@@ -1,22 +1,44 @@
-import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoaderComponent } from './core/layouts/loader/loader/loader.component';
-import { MessageDialogComponent } from './core/layouts/message-dialog/message-dialog/message-dialog.component';
+import { AppHttpInterceptor } from './core/interceptors/app-http.interceptor';
+import { AppErrorHandler } from './core/handlers/app-error.handler';
+import { ResourceModule } from '@kkoehn/ngx-resource-handler-ngx-http';
+
+import { CoreModule } from './core/core.module';
+import { MainModule } from './main/main.module';
+import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+
+import { LoginComponent } from './main/components/login/login.component';
+import { NotFoundPageComponent } from './main/components/notFoundPage/notFoundPage.component';
+
+const appRoutes:Routes = [
+  {path:'login',component: LoginComponent},
+  {path: '**',component: NotFoundPageComponent}, 
+]
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoaderComponent,
-    MessageDialogComponent
+    LoginComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    ResourceModule.forRoot(),
+    CoreModule,
+    MainModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+    { provide: CookieService},
+    { provide: ErrorHandler, useClass: AppErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

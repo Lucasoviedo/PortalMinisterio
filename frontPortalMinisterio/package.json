@@ -20,8 +20,9 @@
     "@angular/router": "^14.2.0",
     "@kkoehn/ngx-resource-core": "^14.0.1",
     "@kkoehn/ngx-resource-handler-ngx-http": "^14.0.1",
-    "@ng-bootstrap/ng-bootstrap": "^13.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^13.1.1",
     "bootstrap": "^5.2.2",
+    "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
