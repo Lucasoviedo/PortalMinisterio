@@ -1,0 +1,23 @@
+<div class="loginContenedor">
+    <div class="loginImagenContenedor">
+        <img 
+            class="loginImagen"
+            src="./../../../../assets/login.svg">
+    </div>
+    <div class="loginForm">
+        <h1 style="margin-top: 30px;">Iniciar sesion</h1>
+        <br>
+        <form #f="ngForm" (ngSubmit)="onLogin()" class="form-group">
+            <div class="loginInput">
+                <label for="nombreInput">Nombre de usuario</label>
+                <input class="form-control" [(ngModel)] = "nombreUsuario" id="nombreInput" name="nombre_usuario">
+            </div>
+            <div class="loginInput">
+                <label for="contraseñaInput">Contraseña</label>
+                <input class="form-control" [(ngModel)] = "password" type="password" id="contraseñaInput" name="password">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.agregarBoton{
+    width: 100%;
+}
+
+.filtrosContenedor{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tituloConsulta{
+    margin: 20px 0px;
+}
