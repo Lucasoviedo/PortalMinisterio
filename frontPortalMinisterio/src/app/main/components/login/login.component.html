@@ -7,17 +7,17 @@
     <div class="loginForm">
         <h1 style="margin-top: 30px;">Iniciar sesion</h1>
         <br>
-        <form>
+        <form #f="ngForm" (ngSubmit)="onLogin()" class="form-group">
             <div class="loginInput">
                 <label for="nombreInput">Nombre de usuario</label>
-                <input id="nombreInput">
+                <input class="form-control" [(ngModel)] = "nombreUsuario" id="nombreInput" name="nombre_usuario">
             </div>
             <div class="loginInput">
                 <label for="contraseñaInput">Contraseña</label>
-                <input type="password" id="contraseñaInput">
+                <input class="form-control" [(ngModel)] = "password" type="password" id="contraseñaInput" name="password">
             </div>
             <br>
-            <button class="btn btn-primary" style="width: 100%;">Entrar</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
         </form>
     </div>
 </div>

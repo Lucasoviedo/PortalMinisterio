@@ -4,6 +4,6 @@ html{
 
 @media (min-width: 768px){
     html{
-        font-weight: 20px;
+        font-size: 20px;
     }
 }

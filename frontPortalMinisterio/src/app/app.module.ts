@@ -5,19 +5,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppHttpInterceptor } from './core/interceptors/app-http.interceptor';
 import { AppErrorHandler } from './core/handlers/app-error.handler';
-import { ResourceModule } from '@kkoehn/ngx-resource-handler-ngx-http';
 
 import { CoreModule } from './core/core.module';
-import { MainModule } from './main/main.module';
 import { RouterModule, Routes } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 import { LoginComponent } from './main/components/login/login.component';
 import { NotFoundPageComponent } from './main/components/notFoundPage/notFoundPage.component';
+import { DashboardComponent } from './main/components/dashboard/dashboard.component';
+import { LaboratoriosComponent } from './main/components/laboratorios/laboratorios.component';
+import { ProvinciasComponent } from './main/components/provincias/provincias.component';
+import { VacunadosComponent } from './main/components/vacunados/vacunados.component';
+import { UsuariosComponent } from './main/components/usuarios/usuarios.component';
 
 const appRoutes:Routes = [
+  {path: '', component: DashboardComponent},
   {path:'login',component: LoginComponent},
-  {path: '**',component: NotFoundPageComponent}, 
+  {path: 'laboratorios',component: LaboratoriosComponent},
+  {path: 'provincias',component: ProvinciasComponent},
+  {path: 'usuarios',component: UsuariosComponent},
+  {path: 'vacunados',component: VacunadosComponent},
+  {path: '**',component: NotFoundPageComponent}
 ]
 
 @NgModule({
@@ -25,18 +34,18 @@ const appRoutes:Routes = [
     AppComponent,
     LoginComponent,
     NotFoundPageComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    ResourceModule.forRoot(),
     CoreModule,
-    MainModule,
+    FormsModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-    { provide: CookieService},
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
