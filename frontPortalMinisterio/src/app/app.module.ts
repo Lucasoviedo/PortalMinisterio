@@ -19,6 +19,8 @@ import { ProvinciasComponent } from './main/components/provincias/provincias.com
 import { VacunadosComponent } from './main/components/vacunados/vacunados.component';
 import { UsuariosComponent } from './main/components/usuarios/usuarios.component';
 
+import { CommonModule } from '@angular/common';
+
 const appRoutes:Routes = [
   {path: '', component: DashboardComponent},
   {path:'login',component: LoginComponent},
@@ -34,7 +36,8 @@ const appRoutes:Routes = [
     AppComponent,
     LoginComponent,
     NotFoundPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProvinciasComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ const appRoutes:Routes = [
     CoreModule,
     FormsModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    CommonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },

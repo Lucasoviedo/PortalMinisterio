@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
-import { Laboratorio } from "../../api/models/laboratorio";
-// import { LaboratoriosResourceService } from "src/app/core/services/laboratorios/laboratorios-resource.service";
-import { INuevoLaboratorio } from "src/app/core/models/i-nuevoLaboratorio";
+import { Router } from "@angular/router";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-laboratorios',
@@ -10,5 +9,7 @@ import { INuevoLaboratorio } from "src/app/core/models/i-nuevoLaboratorio";
 })
 
 export class LaboratoriosComponent{
+
+    constructor(private cookieService: CookieService){}
 
 }

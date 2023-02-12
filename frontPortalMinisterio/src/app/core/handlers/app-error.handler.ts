@@ -38,7 +38,7 @@ export class AppErrorHandler implements ErrorHandler {
         }
       }
       else if(error.error) {
-        message = { text: error.error, num: error.status }; 
+        message = { text: error.error.message, num: error.status }; 
       }
       else if(error.message) {
         message = { text: error.message, num: error.status }; 

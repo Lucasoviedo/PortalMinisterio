@@ -2,30 +2,27 @@
 <div class="container">
     <h1 class="tituloConsulta">PROVINCIAS</h1>
     <hr>
+    <div *ngIf="provinciasData.length > 0">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Configurar</th>
+                <th>Contacto</th>
+                <th>Email</th>
+                <th>Configuracion</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>Cordoba</td>
-                <td><button>O</button></td>
-            </tr>
-            <tr>
-                <td>San Juan</td>
-                <td><button>O</button></td>
-            </tr>
-            <tr>
-                <td>Mendoza</td>
-                <td><button>O</button></td>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td><button>O</button></td>
+        <tbody >
+            <tr *ngFor="let provincia of provinciasData">
+                <td><b>{{provincia.nombre}}</b></td>
+                <td>{{provincia.nombreContacto}}</td>
+                <td>{{provincia.emailContacto}}</td>
+                <td>
+                    <div><img src="../../../../assets/configurar.svg" class="configurar-img"/></div>
+                </td>
             </tr>
         </tbody>
     </table>
+        
+    </div>
 </div>

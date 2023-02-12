@@ -2,6 +2,12 @@
     width: 100%;
 }
 
+.configurar-img{
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 25%;
+}
+
 .filtrosContenedor{
     display: flex;
     justify-content: space-between;
@@ -11,3 +17,5 @@
 .tituloConsulta{
     margin: 20px 0px;
 }
+
+
