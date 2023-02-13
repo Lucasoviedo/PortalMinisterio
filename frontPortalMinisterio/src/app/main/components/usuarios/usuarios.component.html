@@ -1,0 +1,103 @@
+
+<div class="container">
+    <h1 class="tituloConsulta">USUARIOS</h1>
+    <hr>
+    <div class="row filtrosContenedor">
+        <div class="col-3">
+            <select class="form-select">
+                <option>Seleccione un tipo</option>
+                <option>LABABORATORIO</option>
+                <option>PROVINCIA</option>
+                <option>MINISTERIO</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-primary agregarBoton"  
+                type="button" 
+                data-toggle="modal" 
+                data-target="#newUserModal"
+            >
+                Agregar usuario
+            </button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Configurar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Fizer1</td>
+                <td>LAB</td>
+                <td><button>O</button></td>
+                <td><button>X</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+    <!-- Modal -->
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="newUserModalLabel">Agregar usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>Ingrese nombre: </label>
+                    <input type="text" class="form-control"/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Ingrese apellido: </label>
+                    <input type="text" class="form-control"/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Ingrese DNI: </label>
+                    <input type="number" class="form-control"/>
+                </div>
+            </div>
+            <div class="flexRow">
+                <label style="width: 15%">Ingrese email: </label>
+                <input style="width: 85%" type="email" class="form-control"/>
+            </div>
+            <hr/>
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>Nombre de usuario: </label>
+                    <input class="form-control"/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Habilitacion: </label>
+                    <select type="password" class="form-control"></select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Idioma: </label>
+                    <select type="password" class="form-control"></select>
+                </div>
+            </div>
+            <div class="flexRow">
+                <label>Contraseña </label>
+                <input type="password" class="form-control"/>
+            </div>
+            <div class="flexRow">
+                <label>Repita contraseña: </label>
+                <input type="password" class="form-control"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>

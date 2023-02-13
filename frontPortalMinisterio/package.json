@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.2.0",
+    "@angular/animations": "^14.2.12",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
@@ -20,8 +20,11 @@
     "@angular/router": "^14.2.0",
     "@kkoehn/ngx-resource-core": "^14.0.1",
     "@kkoehn/ngx-resource-handler-ngx-http": "^14.0.1",
-    "@ng-bootstrap/ng-bootstrap": "^13.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^13.1.1",
     "bootstrap": "^5.2.2",
+    "ngx-cookie-service": "^15.0.0",
+    "ngx-resource": "^3.6.3",
+    "ngx-toastr": "^16.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

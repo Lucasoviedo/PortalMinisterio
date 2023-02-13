@@ -1,0 +1,127 @@
+<div class="container">
+    <h1 class="tituloConsulta">PROVINCIAS</h1>
+    <hr>
+    <div *ngIf="provinciasData.length > 0">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Email</th>
+                <th>Configuracion</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr *ngFor="let provincia of provinciasData">
+                <td (click)="mostrarCentrosSalud(provincia.codigoProvincia)"
+                    data-toggle="modal" data-target="#centros-provincia"
+                ><u><b>{{provincia.nombre}}</b></u></td>
+                <td>{{provincia.nombreContacto}}</td>
+                <td>{{provincia.emailContacto}}</td>
+                <td>
+                    <div (click)="editarProvincia(provincia)">
+                        <img src="../../../../assets/configurar.svg" class="configurar-img"
+                        type="button" data-toggle="modal" data-target="#editar-provincia"
+                        />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="editar-provincia" tabindex="-1" role="dialog" aria-labelledby="editar-provinciaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editar-provinciaLabel">Editar provincia</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="flexRow">
+                <label>Nombre provincia: </label>
+                <input value={{provinciaModal.nombre}} style="width: 65%;"/>
+            </div>
+            <div class="flexRow">
+                <label>Nombre contacto: </label>
+                <input value={{provinciaModal.nombreContacto}} style="width: 65%;"/>
+            </div>
+            <div class="flexRow">
+                <label>Email contacto: </label>
+                <input value={{provinciaModal.emailContacto}} style="width: 65%;"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="centros-provincia" tabindex="-1" role="dialog" aria-labelledby="centros-provinciaLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="centros-provinciaLabel">Centros de salud</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length > 0">
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Nombre contacto</th>
+                    <th>Email contacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let centros of provinciaCentrosDeSalud">
+                    <td>{{centros.nombre}}</td>
+                    <td>{{centros.direccion}}</td>
+                    <td>{{centros.nombreContacto}}</td>
+                    <td>{{centros.emailContacto}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
