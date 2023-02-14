@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from 'src/environments/environment';
+import { UsuarioService } from './main/api/resources/usuarios.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent {
 
   constructor(  private router: Router, 
     private cookieService: CookieService,
-    private route: ActivatedRoute){
+    private route: ActivatedRoute,
+    private usuarioService: UsuarioService){
       this.router.events.subscribe(event => {
         if (this.router.url === `${environment.apiUrl}/login`) {
           this.onlogin = true;
@@ -25,14 +27,15 @@ export class AppComponent {
       });
     }
 
-
-
-      
-
-  
-
   cerrarSesion(){
     this.cookieService.delete('authToken');
     this.router.navigate(['/login']);
   }
+
+  logout(){
+    this.usuarioService.logout()
+    .subscribe((response: any) => {
+        this.router.navigate(['/login']);
+    });
+}
 }

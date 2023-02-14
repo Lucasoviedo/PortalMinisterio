@@ -19,12 +19,15 @@
             <a class="nav-link" href="vacunados">Vacunados</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="vacunados">Lotes</a>
+            <a class="nav-link" href="">Lotes externos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Lotes internos</a>
           </li>
         </ul>
       </div>
     </div>
-    <div [ngClass]="{'logout-img-container-variable': onlogin}"  class="logout-img-container" (click)="cerrarSesion()">
+    <div [ngClass]="{'logout-img-container-variable': onlogin}"  class="logout-img-container" (click)="logout()">
       <img src="../assets/salida.svg" class="logout-img" alt="logout" />
     </div>
 </nav>
