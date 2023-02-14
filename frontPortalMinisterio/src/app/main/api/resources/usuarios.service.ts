@@ -22,4 +22,12 @@ export class UsuarioService {
     }, {headers} );
   }
 
+  logout(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<IUsuario>(this.url + '/usuarios/logout' ,{
+    }, {headers} );
+  }
+
 }
