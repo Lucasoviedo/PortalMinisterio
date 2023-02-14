@@ -22,50 +22,8 @@ export class LoginComponent{
     onLogin() {
         this.loginService.login(this.nombreUsuario, this.password)
         .subscribe((response) => {
-            console.log(response);
             this.cookieService.set('authToken', response.toString());
             this.router.navigate(['/']);
         });
     }
 }
-
-
-
-// export class LoginComponent implements OnInit{
-
-//     loginUsuario!: LoginUsuario;
-//     nombreUsuario: string = "";
-//     password: string = "";
-
-//     errMsj: string = "";
-
-//     constructor(
-//         private authService: AuthService,
-//         private toastr: ToastrService,
-//         private tokenService: TokenService,
-//         private router: Router
-//     ){}
-
-//     ngOnInit() {
-//     }
-
-//     onLogin() : void {
-//         this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
-//         this.authService.login(this.loginUsuario).subscribe(
-//             data => {
-//                 this.tokenService.setToken(data.token);
-//                 this.toastr.success('Bienvenido','OK', {
-//                     timeOut: 3000, positionClass: 'toast-top-center'
-//                 });
-//                 this.router.navigate(['']);
-//             },
-//             err => {
-//                 this.errMsj = err.message;
-//                 this.toastr.error(this.errMsj, 'Error', {
-//                     timeOut: 3000, positionClass: 'toast-top-center'
-//                 });
-//             }
-//         );
-//     }
-
-// }

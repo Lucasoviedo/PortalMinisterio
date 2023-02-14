@@ -21,24 +21,33 @@
             </button>
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Configurar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Fizer1</td>
-                <td>LAB</td>
-                <td><button>O</button></td>
-                <td><button>X</button></td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div *ngIf="usuariosData.length > 0">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Idioma</th>
+                    <th>Nombre provincia</th>
+                    <th>Nombre laboratorio</th>
+                    <th>Configuracion</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let usuario of usuariosData">
+                    <td>{{usuario.nombreUsuario}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.rol}}</td>
+                    <td>{{usuario.idioma}}</td>
+                    <td>{{usuario.nombreProvincia}}</td>
+                    <td>{{usuario.nombreLaboratorio}}</td>
+                    <td>{{usuario.habilitado}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
     
     <!-- Modal -->
@@ -55,48 +64,48 @@
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese nombre: </label>
-                    <input type="text" class="form-control"/>
+                    <input type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese apellido: </label>
-                    <input type="text" class="form-control"/>
+                    <input type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese DNI: </label>
-                    <input type="number" class="form-control"/>
+                    <input type="number" class="form-control" required/>
                 </div>
             </div>
             <div class="flexRow">
                 <label style="width: 15%">Ingrese email: </label>
-                <input style="width: 85%" type="email" class="form-control"/>
+                <input style="width: 85%" type="email" class="form-control" required/>
             </div>
             <hr/>
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
                     <label>Nombre de usuario: </label>
-                    <input class="form-control"/>
+                    <input class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Habilitacion: </label>
-                    <select type="password" class="form-control"></select>
+                    <select type="password" class="form-control" required></select>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Idioma: </label>
-                    <select type="password" class="form-control"></select>
+                    <select type="password" class="form-control" required></select>
                 </div>
             </div>
             <div class="flexRow">
-                <label>Contraseña </label>
-                <input type="password" class="form-control"/>
+                <label>Contraseña: </label>
+                <input type="password" class="form-control" required/>
             </div>
             <div class="flexRow">
                 <label>Repita contraseña: </label>
-                <input type="password" class="form-control"/>
+                <input type="password" class="form-control" required/>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Agregar</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
         </div>
       </div>
     </div>

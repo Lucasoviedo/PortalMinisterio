@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { CookieService } from 'ngx-cookie-service';
+import { Component, OnInit } from "@angular/core";
+import { ILaboratorio } from "src/app/core/models/i-laboratorio";
+import { LaboratorioService } from "../../api/resources/laboratorios.service";
 
 @Component({
     selector: 'app-laboratorios',
@@ -8,8 +8,16 @@ import { CookieService } from 'ngx-cookie-service';
     styleUrls: ['./laboratorios.component.css','../generalStyles.css']
 })
 
-export class LaboratoriosComponent{
+export class LaboratoriosComponent implements OnInit{
 
-    constructor(private cookieService: CookieService){}
+    laboratoriosData: Array<ILaboratorio> = [];
 
+    constructor(private laboratorioService: LaboratorioService) { }
+
+    ngOnInit(){
+        this.laboratorioService.getLaboratorios()
+        .subscribe((response: any) => {
+            this.laboratoriosData = response
+        });
+    }
 }

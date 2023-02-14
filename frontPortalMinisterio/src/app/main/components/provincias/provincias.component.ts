@@ -27,7 +27,6 @@ export class ProvinciasComponent implements OnInit {
         this.provinciaService.getProvincias(1)
         .subscribe((response: any) => {
             this.provinciasData = response
-            console.log(this.provinciasData);
         });
     }
 
@@ -38,7 +37,6 @@ export class ProvinciasComponent implements OnInit {
     mostrarCentrosSalud(codigoProvincia:string){
         this.provinciaService.getCentrosSalud(codigoProvincia)
         .subscribe((response: any) => {
-            console.log(response)
             this.provinciaCentrosDeSalud = response;
         });
     }
