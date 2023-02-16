@@ -4,8 +4,6 @@ import { Router } from "@angular/router";
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from "../../api/resources/login.service";
 
-// import { ILoginUsuario } from "src/app/core/models/i-loginUsuario";
-
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',

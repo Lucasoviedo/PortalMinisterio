@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { IProvincia } from 'src/app/core/models/i-provincia';
+import { IProvincia } from 'src/app/core/models/provincias/i-provincia';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 

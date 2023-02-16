@@ -27,14 +27,11 @@ export class AppComponent {
       });
     }
 
-  cerrarSesion(){
-    this.cookieService.delete('authToken');
-    this.router.navigate(['/login']);
-  }
 
   logout(){
     this.usuarioService.logout()
     .subscribe((response: any) => {
+        this.cookieService.delete('authToken');
         this.router.navigate(['/login']);
     });
 }

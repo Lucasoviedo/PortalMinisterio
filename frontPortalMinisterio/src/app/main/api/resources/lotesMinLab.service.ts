@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { ILaboratorio } from 'src/app/core/models/laboratorios/i-laboratorio';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ILoteLab } from 'src/app/core/models/lotesMinLab/i-loteLab';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LaboratorioService {
+export class LotesMinLabService {
   private url = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient,
     private cookieService : CookieService) { }
-    
-  getLaboratorios() {
+
+  obtenerLotes() {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<ILaboratorio>(this.url + '/laboratorios/' ,{
-    }, {headers} );
+    return this.http.post<ILoteLab>(this.url + '/lotes/', {}, {headers});
   }
-
 }
