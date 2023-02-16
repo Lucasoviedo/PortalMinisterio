@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { IUsuario } from 'src/app/core/models/i-usuario';
+import { IUsuario } from 'src/app/core/models/usuarios/i-usuario';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 

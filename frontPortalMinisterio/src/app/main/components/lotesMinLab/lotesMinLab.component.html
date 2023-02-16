@@ -1,0 +1,83 @@
+<div class="container">
+    <h1 class="tituloConsulta">LOTES EXTERNOS</h1>
+    <hr>
+    <select class="form-select" (change)="filtrarPorEstado($event)">
+        <option hidden selected> SELECCIONE UN ESTADO</option>
+        <option value="">TODOS</option>
+        <option *ngFor="let estado of estadosData" 
+                value={{estado.estado}}>{{estado.estado}}</option>
+    </select>
+    <hr>
+    <div *ngIf="lotesData.length > 0">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Laboratorio</th>
+                <th>Cod. Lote</th>
+                <th>Distribucion</th>
+                <th>Estado</th>
+                <th>Seguimiento</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr *ngFor="let lote of lotesData">
+                <td>{{lote.nombreLaboratorio}}</td>
+                <td>{{lote.codigoLote}}</td>
+                <td> {{lote.distribuido ? 'DISTRIBUIDO' : 'POR DISTRIBUIR'}}</td>
+                <td>{{lote.estado}}</td>
+                <td>
+                    <div class="btn-table" (click)="mostrarSeguimiento(lote)"
+                    type="button" data-toggle="modal" data-target="#seguimiento-lote">
+                        {{lote.codigoSeguimiento}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="seguimiento-lote" tabindex="-1" role="dialog" aria-labelledby="seguimiento-loteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="seguimiento-loteLabel">Seguimiento lote</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="flexRow">
+                <label>Fecha envio: </label>
+                <input disabled type="date" value={{modalSeguimiento.fechaEnvio}} style="width: 65%;"/>
+            </div>
+            <div class="flexRow">
+                <label>Fecha recepcion: </label>
+                <input [disabled]="modalSeguimiento.fechaRecepcion" type="date" value={{modalSeguimiento.fechaRecepcion}} style="width: 65%;"/>
+            </div>
+            <div class="flexRow">
+                <label>Fecha Registro: </label>
+                <input [disabled]="modalSeguimiento.fechaRegistro" type="date" value={{modalSeguimiento.fechaRegistro}} style="width: 65%;"/>
+            </div>
+            <div class="flexRow">
+                <label>Fecha vencimiento: </label>
+                <input disabled type="date" value={{modalSeguimiento.fechaVencimiento}} style="width: 65%;"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+        </div>
+    </div>
+</div>

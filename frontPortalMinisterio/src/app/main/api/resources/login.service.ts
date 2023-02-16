@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ILoginUsuario } from 'src/app/core/models/i-loginUsuario'; 
+import { ILoginUsuario } from 'src/app/core/models/usuarios/i-loginUsuario'; 
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private loginApi = `${environment.apiUrl}`;
+  private url = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 
   login(nombreUsuario: string, password: string) {
-    return this.http.post<ILoginUsuario>(this.loginApi + '/usuarios/login', {
+    return this.http.post<ILoginUsuario>(this.url + '/usuarios/login', {
         nombreUsuario,
         password
     });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ILaboratorio } from "src/app/core/models/i-laboratorio";
+import { ILaboratorio } from "src/app/core/models/laboratorios/i-laboratorio";
 import { LaboratorioService } from "../../api/resources/laboratorios.service";
 
 @Component({
