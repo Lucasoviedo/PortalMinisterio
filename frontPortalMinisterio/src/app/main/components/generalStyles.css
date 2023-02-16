@@ -1,3 +1,4 @@
+
 .agregarBoton{
     width: 100%;
 }
@@ -14,8 +15,18 @@
     margin-bottom: 20px;
 }
 
+.flexRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
 .tituloConsulta{
     margin: 20px 0px;
 }
 
+.sizeUnTercio{
+    width: 33%;
+}
 

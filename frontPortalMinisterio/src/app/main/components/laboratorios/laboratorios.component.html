@@ -15,15 +15,24 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Configurar</th>
-                <th>Eliminar</th>
+                <th>Pais</th>
+                <th>Direccion</th>
+                <th>Nombre contacto</th>
+                <th>Email contacto</th>
+                <th>Configuraciones</th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let laboratorio of laboratorios">
-                <td>Fizer</td>
-                <td><button>O</button></td>
-                <td><button>X</button></td>
+        <tbody >
+            <tr *ngFor="let laboratorio of laboratoriosData">
+                <td>{{laboratorio.nombre}}</td>
+                <td>{{laboratorio.pais}}</td>
+                <td>{{laboratorio.direccion}}</td>
+                <td>{{laboratorio.emailContacto}}</td>
+                <td>{{laboratorio.nombreContacto}}</td>
+                <td>
+                    <img src="../../../../assets/configurar.svg" class="configurar-img"/>
+                    <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
+                </td>
             </tr>
         </tbody>
     </table>

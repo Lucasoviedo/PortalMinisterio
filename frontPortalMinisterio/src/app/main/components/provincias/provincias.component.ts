@@ -1,5 +1,6 @@
 import { Component , OnInit } from "@angular/core";
 import { CookieService } from 'ngx-cookie-service';
+import { ICentroSalud } from "src/app/core/models/i-centroSalud";
 import { IProvincia } from "src/app/core/models/i-provincia";
 import { ProvinciaService } from "../../api/resources/provincias.service";
 
@@ -12,15 +13,31 @@ import { ProvinciaService } from "../../api/resources/provincias.service";
 export class ProvinciasComponent implements OnInit {
 
     provinciasData: Array<IProvincia> = [];
+    provinciaModal: IProvincia = { 
+        nombre : "",
+        codigoProvincia: "", 
+        emailContacto: "", 
+        nombreContacto :""
+    };
+    provinciaCentrosDeSalud : Array<ICentroSalud> = [];
 
-    constructor(private provinciaService: ProvinciaService, 
-        private cookieService: CookieService) { }
+    constructor(private provinciaService: ProvinciaService) { }
 
     ngOnInit(){
         this.provinciaService.getProvincias(1)
         .subscribe((response: any) => {
             this.provinciasData = response
-            console.log(this.provinciasData);
+        });
+    }
+
+    editarProvincia(provincia:IProvincia){
+        this.provinciaModal = provincia; 
+    }
+
+    mostrarCentrosSalud(codigoProvincia:string){
+        this.provinciaService.getCentrosSalud(codigoProvincia)
+        .subscribe((response: any) => {
+            this.provinciaCentrosDeSalud = response;
         });
     }
 }

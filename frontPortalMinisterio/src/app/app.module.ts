@@ -37,7 +37,9 @@ const appRoutes:Routes = [
     LoginComponent,
     NotFoundPageComponent,
     DashboardComponent,
-    ProvinciasComponent
+    ProvinciasComponent,
+    UsuariosComponent,
+    LaboratoriosComponent
   ],
   imports: [
     BrowserModule,
