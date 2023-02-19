@@ -22,34 +22,20 @@
         </div>
     </div>
 
-    <div *ngIf="usuariosData.length > 0">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Idioma</th>
-                    <th>Nombre provincia</th>
-                    <th>Nombre laboratorio</th>
-                    <th>Configuracion</th>
-                </tr>
-            </thead>
-            <tbody >
-                <tr *ngFor="let usuario of usuariosData">
-                    <td>{{usuario.nombreUsuario}}</td>
-                    <td>{{usuario.email}}</td>
-                    <td>{{usuario.rol}}</td>
-                    <td>{{usuario.idioma}}</td>
-                    <td>{{usuario.nombreProvincia}}</td>
-                    <td>{{usuario.nombreLaboratorio}}</td>
-                    <td>
-                        <img src="../../../../assets/configurar.svg" class="configurar-img"/>
-                        <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div *ngIf="usuariosData.length > 0" class="card-usuario-container">
+
+        <div *ngFor="let usuario of usuariosData" class="card-usuario">
+            <h3>{{usuario.nombreUsuario}}</h3>
+            <hr/>
+            <h5>
+                {{usuario.nombreProvincia || usuario.nombreLaboratorio || "Ministerio"}}
+                : {{usuario.rol}}
+            </h5>
+            <h5>{{usuario.email}}</h5>
+            <hr/>
+            <img src="../../../../assets/configurar.svg" class="configurar-img"/>
+            <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
+        </div>
     </div>
 </div>
     

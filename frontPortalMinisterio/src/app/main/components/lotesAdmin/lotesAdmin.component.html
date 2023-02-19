@@ -1,12 +1,28 @@
 <div class="container">
-    <h1 class="tituloConsulta">LOTES EXTERNOS</h1>
+    <h1 class="tituloConsulta">ADMINISTRACION DE LOTES</h1>
+    <br/>
+    <p>Seleccione un laboratorio para comenzar su consulta</p>
     <hr>
-    <select class="form-select" (change)="filtrarPorEstado($event)">
-        <option hidden selected> SELECCIONE UN ESTADO</option>
-        <option value="">TODOS</option>
-        <option *ngFor="let estado of estadosData" 
-                value={{estado.estado}}>{{estado.estado}}</option>
-    </select>
+    <div class="flexRow">
+        <select class="form-select sizeUnTercio" (change)="filtrarPorEstado($event)">
+            <option hidden selected> SELECCIONE UN ESTADO</option>
+            <option value="">TODOS</option>
+            <option *ngFor="let estado of estadosData" 
+                    value={{estado.estado}}>{{estado.estado}}</option>
+        </select>
+    
+        <select class="form-select sizeUnTercio" (change)="filtrarPorLaboratorio($event)">
+            <option hidden selected> SELECCIONE UN LABORATORIO</option>
+            <option value="">TODOS</option>
+            <option *ngFor="let laboratorio of laboratoriosData" 
+                    value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
+        </select>
+
+        <button class="btn btn-primary sizeUnTercio">
+            LOTES DEVUELTOS
+        </button>
+    </div>
+
     <hr>
     <div *ngIf="lotesData.length > 0">
     <table class="table table-striped">
@@ -23,7 +39,14 @@
             <tr *ngFor="let lote of lotesData">
                 <td>{{lote.nombreLaboratorio}}</td>
                 <td>{{lote.codigoLote}}</td>
-                <td> {{lote.distribuido ? 'DISTRIBUIDO' : 'POR DISTRIBUIR'}}</td>
+                <td *ngIf="lote.distribuido">DISTRIBUIDO</td>
+                <td *ngIf="!lote.distribuido && !lote.fechaRecepcion">POR DISTRIBUIR</td>
+                <td *ngIf="!lote.distribuido && lote.fechaRecepcion">
+                    <div class="btn-table" (click)="mostrarSeguimiento(lote)"
+                    type="button" data-toggle="modal" data-target="#seguimiento-lote">
+                        DISTRIBUIR
+                    </div>
+                </td>
                 <td>{{lote.estado}}</td>
                 <td>
                     <div class="btn-table" (click)="mostrarSeguimiento(lote)"
