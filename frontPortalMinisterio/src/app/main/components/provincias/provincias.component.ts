@@ -26,6 +26,7 @@ export class ProvinciasComponent implements OnInit {
     ngOnInit(){
         this.provinciaService.getProvincias(1)
         .subscribe((response: any) => {
+            console.log(response)
             this.provinciasData = response
         });
     }

@@ -18,8 +18,8 @@ import { LaboratoriosComponent } from './main/components/laboratorios/laboratori
 import { ProvinciasComponent } from './main/components/provincias/provincias.component';
 import { VacunadosComponent } from './main/components/vacunados/vacunados.component';
 import { UsuariosComponent } from './main/components/usuarios/usuarios.component';
-import { LotesMinLabComponent } from './main/components/lotesMinLab/lotesMinLab.component';
-import { LotesMinProvComponent } from './main/components/lotesMinProv/lotesMinProv.component';
+import { LotesAdminComponent } from './main/components/lotesAdmin/lotesAdmin.component';
+import { LotesConsultaComponent } from './main/components/lotesConsulta/loteConsulta.component';
 
 import { CommonModule } from '@angular/common';
 
@@ -30,8 +30,8 @@ const appRoutes:Routes = [
   {path: 'provincias',component: ProvinciasComponent},
   {path: 'usuarios',component: UsuariosComponent},
   {path: 'vacunados',component: VacunadosComponent},
-  {path: 'lotes-min-lab',component: LotesMinLabComponent},
-  {path: 'lotes-min-prov',component: LotesMinProvComponent},
+  {path: 'lotes-admin',component: LotesAdminComponent},
+  {path: 'lotes-consulta',component: LotesConsultaComponent},
   {path: '**',component: NotFoundPageComponent}
 ]
 
@@ -44,8 +44,8 @@ const appRoutes:Routes = [
     ProvinciasComponent,
     UsuariosComponent,
     LaboratoriosComponent,
-    LotesMinLabComponent,
-    LotesMinProvComponent
+    LotesAdminComponent,
+    LotesConsultaComponent
   ],
   imports: [
     BrowserModule,
