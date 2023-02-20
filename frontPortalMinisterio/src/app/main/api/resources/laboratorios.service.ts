@@ -1,34 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { IProvincia } from 'src/app/core/models/provincias/i-provincia';
+import { ILaboratorio } from 'src/app/core/models/laboratorios/i-laboratorio';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProvinciaService {
+export class LaboratorioService {
   private url = `${environment.apiUrl}`;
-  
 
   constructor(private http: HttpClient,
     private cookieService : CookieService) { }
     
-  getProvincias(idUsuario: number) {
+  getLaboratorios() {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IProvincia>(this.url + '/provincias/' ,{
-      idUsuario
+    return this.http.post<ILaboratorio>(this.url + '/laboratorios/' ,{
     }, {headers} );
   }
 
-  getCentrosSalud(codigoProvincia: string) {
-    const headers = new HttpHeaders({
-      'Authorization': this.cookieService.get('authToken')
-    });
-    return this.http.post<IProvincia>(this.url + '/provincias/centros-vac' ,{
-      codigoProvincia
-    }, {headers} );
-  }
 }

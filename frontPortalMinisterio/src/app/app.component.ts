@@ -1,38 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
+import { UsuarioService } from './main/api/resources/usuarios.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'frontPortalMinisterio';
 
-  onlogin = true;
+  showHeaderOptions = false;
+  showHeaderOptionsMovile = false
 
   constructor(  private router: Router, 
     private cookieService: CookieService,
-    private route: ActivatedRoute){
-      this.router.events.subscribe(event => {
-        if (this.router.url === `${environment.apiUrl}/login`) {
-          this.onlogin = true;
-        } else {
-          this.onlogin = false;
-        }
-      });
+    private usuarioService: UsuarioService){}
+
+  ngOnInit(): void {
+    //Comprobar que exista la sesion
+    if(!this.cookieService.get('authToken')){
+        this.showHeaderOptions = false;
+        this.router.navigate(['/login']);
+    } else {
+      this.showHeaderOptions = true;
+      if(this.cookieService.get('authToken') === ""){
+        this.cookieService.delete('authToken');
+        this.router.navigate(['/login']);
+      }
     }
+  }
 
+  logout(){
+    this.usuarioService.logout()
+    .subscribe((response: any) => {
+      console.log(response)
+        this.cookieService.delete('authToken');
+        this.router.navigate(['/login']);
+        window.location.reload();
+    });
+  }
 
+  ruteoHeader(ruta : String){
+    this.router.navigate([ruta]);
+  }
 
-      
-
-  
-
-  cerrarSesion(){
-    this.cookieService.delete('authToken');
-    this.router.navigate(['/login']);
+  clickShowHeaderOptionsMovile(){
+    this.showHeaderOptionsMovile = !this.showHeaderOptionsMovile;
   }
 }

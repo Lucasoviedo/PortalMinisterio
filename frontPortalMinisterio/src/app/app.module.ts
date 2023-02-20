@@ -18,6 +18,8 @@ import { LaboratoriosComponent } from './main/components/laboratorios/laboratori
 import { ProvinciasComponent } from './main/components/provincias/provincias.component';
 import { VacunadosComponent } from './main/components/vacunados/vacunados.component';
 import { UsuariosComponent } from './main/components/usuarios/usuarios.component';
+import { LotesAdminComponent } from './main/components/lotesAdmin/lotesAdmin.component';
+import { LotesConsultaComponent } from './main/components/lotesConsulta/loteConsulta.component';
 
 import { CommonModule } from '@angular/common';
 
@@ -28,6 +30,8 @@ const appRoutes:Routes = [
   {path: 'provincias',component: ProvinciasComponent},
   {path: 'usuarios',component: UsuariosComponent},
   {path: 'vacunados',component: VacunadosComponent},
+  {path: 'lotes-admin',component: LotesAdminComponent},
+  {path: 'lotes-consulta',component: LotesConsultaComponent},
   {path: '**',component: NotFoundPageComponent}
 ]
 
@@ -37,7 +41,11 @@ const appRoutes:Routes = [
     LoginComponent,
     NotFoundPageComponent,
     DashboardComponent,
-    ProvinciasComponent
+    ProvinciasComponent,
+    UsuariosComponent,
+    LaboratoriosComponent,
+    LotesAdminComponent,
+    LotesConsultaComponent
   ],
   imports: [
     BrowserModule,

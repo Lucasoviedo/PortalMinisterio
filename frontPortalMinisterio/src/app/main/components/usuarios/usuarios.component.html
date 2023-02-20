@@ -21,24 +21,22 @@
             </button>
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Configurar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Fizer1</td>
-                <td>LAB</td>
-                <td><button>O</button></td>
-                <td><button>X</button></td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div *ngIf="usuariosData.length > 0" class="card-usuario-container">
+
+        <div *ngFor="let usuario of usuariosData" class="card-usuario">
+            <h3>{{usuario.nombreUsuario}}</h3>
+            <hr/>
+            <h5>
+                {{usuario.nombreProvincia || usuario.nombreLaboratorio || "Ministerio"}}
+                : {{usuario.rol}}
+            </h5>
+            <h5>{{usuario.email}}</h5>
+            <hr/>
+            <img src="../../../../assets/configurar.svg" class="configurar-img"/>
+            <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
+        </div>
+    </div>
 </div>
     
     <!-- Modal -->
@@ -53,48 +51,50 @@
         </div>
         <div class="modal-body">
             <div class="flexRow">
-                <div class="flexCol">
+                <div class="flexCol sizeUnTercio">
                     <label>Ingrese nombre: </label>
-                    <input type="text" class="form-control"/>
+                    <input type="text" class="form-control" required/>
                 </div>
-                <div class="flexCol">
+                <div class="flexCol sizeUnTercio">
                     <label>Ingrese apellido: </label>
-                    <input type="text" class="form-control"/>
+                    <input type="text" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Ingrese DNI: </label>
+                    <input type="number" class="form-control" required/>
                 </div>
             </div>
             <div class="flexRow">
-                <label>Ingrese DNI: </label>
-                <input type="number" class="form-control"/>
-            </div>
-            <div class="flexRow">
-                <label>Ingrese email: </label>
-                <input type="email" class="form-control"/>
+                <label style="width: 15%">Ingrese email: </label>
+                <input style="width: 85%" type="email" class="form-control" required/>
             </div>
             <hr/>
             <div class="flexRow">
-                <label>Nombre de usuario: </label>
-                <input class="form-control"/>
+                <div class="flexCol sizeUnTercio">
+                    <label>Nombre de usuario: </label>
+                    <input class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Habilitacion: </label>
+                    <select type="password" class="form-control" required></select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Idioma: </label>
+                    <select type="password" class="form-control" required></select>
+                </div>
             </div>
             <div class="flexRow">
-                <label>Contraseña </label>
-                <input type="password" class="form-control"/>
+                <label>Contraseña: </label>
+                <input type="password" class="form-control" required/>
             </div>
             <div class="flexRow">
                 <label>Repita contraseña: </label>
-                <input type="password" class="form-control"/>
-            </div>
-            <div class="flexRow">
-                <label>Habilitacion: </label>
-                <select type="password" class="form-control"></select>
-            </div>
-            <div class="flexRow">
-                <label>Idioma: </label>
-                <select type="password" class="form-control"></select>
+                <input type="password" class="form-control" required/>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Agregar</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
         </div>
       </div>
     </div>

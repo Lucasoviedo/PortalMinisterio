@@ -1,17 +1,15 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from "../../api/resources/login.service";
-
-// import { ILoginUsuario } from "src/app/core/models/i-loginUsuario";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit {
     nombreUsuario: string = "";
     password: string = "";
 
@@ -19,53 +17,18 @@ export class LoginComponent{
         private router: Router,
         private cookieService: CookieService) { }
 
+    ngOnInit(): void{
+        if(this.cookieService.get('authToken')){
+            this.router.navigate(['/']);
+        }
+    }
+
     onLogin() {
         this.loginService.login(this.nombreUsuario, this.password)
         .subscribe((response) => {
-            console.log(response);
             this.cookieService.set('authToken', response.toString());
             this.router.navigate(['/']);
+            window.location.reload();
         });
     }
 }
-
-
-
-// export class LoginComponent implements OnInit{
-
-//     loginUsuario!: LoginUsuario;
-//     nombreUsuario: string = "";
-//     password: string = "";
-
-//     errMsj: string = "";
-
-//     constructor(
-//         private authService: AuthService,
-//         private toastr: ToastrService,
-//         private tokenService: TokenService,
-//         private router: Router
-//     ){}
-
-//     ngOnInit() {
-//     }
-
-//     onLogin() : void {
-//         this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
-//         this.authService.login(this.loginUsuario).subscribe(
-//             data => {
-//                 this.tokenService.setToken(data.token);
-//                 this.toastr.success('Bienvenido','OK', {
-//                     timeOut: 3000, positionClass: 'toast-top-center'
-//                 });
-//                 this.router.navigate(['']);
-//             },
-//             err => {
-//                 this.errMsj = err.message;
-//                 this.toastr.error(this.errMsj, 'Error', {
-//                     timeOut: 3000, positionClass: 'toast-top-center'
-//                 });
-//             }
-//         );
-//     }
-
-// }
