@@ -1,36 +1,46 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">Ministerio de la Nación</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-brand" (click)="ruteoHeader('/')">Ministerio de la Nación</div>
+      <div *ngIf="showHeaderOptions" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="laboratorios">Laboratorios</a>
+          <li class="nav-item">
+            <div class="nav-link" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="provincias">Provincias</a>
+            <div class="nav-link" (click)="ruteoHeader('/provincias')">Provincias</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="usuarios">Usuarios</a>
+            <div class="nav-link" (click)="ruteoHeader('/usuarios')">Usuarios</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="vacunados">Vacunados</a>
+            <div class="nav-link" (click)="ruteoHeader('/vacunados')">Vacunados</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="lotes-admin">Administracion de lotes</a>
+            <div class="nav-link" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="lotes-consulta">Consulta de lotes</a>
+            <div class="nav-link" (click)="ruteoHeader('/lotes-consulta')">Consulta de lotes</div>
           </li>
         </ul>
       </div>
-    </div>
-    <div [ngClass]="{'logout-img-container-variable': onlogin}"  class="logout-img-container" (click)="logout()">
-      <img src="../assets/salida.svg" class="logout-img" alt="logout" />
+      <div *ngIf="showHeaderOptions" class="header-buttons">
+        <div class="logout-img-container disapear-desktop" (click)="clickShowHeaderOptionsMovile()">
+          <img src="../assets/menu-hamburguesa.svg" class="logout-img" alt="logout" />
+        </div>
+        <div class="logout-img-container" (click)="logout()">
+          <img src="../assets/salida.svg" class="logout-img" alt="logout" />
+        </div>
+      </div>
     </div>
 </nav>
+<div *ngIf="showHeaderOptionsMovile" class="header-options-movile">
+  <div class="header-option-movile" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
+  <div class="header-option-movile" (click)="ruteoHeader('/provincias')">Provincias</div>
+  <div class="header-option-movile" (click)="ruteoHeader('/usuarios')">Usuarios</div>
+  <div class="header-option-movile" (click)="ruteoHeader('/vacunados')">Vacunados</div>
+  <div class="header-option-movile" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
+  <div class="header-option-movile" (click)="ruteoHeader('/lotes-consulta')">Consulta de lotes</div>
+</div>
 
 
 <router-outlet></router-outlet>

@@ -1,3 +1,24 @@
+.header-buttons{
+    display: flex;
+}
+
+.header-option-movile{
+    color: white;
+    font-weight: 100;
+    font-size: larger;
+    text-decoration: underline;
+}
+
+.header-options-movile{
+    width: 100%;
+    background-color: skyblue;
+    padding: 15px;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+}
+
 html{
     font-size: 16px;
     background-color: aliceblue;
@@ -8,19 +29,21 @@ html{
     color: aliceblue;
 }
 
-.logout-img-container-variable{
-    display: none;
-}
-
 .logout-img-container{
     background-color: aliceblue;
     padding: 15px;
     border-radius: 50px;
     margin-right: 25px;
+    box-shadow: 0px 0px 3px black;
 }
 
-@media (min-width: 768px){
-    html{
-        font-size: 20px;
+.logout-img-container:hover{
+    box-shadow: 0px 0px 5px black;
+    background-color: rgba(240, 248, 255, 0.685);
+}
+
+@media (min-width: 992px){
+    .disapear-desktop{
+        display: none;
     }
 }
