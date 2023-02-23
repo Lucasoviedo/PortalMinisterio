@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit {
     onLogin() {
         this.loginService.login(this.nombreUsuario, this.password)
         .subscribe((response) => {
-            this.cookieService.set('authToken', response.toString());
-            this.router.navigate(['/']);
+            this.cookieService.set('authToken', response.token.toString());
             window.location.reload();
+            this.router.navigate(['/']);
         });
     }
 }

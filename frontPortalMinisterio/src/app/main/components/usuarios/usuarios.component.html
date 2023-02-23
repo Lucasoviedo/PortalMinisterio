@@ -4,11 +4,12 @@
     <hr>
     <div class="row filtrosContenedor">
         <div class="col-3">
-            <select class="form-select">
-                <option>Seleccione un tipo</option>
-                <option>LABABORATORIO</option>
-                <option>PROVINCIA</option>
-                <option>MINISTERIO</option>
+            <select class="form-select"
+                    (change)="filtrarPorRol($event)">
+                <option hidden selected>SELECCIONE UN ROL</option>
+                <option value="">TODOS</option>
+                <option *ngFor="let rol of rolesData" 
+                        value={{rol.nombreRol}}>{{rol.nombreRol}}</option>
             </select>
         </div>
         <div class="col-3">
@@ -21,9 +22,7 @@
             </button>
         </div>
     </div>
-
-    <div *ngIf="usuariosData.length > 0" class="card-usuario-container">
-
+    <div *ngIf="usuariosData" class="card-usuario-container">
         <div *ngFor="let usuario of usuariosData" class="card-usuario">
             <h3>{{usuario.nombreUsuario}}</h3>
             <hr/>
@@ -34,7 +33,7 @@
             <h5>{{usuario.email}}</h5>
             <hr/>
             <img src="../../../../assets/configurar.svg" class="configurar-img"/>
-            <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
+            <img src="../../../../assets/eliminar.svg" class="configurar-img" data-toggle="modal" data-target="#errorModal"/>
         </div>
     </div>
 </div>
@@ -53,48 +52,103 @@
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese nombre: </label>
-                    <input type="text" class="form-control" required/>
+                    <input  [(ngModel)] = "nuevoUsuario.nombre" type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese apellido: </label>
-                    <input type="text" class="form-control" required/>
+                    <input [(ngModel)] = "nuevoUsuario.apellido" type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Ingrese DNI: </label>
-                    <input type="number" class="form-control" required/>
+                    <input [(ngModel)] = "nuevoUsuario.dni" type="number" class="form-control" required/>
                 </div>
             </div>
             <div class="flexRow">
                 <label style="width: 15%">Ingrese email: </label>
-                <input style="width: 85%" type="email" class="form-control" required/>
+                <input [(ngModel)] = "nuevoUsuario.email" style="width: 85%" type="email" class="form-control" required/>
             </div>
             <hr/>
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
-                    <label>Nombre de usuario: </label>
-                    <input class="form-control" required/>
+                    <label>Habilitacion: </label>
+                    <select [(ngModel)] = "nuevoUsuario.nroRol" class="form-control" required (change)="rolOnChange($event)">
+                        <option hidden selected>SELECCIONE UN ROL</option>
+                        <option *ngFor="let rol of rolesData" 
+                                value={{rol.nroRol}}>{{rol.nombreRol}}</option>
+                    </select>
                 </div>
                 <div class="flexCol sizeUnTercio">
-                    <label>Habilitacion: </label>
-                    <select type="password" class="form-control" required></select>
+                    <label>Origen: </label>
+                    <select [(ngModel)] = "nuevoUsuario.codigoLaboratorio" class="form-control" required>
+                        <option hidden selected>SELECCIONE ORIGEN</option>
+                        <option *ngFor="let e of dataToSelectRol"
+                            [value]="e.codigoProvincia ? e.codigoProvincia : e.codigoLaboratorio"
+                        > {{e.nombre}}
+                        </option>
+                    </select>
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Idioma: </label>
                     <select type="password" class="form-control" required></select>
                 </div>
             </div>
+            <hr/>
             <div class="flexRow">
-                <label>Contraseña: </label>
-                <input type="password" class="form-control" required/>
-            </div>
-            <div class="flexRow">
-                <label>Repita contraseña: </label>
-                <input type="password" class="form-control" required/>
+                <div class="flexCol sizeUnTercio">
+                    <label>Nombre de usuario: </label>
+                    <input [(ngModel)] = "nuevoUsuario.nombreUsuario" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Contraseña: </label>
+                    <input [(ngModel)] = "nuevoUsuario.clave" type="password" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Repita contraseña: </label>
+                    <input type="password" class="form-control" required/>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Agregar</button>
+          <button type="submit" (click)="agregarUsuario()" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Eliminar usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>¿Está seguro que desea eliminar este usuario?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Confirmar</button>
         </div>
       </div>
     </div>
