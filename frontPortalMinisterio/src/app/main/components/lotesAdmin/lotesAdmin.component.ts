@@ -5,6 +5,11 @@ import { ILoteLab } from "src/app/core/models/lotesMinLab/i-loteLab";
 import { LaboratorioService } from "../../api/resources/laboratorios.service";
 import { LotesGeneralService } from "../../api/resources/lotesGeneral.service";
 import { LotesMinLabService } from "../../api/resources/lotesMinLab.service";
+import { VacunasService } from "../../api/resources/vacunas.service";
+import { IEditarLoteRecepcion } from "src/app/core/models/lotesMinLab/i-editarLote";
+
+import { Modal } from 'bootstrap';
+import { IVacunasGet } from "src/app/core/models/vacunas/i-vacunasGet";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -13,8 +18,27 @@ import { LotesMinLabService } from "../../api/resources/lotesMinLab.service";
 })
 export class LotesAdminComponent implements OnInit{
     
+    myModal = document.getElementById('#confirmDataChangeModal');
+
+    selectedOptionState = ""
+    selectedOptionLab = ""
+
+    actualIVacunasGet : IVacunasGet = {
+        idUsuario: 0,
+        codigoLote: "",
+        codigoEstadoVacuna: null,
+    }
+
+    fechaActualizacionRecibo = new Date();
+    loteActualizacionRecibo :  IEditarLoteRecepcion =  {
+        idUsuario: 1,
+        codigoLote: "",
+        fechaRecepcion: ""
+    } ;
+
     lotesData: Array<ILoteLab> = [];
-    lotesDataComplete: Array<ILoteLab> = [];
+    lotesDataLab: Array<ILoteLab> = [];
+    
     modalSeguimiento : ILoteLab =  {
         idUsuario: 0,
         codigoLaboratorio: "",
@@ -30,54 +54,96 @@ export class LotesAdminComponent implements OnInit{
         fechaRegistro: new Date,
         fechaVencimiento: new Date,
     } ;
+
+    lotesDataComplete: Array<ILoteLab> = [];
     estadosData : Array<IEstado> = [];
     laboratoriosData : Array<ILaboratorio> = [];
 
     constructor(private lotesMinLabService : LotesMinLabService,
         private lotesGeneralService : LotesGeneralService,
-        private laboratorioService : LaboratorioService) { }
+        private laboratorioService : LaboratorioService,
+        private vacunasService : VacunasService) { }
 
     ngOnInit() {
         this.lotesMinLabService.obtenerLotes()
         .subscribe((response: any) => {
             this.lotesDataComplete = response
-            console.log(response)
+        });
+
+        this.vacunasService.getVacunas()
+        .subscribe((response: any) => {
         });
 
         this.lotesGeneralService.obtenerEstados()
         .subscribe((response: any) => {
             this.estadosData = response
-            console.log(response)
         });
 
         this.laboratorioService.getLaboratorios()
         .subscribe((response: any) => {
             this.laboratoriosData = response
-            console.log(response)
         });
-    }
-
-    mostrarSeguimiento(lote : ILoteLab){
-        this.modalSeguimiento = lote;
     }
 
     filtrarPorLaboratorio(evento: any){
         if(evento.target.value === ""){
             this.lotesData = this.lotesDataComplete;
+            this.lotesDataLab = this.lotesDataComplete;
         } else {
             const newData = this.lotesDataComplete.filter(lote => lote.codigoLaboratorio === evento.target.value);
             this.lotesData = newData;
+            this.lotesDataLab = newData;
         }
+        this.selectedOptionState = ""
     }
 
     filtrarPorEstado(evento: any){
-        if(this.lotesData.length  > 0){
+        if(this.lotesDataLab.length  > 0){
                 if(evento.target.value === ""){
-                    this.lotesData = this.lotesDataComplete;
+                    this.lotesData = this.lotesDataLab;
                 } else {
-                    const newData = this.lotesDataComplete.filter(lote => lote.estado === evento.target.value);
+                    const newData = this.lotesDataLab.filter(lote => lote.estado === evento.target.value);
                     this.lotesData = newData;
                 }
         }
+    }
+
+    openConfirmDataModal(evento : any, lote : ILoteLab){
+        if(new Date().toISOString().slice(0, 10) < evento.target.value){
+            alert("Seleccione una fecha igual o anterior al dia actual")
+        } else {
+            this.myModal = document.getElementById('confirmDataChangeModal');
+            if (this.myModal) {
+                const modal = new Modal(this.myModal);
+                    this.fechaActualizacionRecibo = evento.target.value;
+                    this.loteActualizacionRecibo.codigoLote = lote.codigoLote;
+                    this.loteActualizacionRecibo.fechaRecepcion = evento.target.value;
+                    modal.show();
+              }
+        }
+    }
+
+    actualizarFechaLoteAdmin(){
+        this.lotesGeneralService.actualizarLoteAdmin(this.loteActualizacionRecibo.codigoLote 
+            + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
+        .subscribe((response: any) => {
+            alert("Se ha actualizado correctamente el lote");
+            window.location.reload();
+        });
+    }
+    
+    verificarVacunas(lote : ILoteLab){
+        console.log(lote)
+        this.actualIVacunasGet.codigoLote = lote.codigoLote
+        this.actualIVacunasGet.idUsuario = 1
+        console.log(this.actualIVacunasGet)
+        this.lotesMinLabService.obtenerVacunasLote(this.actualIVacunasGet)
+        .subscribe((response:any) =>{
+            console.log(response)
+        })
+    }
+
+    cerrarModal(){
+        window.location.reload();
     }
 }
