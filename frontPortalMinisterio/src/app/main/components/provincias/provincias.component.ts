@@ -26,7 +26,6 @@ export class ProvinciasComponent implements OnInit {
     ngOnInit(){
         this.provinciaService.getProvincias(1)
         .subscribe((response: any) => {
-            console.log(response)
             this.provinciasData = response
         });
     }
@@ -39,8 +38,6 @@ export class ProvinciasComponent implements OnInit {
         this.provinciaService.getCentrosSalud(codigoProvincia)
         .subscribe((response: any) => {
             this.provinciaCentrosDeSalud = response;
-
-            console.log(this.provinciaCentrosDeSalud)
         });
     }
 }

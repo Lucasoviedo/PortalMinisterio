@@ -57,3 +57,10 @@
     width: 33%;
 }
 
+@media (min-width: 768px) {
+    .card-usuario-container{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
