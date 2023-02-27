@@ -26,7 +26,6 @@ export class LotesGeneralService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    console.log(lote)
     return this.http.put<IEditarLoteRecepcion>(this.url + '/lotes/marcar-recepcion-lote', lote, {headers});
   }
 }

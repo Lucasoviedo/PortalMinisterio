@@ -4,7 +4,7 @@ import { IUsuario } from 'src/app/core/models/usuarios/i-usuario';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { INuevoUsuario } from 'src/app/core/models/usuarios/i-nuevoUsuario';
-// import { IIdioma } from 'src/app/core/models/usuarios/i-idiomas';
+import { IIdioma } from 'src/app/core/models/usuarios/i-idiomas';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +31,15 @@ export class UsuarioService {
     }, {headers} );
   }
 
-  // getIdiomas(idioma : any){
-  //   const params = new HttpParams().set('idioma', idioma);
-  //   return this.http.get<IUsuario>(this.url + '/usuarios/idiomas' ,{ params
-  //   });
-  // }
+  getIdiomas(idioma2 : any){
+    // const params = new HttpParams().set('idioma', idioma);
+    let idioma = <IIdioma> {
+      idioma : undefined
+    }
+
+    return this.http.post<IUsuario>(this.url + '/usuarios/idiomas' , idioma
+    );
+  }
 
   getRoles(){
     const headers = new HttpHeaders({
@@ -49,8 +53,16 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IUsuario>(this.url + '/usuarios/nuevo' ,{ nuevoUsuario
-    }, {headers} );
+    return this.http.post<IUsuario>(this.url + '/usuarios/nuevo' , nuevoUsuario
+    , {headers} );
+  }
+
+  eliminarUsuario( userToDelete : number){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<IUsuario>(this.url + '/usuarios/eliminar' , userToDelete
+    , {headers} );
   }
 
 }

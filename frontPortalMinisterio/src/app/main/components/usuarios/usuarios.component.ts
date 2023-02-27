@@ -9,6 +9,7 @@ import { ProvinciaService } from "../../api/resources/provincias.service";
 import { ILaboratorio } from "src/app/core/models/laboratorios/i-laboratorio";
 import { IProvincia } from "src/app/core/models/provincias/i-provincia";
 import { INuevoUsuario } from "src/app/core/models/usuarios/i-nuevoUsuario";
+import { IEditUser } from "src/app/core/models/usuarios/i-editUser";
 
 @Component({
     selector: 'app-usuarios',
@@ -22,26 +23,41 @@ export class UsuariosComponent implements OnInit {
     idiomasData: Array<IIdioma> = [];
     rolesData: Array<IRoles> = [];
     usuariosDataComplete: Array<IUsuario> = [];
+    laboratoriosData: Array<ILaboratorio> = [];
+    provinciasData: Array<IProvincia> = [];
+    dataToSelectRol : Array<any> = [];
 
+    usuarioEliminar: number = 0;
     nuevoUsuario : INuevoUsuario  = {
-        idUsuario : 0,
-        codigoLaboratorio : "asd",
+        idUsuario : 100,
+        codigoLaboratorio : undefined,
         nroRol : 0,
-        codigoProvincia : "asd",
-        nombreUsuario : "asd",
-        clave : "asd",
-        email : "asd",
-        nombre : "asd",
-        apellido : "asd",
+        codigoProvincia : undefined,
+        nombreUsuario : "",
+        clave : "",
+        email : "",
+        nombre : "",
+        apellido : "",
         dni : 0,
         habilitado : 1,
         idIdioma : 1,
     }
-
-    laboratoriosData: Array<ILaboratorio> = [];
-    provinciasData: Array<IProvincia> = [];
-
-    dataToSelectRol : Array<any> = [];
+    userToEdit : IEditUser = {
+        idUsuarioAEditar : 0,
+        idUsuario : 0,
+        codigoLaboratorio : undefined,
+        nroRol : 0,
+        codigoProvincia : undefined,
+        nombreUsuario : "",
+        clave : "",
+        email : "",
+        nombre : "",
+        apellido : "",
+        dni : 0,
+        habilitado : 1,
+        idIdioma : 1,
+    }
+    
 
     constructor(private usuarioService: UsuarioService,
                 private laboratorioService : LaboratorioService,
@@ -54,10 +70,10 @@ export class UsuariosComponent implements OnInit {
             this.usuariosDataComplete = response;
         });
 
-        // this.usuarioService.getIdiomas(null)
-        // .subscribe((response: any) => {
-        //     this.idiomasData = response
-        // });
+        this.usuarioService.getIdiomas(null)
+        .subscribe((response: any) => {
+            this.idiomasData = response
+        });
 
         this.usuarioService.getRoles()
         .subscribe((response: any) => {
@@ -98,17 +114,52 @@ export class UsuariosComponent implements OnInit {
 
     agregarUsuario(){
         if(this.nuevoUsuario.nroRol == 1){
-            this.nuevoUsuario.codigoLaboratorio = "null";
+            this.nuevoUsuario.codigoLaboratorio = undefined;
         } else if (this.nuevoUsuario.nroRol == 3){
             this.nuevoUsuario.codigoProvincia = this.nuevoUsuario.codigoLaboratorio;
-            this.nuevoUsuario.codigoLaboratorio = "null";
+            this.nuevoUsuario.codigoLaboratorio = undefined;
         } else {
-            this.nuevoUsuario.codigoProvincia = "null";
+            this.nuevoUsuario.codigoProvincia = undefined;
         }
+
+        console.log(this.nuevoUsuario)
         
         this.usuarioService.agregarUsuario(this.nuevoUsuario)
         .subscribe((response: any) => {
-            console.log(response);
+            alert("Se ha agregado el usuario correctamente!")
+            window.location.reload();
         });
+    }
+
+    marcarUsuarioEliminar(idUsuario : number){
+        this.usuarioEliminar = idUsuario;
+    }
+
+    eliminarUsuario(){
+        this.usuarioService.eliminarUsuario(this.usuarioEliminar)
+        .subscribe((response : any) => {
+            console.log(response);
+            alert("Se ha eliminado el usuario correctamente!");
+            window.location.reload();
+        });
+    }
+
+    editUser(user : IUsuario){
+        console.log(user)
+        this.userToEdit = {
+            idUsuarioAEditar : 0,
+            idUsuario : 0,
+            codigoLaboratorio : undefined,
+            nroRol : 0,
+            codigoProvincia : undefined,
+            nombreUsuario : "",
+            clave : "",
+            email : user.email,
+            nombre : "",
+            apellido : "",
+            dni : 0,
+            habilitado : user.habilitado,
+            idIdioma : 1,
+        };
     }
 }

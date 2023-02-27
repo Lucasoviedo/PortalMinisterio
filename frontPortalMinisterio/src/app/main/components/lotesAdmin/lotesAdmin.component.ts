@@ -9,7 +9,7 @@ import { VacunasService } from "../../api/resources/vacunas.service";
 import { IEditarLoteRecepcion } from "src/app/core/models/lotesMinLab/i-editarLote";
 
 import { Modal } from 'bootstrap';
-import { IVacunasGet } from "src/app/core/models/vacunas/i-vacunasGet";
+import { IVacuna } from "src/app/core/models/vacunas/i-vacunas";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -23,22 +23,12 @@ export class LotesAdminComponent implements OnInit{
     selectedOptionState = ""
     selectedOptionLab = ""
 
-    actualIVacunasGet : IVacunasGet = {
-        idUsuario: 0,
-        codigoLote: "",
-        codigoEstadoVacuna: null,
-    }
-
     fechaActualizacionRecibo = new Date();
     loteActualizacionRecibo :  IEditarLoteRecepcion =  {
         idUsuario: 1,
         codigoLote: "",
         fechaRecepcion: ""
     } ;
-
-    lotesData: Array<ILoteLab> = [];
-    lotesDataLab: Array<ILoteLab> = [];
-    
     modalSeguimiento : ILoteLab =  {
         idUsuario: 0,
         codigoLaboratorio: "",
@@ -55,9 +45,13 @@ export class LotesAdminComponent implements OnInit{
         fechaVencimiento: new Date,
     } ;
 
+    lotesData: Array<ILoteLab> = [];
+    lotesDataLab: Array<ILoteLab> = [];
     lotesDataComplete: Array<ILoteLab> = [];
     estadosData : Array<IEstado> = [];
     laboratoriosData : Array<ILaboratorio> = [];
+    vaccinesData : Array<IVacuna> = [];
+    
 
     constructor(private lotesMinLabService : LotesMinLabService,
         private lotesGeneralService : LotesGeneralService,
@@ -133,12 +127,9 @@ export class LotesAdminComponent implements OnInit{
     }
     
     verificarVacunas(lote : ILoteLab){
-        console.log(lote)
-        this.actualIVacunasGet.codigoLote = lote.codigoLote
-        this.actualIVacunasGet.idUsuario = 1
-        console.log(this.actualIVacunasGet)
-        this.lotesMinLabService.obtenerVacunasLote(this.actualIVacunasGet)
+        this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
         .subscribe((response:any) =>{
+            this.vaccinesData = response;
             console.log(response)
         })
     }
