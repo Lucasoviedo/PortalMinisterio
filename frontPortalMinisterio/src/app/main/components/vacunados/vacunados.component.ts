@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
     selector: 'app-vacunados',
@@ -6,6 +6,9 @@ import { Component } from "@angular/core";
     styleUrls: ['./vacunados.component.css','../generalStyles.css']
 })
 
-export class VacunadosComponent{
+export class VacunadosComponent implements OnInit{
 
+    ngOnInit(): void {
+        
+    }
 }

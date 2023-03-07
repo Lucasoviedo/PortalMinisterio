@@ -13,10 +13,9 @@
             </select>
         </div>
         <div class="user-header-options">
-            <button class="btn btn-primary agregarBoton"  
-                type="button" 
-                data-toggle="modal" 
-                data-target="#newUserModal"
+            <button class="btn btn-primary agregarBoton" type="button" 
+                data-toggle="modal" data-target="#newUserModal"
+                (click)="cleanUserIdToEdit()"
             >
                 Agregar usuario
             </button>
@@ -32,8 +31,8 @@
             </h5>
             <h5>{{usuario.email}}</h5>
             <hr/>
-            <img src="../../../../assets/configurar.svg" class="configurar-img"
-                data-toggle="modal" data-target="#updateModal"
+            <img src="../../../../assets/configurar.svg" class="configurar-img"   
+                data-toggle="modal" data-target="#newUserModal"
                 (click)="editUser(usuario)"/>
             <img src="../../../../assets/eliminar.svg" class="configurar-img" 
                 data-toggle="modal" data-target="#eliminarModal"
@@ -93,7 +92,7 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Idioma: </label>
-                    <select type="password" class="form-control" required>
+                    <select [(ngModel)] = "nuevoUsuario.idIdioma" type="password" class="form-control" required>
                         <option hidden selected>SELECCIONE IDIOMA</option>
                         <option *ngFor="let idioma of idiomasData"
                             [value]="idioma.idIdioma"
@@ -113,7 +112,7 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Repita contraseña: </label>
-                    <input type="password" class="form-control" required/>
+                    <input [(ngModel)] = "nuevoUsuarioClaveRepetida" type="password" class="form-control" required/>
                 </div>
             </div>
         </div>

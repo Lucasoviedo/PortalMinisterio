@@ -25,6 +25,6 @@ export class LotesMinLabService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IVacuna>(this.url + '/vacunas/', codigoLote, {headers});
+    return this.http.post<IVacuna>(this.url + '/vacunas/', {"codigoLote" : codigoLote} , {headers});
   }
 }

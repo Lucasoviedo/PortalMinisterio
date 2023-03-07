@@ -59,13 +59,14 @@ export class LotesAdminComponent implements OnInit{
         private vacunasService : VacunasService) { }
 
     ngOnInit() {
+        this.laboratorioService.getLaboratorios()
+        .subscribe((response: any) => {
+            this.laboratoriosData = response
+        });
+
         this.lotesMinLabService.obtenerLotes()
         .subscribe((response: any) => {
             this.lotesDataComplete = response
-        });
-
-        this.vacunasService.getVacunas()
-        .subscribe((response: any) => {
         });
 
         this.lotesGeneralService.obtenerEstados()
@@ -73,10 +74,17 @@ export class LotesAdminComponent implements OnInit{
             this.estadosData = response
         });
 
-        this.laboratorioService.getLaboratorios()
+        this.vacunasService.getVacunas()
         .subscribe((response: any) => {
-            this.laboratoriosData = response
         });
+
+        this.lotesGeneralService.getVaccinesStates()
+        .subscribe((response: any) => {
+            console.log(response)
+        });
+
+
+
     }
 
     filtrarPorLaboratorio(evento: any){
