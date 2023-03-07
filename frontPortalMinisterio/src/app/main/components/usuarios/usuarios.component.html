@@ -3,7 +3,7 @@
     <h1 class="tituloConsulta">USUARIOS</h1>
     <hr>
     <div class="row filtrosContenedor">
-        <div class="col-3">
+        <div class="user-header-options">
             <select class="form-select"
                     (change)="filtrarPorRol($event)">
                 <option hidden selected>SELECCIONE UN ROL</option>
@@ -12,11 +12,10 @@
                         value={{rol.nombreRol}}>{{rol.nombreRol}}</option>
             </select>
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary agregarBoton"  
-                type="button" 
-                data-toggle="modal" 
-                data-target="#newUserModal"
+        <div class="user-header-options">
+            <button class="btn btn-primary agregarBoton" type="button" 
+                data-toggle="modal" data-target="#newUserModal"
+                (click)="cleanUserIdToEdit()"
             >
                 Agregar usuario
             </button>
@@ -32,13 +31,17 @@
             </h5>
             <h5>{{usuario.email}}</h5>
             <hr/>
-            <img src="../../../../assets/configurar.svg" class="configurar-img"/>
-            <img src="../../../../assets/eliminar.svg" class="configurar-img" data-toggle="modal" data-target="#errorModal"/>
+            <img src="../../../../assets/configurar.svg" class="configurar-img"   
+                data-toggle="modal" data-target="#newUserModal"
+                (click)="editUser(usuario)"/>
+            <img src="../../../../assets/eliminar.svg" class="configurar-img" 
+                data-toggle="modal" data-target="#eliminarModal"
+                (click)="marcarUsuarioEliminar(usuario.idUsuario)"/>
         </div>
     </div>
 </div>
     
-    <!-- Modal -->
+<!-- Modal add user -->
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -70,7 +73,7 @@
             <hr/>
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
-                    <label>Habilitacion: </label>
+                    <label>Rol: </label>
                     <select [(ngModel)] = "nuevoUsuario.nroRol" class="form-control" required (change)="rolOnChange($event)">
                         <option hidden selected>SELECCIONE UN ROL</option>
                         <option *ngFor="let rol of rolesData" 
@@ -89,7 +92,12 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Idioma: </label>
-                    <select type="password" class="form-control" required></select>
+                    <select [(ngModel)] = "nuevoUsuario.idIdioma" type="password" class="form-control" required>
+                        <option hidden selected>SELECCIONE IDIOMA</option>
+                        <option *ngFor="let idioma of idiomasData"
+                            [value]="idioma.idIdioma"
+                        > {{idioma.idioma}}
+                        </option></select>
                 </div>
             </div>
             <hr/>
@@ -104,7 +112,7 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>Repita contraseña: </label>
-                    <input type="password" class="form-control" required/>
+                    <input [(ngModel)] = "nuevoUsuarioClaveRepetida" type="password" class="form-control" required/>
                 </div>
             </div>
         </div>
@@ -114,31 +122,14 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <!-- Modal -->
-  <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+<!-- Modal delete user -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="errorModalLabel">Eliminar usuario</h5>
+          <h5 class="modal-title" id="eliminarModalLabel">Eliminar usuario</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -148,8 +139,29 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="eliminarUsuario()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal update user -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Actualizar usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>DATA</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-primary">Confirmar</button>
         </div>
       </div>
     </div>
-  </div>
+</div>

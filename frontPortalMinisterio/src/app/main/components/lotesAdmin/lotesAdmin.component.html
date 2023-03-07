@@ -4,30 +4,33 @@
     <p>Seleccione un laboratorio para comenzar su consulta</p>
     <hr>
     <div class="flexRow">
-        <select class="form-select sizeUnTercio" 
+      <div class="flexCol sizeUnTercio">
+        <h6>Laboratorios</h6>
+        <select class="form-select" 
+        (change)="filtrarPorLaboratorio($event)"
+        [(ngModel)]="selectedOptionLab">
+          <option value="" hidden selected>SELECCIONE UN LABORATORIO</option>
+          <option value="">TODOS</option>
+          <option *ngFor="let laboratorio of laboratoriosData" 
+          value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
+        </select>
+      </div>
+      <div class="flexCol sizeUnTercio">
+        <h6>Estados</h6>
+        <select class="form-select" 
                 (change)="filtrarPorEstado($event)"
                 [(ngModel)]="selectedOptionState">
-            <option hidden selected> SELECCIONE UN ESTADO</option>
+            <option value="" hidden selected>SELECCIONE UN ESTADO</option>
             <option value="">TODOS</option>
             <option *ngFor="let estado of estadosData" 
                     value={{estado.estado}}>{{estado.estado}}</option>
         </select>
-    
-        <select class="form-select sizeUnTercio" 
-                (change)="filtrarPorLaboratorio($event)"
-                [(ngModel)]="selectedOptionLab">
-            <option hidden selected> SELECCIONE UN LABORATORIO</option>
-            <option value="">TODOS</option>
-            <option *ngFor="let laboratorio of laboratoriosData" 
-                    value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
-        </select>
-
-        <button class="btn btn-primary sizeUnTercio">
-            LOTES DEVUELTOS
-        </button>
+      </div>
     </div>
-
     <hr>
+    <div *ngIf="lotesDataComplete.length == 0">
+      <h5>No hay lotes aun</h5>
+    </div>
     <div *ngIf="lotesData.length > 0">
     <table class="table table-striped">
         <thead>
@@ -61,17 +64,17 @@
                 <ng-template #demasEstados>
                     <td *ngIf="lote.fechaRecepcion">
                         <div class="btn-table" (click)="verificarVacunas(lote)"
-                        type="button" data-toggle="modal" data-target="#seguimiento-lote">
+                        type="button" data-toggle="modal" data-target="#check-vaccines-modal">
                             VERIFICAR
                         </div>
                     </td>
                     <td *ngIf="!lote.fechaRecepcion">
-                        FUERA
+                         ------------ 
                     </td>
                 </ng-template>
 
                 <td *ngIf="lote.distribuido">DISTRIBUIDO</td>
-                <td *ngIf="!lote.distribuido && !lote.fechaRecepcion">FUERA</td>
+                <td *ngIf="!lote.distribuido && !lote.fechaRecepcion"> ------------ </td>
                 <td *ngIf="!lote.distribuido && lote.fechaRecepcion">
                     <div class="btn-table" 
                         type="button" data-toggle="modal" data-target="#seguimiento-lote">
@@ -84,57 +87,57 @@
     </div>
 </div>
 
-
-
-
-
-
-
-  
-  <!-- Modal actualizacion recepcion -->
-  <div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDataChangeModalLabel">Confirmar fecha</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h5>¿Seguro que quiere marcar la fecha de recepcion como {{fechaActualizacionRecibo}}?</h5>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="actualizarFechaLoteAdmin()">Actualizar</button>
-        </div>
+<!-- Modal actualizacion recepcion -->
+<div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDataChangeModalLabel">Confirmar fecha</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>¿Seguro que quiere marcar la fecha de recepcion como {{fechaActualizacionRecibo}}?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="actualizarFechaLoteAdmin()">Actualizar</button>
       </div>
     </div>
   </div>
+</div>
 
-
-
-
-
-
-  
-  <!-- Modal verificar vacunas-->
-  <div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDataChangeModalLabel">Confirmar fecha</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h5>¿Seguro que quiere marcar la fecha de recepcion como {{fechaActualizacionRecibo}}?</h5>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="actualizarFechaLoteAdmin()">Actualizar</button>
-        </div>
+<!-- Modal verificar vacunas-->
+<div class="modal fade" id="check-vaccines-modal" tabindex="-1" role="dialog" aria-labelledby="check-vaccines-ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="check-vaccines-ModalLabel">Verficar vacunas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <th>Cod. vacuna</th>
+            <th>Nro. vacuna</th>
+            <th>Cod. estado vacuna</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vaccine of vaccinesData">
+              <td>{{vaccine.codigoVacuna}}</td>
+              <td>{{vaccine.nroVacuna}}</td>
+              <td>{{vaccine.codigoEstadoVacuna}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Actualizar</button>
       </div>
     </div>
   </div>
+</div>

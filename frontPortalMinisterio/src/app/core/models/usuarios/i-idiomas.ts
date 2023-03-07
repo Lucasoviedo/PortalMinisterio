@@ -1,4 +1,4 @@
 export interface IIdioma{
-    idIdioma : number;
-    idioma : string
+    idIdioma? : number;
+    idioma? : string
 }

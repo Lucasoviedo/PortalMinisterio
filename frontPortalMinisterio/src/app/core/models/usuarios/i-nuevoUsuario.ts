@@ -1,8 +1,8 @@
 export interface INuevoUsuario{
     idUsuario: number;
-    codigoLaboratorio: string;
+    codigoLaboratorio?: string;
     nroRol: number;
-    codigoProvincia: string;
+    codigoProvincia?: string;
     nombreUsuario: string;
     clave: string;
     email: string;

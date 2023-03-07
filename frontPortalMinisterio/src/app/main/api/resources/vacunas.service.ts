@@ -12,6 +12,14 @@ export class VacunasService {
   
   constructor(private http: HttpClient,
     private cookieService : CookieService) { }
+
+  // getVaccinateds(){
+  //   const headers = new HttpHeaders({
+  //     'Authorization': this.cookieService.get('authToken')
+  //   });
+  //   return this.http.post<IVacuna>(this.url + '/vacunas/' ,{
+  //   }, {headers} );
+  // }
     
   getVacunas() {
     const headers = new HttpHeaders({

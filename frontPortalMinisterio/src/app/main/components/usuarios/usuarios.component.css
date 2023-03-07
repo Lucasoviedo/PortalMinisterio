@@ -1,0 +1,9 @@
+.user-header-options{
+    width: 50%;
+}
+
+@media (min-width: 1006px){
+    .user-header-options{
+        width: 33%;
+    }
+}

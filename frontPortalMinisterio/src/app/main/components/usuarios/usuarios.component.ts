@@ -9,6 +9,7 @@ import { ProvinciaService } from "../../api/resources/provincias.service";
 import { ILaboratorio } from "src/app/core/models/laboratorios/i-laboratorio";
 import { IProvincia } from "src/app/core/models/provincias/i-provincia";
 import { INuevoUsuario } from "src/app/core/models/usuarios/i-nuevoUsuario";
+import { IEditUser } from "src/app/core/models/usuarios/i-editUser";
 
 @Component({
     selector: 'app-usuarios',
@@ -18,31 +19,49 @@ import { INuevoUsuario } from "src/app/core/models/usuarios/i-nuevoUsuario";
 
 export class UsuariosComponent implements OnInit {
 
+    nuevoUsuarioClaveRepetida : string = '';
+
     usuariosData: Array<IUsuario> = [];
     idiomasData: Array<IIdioma> = [];
     rolesData: Array<IRoles> = [];
     usuariosDataComplete: Array<IUsuario> = [];
+    laboratoriosData: Array<ILaboratorio> = [];
+    provinciasData: Array<IProvincia> = [];
+    dataToSelectRol : Array<any> = [];
+
+    usuarioEliminar: number = 0;
+    userIdToEdit? : number = undefined;
 
     nuevoUsuario : INuevoUsuario  = {
-        idUsuario : 0,
-        codigoLaboratorio : "asd",
+        idUsuario : 100,
+        codigoLaboratorio : undefined,
         nroRol : 0,
-        codigoProvincia : "asd",
-        nombreUsuario : "asd",
-        clave : "asd",
-        email : "asd",
-        nombre : "asd",
-        apellido : "asd",
+        codigoProvincia : undefined,
+        nombreUsuario : "",
+        clave : "",
+        email : "",
+        nombre : "",
+        apellido : "",
+        dni : 0,
+        habilitado : 1,
+        idIdioma : 0,
+    }
+    userToEdit : IEditUser = {
+        idUsuarioAEditar : 0,
+        idUsuario : 0,
+        codigoLaboratorio : undefined,
+        nroRol : 0,
+        codigoProvincia : undefined,
+        nombreUsuario : "",
+        clave : "",
+        email : "",
+        nombre : "",
+        apellido : "",
         dni : 0,
         habilitado : 1,
         idIdioma : 1,
     }
-
-    laboratoriosData: Array<ILaboratorio> = [];
-    provinciasData: Array<IProvincia> = [];
-
-    dataToSelectRol : Array<any> = [];
-
+    
     constructor(private usuarioService: UsuarioService,
                 private laboratorioService : LaboratorioService,
                 private provinciaService : ProvinciaService) { }
@@ -54,10 +73,11 @@ export class UsuariosComponent implements OnInit {
             this.usuariosDataComplete = response;
         });
 
-        // this.usuarioService.getIdiomas(null)
-        // .subscribe((response: any) => {
-        //     this.idiomasData = response
-        // });
+        this.usuarioService.getIdiomas(null)
+        .subscribe((response: any) => {
+            this.idiomasData = response
+            console.log(response);
+        });
 
         this.usuarioService.getRoles()
         .subscribe((response: any) => {
@@ -97,18 +117,90 @@ export class UsuariosComponent implements OnInit {
     }
 
     agregarUsuario(){
+        console.log(this.userIdToEdit)
+
         if(this.nuevoUsuario.nroRol == 1){
-            this.nuevoUsuario.codigoLaboratorio = "null";
+            this.nuevoUsuario.codigoLaboratorio = undefined;
         } else if (this.nuevoUsuario.nroRol == 3){
             this.nuevoUsuario.codigoProvincia = this.nuevoUsuario.codigoLaboratorio;
-            this.nuevoUsuario.codigoLaboratorio = "null";
+            this.nuevoUsuario.codigoLaboratorio = undefined;
         } else {
-            this.nuevoUsuario.codigoProvincia = "null";
+            this.nuevoUsuario.codigoProvincia = undefined;
         }
-        
-        this.usuarioService.agregarUsuario(this.nuevoUsuario)
-        .subscribe((response: any) => {
+
+        if(this.checkUserData()){
+
+            if(this.usuariosDataComplete.find(u => u.nombreUsuario === this.nuevoUsuario.nombreUsuario)){
+                alert("Existe un usuario con este mismo nombre de usuario! Se solicita cambiarlo por otro")
+            } else {
+                this.usuarioService.agregarUsuario(this.nuevoUsuario)
+                .subscribe((response: any) => {
+                    alert("Se ha agregado el usuario correctamente!")
+                    window.location.reload();
+                });
+            }
+        }
+    }
+
+    checkUserData(){
+        if(this.nuevoUsuario.nombre.length === 0){
+            alert("Debe registrar el nombre del usuario")
+        }
+        else if (this.nuevoUsuario.apellido.length === 0){
+            alert("Debe registrar el apellido del usuario")
+        }
+        else if (this.nuevoUsuario.dni < 9999999){
+            alert("Debe registrar el dni del usuario y debe superar las 8 cifras")
+        }
+        else if (this.nuevoUsuario.email.length === 0){
+            alert("Debe registrar el email del usuario")
+        }
+        else if (this.nuevoUsuario.nroRol === 0){
+            alert("Debe seleccionar un rol")
+        }
+        else if (this.nuevoUsuario.nroRol != 1  
+            && (this.nuevoUsuario.codigoLaboratorio === undefined 
+            && this.nuevoUsuario.codigoProvincia === undefined)){
+            alert("Debe seleccionar el origen del rol")
+        }
+        else if (this.nuevoUsuario.idIdioma === 0){
+            console.log(this.nuevoUsuario.idIdioma)
+            alert("Debe seleccionar el idioma del usuario")
+        }
+        else if(this.nuevoUsuario.nombreUsuario.length === 0){
+            alert("Debe ingresar el nombre del usuario")
+        }
+        else if(this.nuevoUsuario.clave.length < 8){
+            alert("La contraseña debe poseer minimo 8 caracteres")
+        }
+        else if(this.nuevoUsuario.clave !== this.nuevoUsuarioClaveRepetida){
+            alert("Las contraseñas no coinciden")
+        } 
+        else{
+            return true
+        }
+        return false
+    }
+
+    marcarUsuarioEliminar(idUsuario : number){
+        this.usuarioEliminar = idUsuario;
+    }
+
+    eliminarUsuario(){
+        this.usuarioService.eliminarUsuario(this.usuarioEliminar)
+        .subscribe((response : any) => {
             console.log(response);
+            alert("Se ha eliminado el usuario correctamente!");
+            window.location.reload();
         });
     }
+
+    cleanUserIdToEdit(){
+        this.userIdToEdit = undefined;
+    }
+
+    editUser(user : IUsuario){
+        this.userIdToEdit = user.idUsuario;
+        console.log(user)
+    } 
 }

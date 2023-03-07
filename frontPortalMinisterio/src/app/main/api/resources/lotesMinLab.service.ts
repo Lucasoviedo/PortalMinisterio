@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { ILoteLab } from 'src/app/core/models/lotesMinLab/i-loteLab';
 import { CookieService } from 'ngx-cookie-service';
 import { IVacuna } from 'src/app/core/models/vacunas/i-vacunas';
-import { IVacunasGet } from 'src/app/core/models/vacunas/i-vacunasGet';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +21,10 @@ export class LotesMinLabService {
     return this.http.post<ILoteLab>(this.url + '/lotes/', {}, {headers});
   }
 
-  obtenerVacunasLote(vacunas : IVacunasGet){
+  obtenerVacunasLote(codigoLote : String){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IVacunasGet>(this.url + '/vacunas/', {vacunas}, {headers});
+    return this.http.post<IVacuna>(this.url + '/vacunas/', {"codigoLote" : codigoLote} , {headers});
   }
 }
