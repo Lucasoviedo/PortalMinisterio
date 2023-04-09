@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
 import { LoginService } from './main/api/resources/login.service';
 import { UsuarioService } from './main/api/resources/usuarios.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,12 @@ export class AppComponent implements OnInit{
   constructor(  private router: Router, 
     private cookieService: CookieService,
     private loginService : LoginService,
-    private usuariosService : UsuarioService){}
+    private usuariosService : UsuarioService,
+    public translate : TranslateService){
+      this.translate.addLangs(['es','en']);
+      this.translate.setDefaultLang('es');
+      this.translate.use('en')
+    }
 
   ngOnInit(): void {
     //Comprobar que exista la sesion
@@ -45,7 +51,12 @@ export class AppComponent implements OnInit{
       }
     }
 
-    
+    if(this.cookieService.get('rolUsuario')){
+      this.usuariosService.getRolNumber()
+      .subscribe((response) => {
+          this.userPermissions = response;
+      })
+    }
   }
 
   logout(){

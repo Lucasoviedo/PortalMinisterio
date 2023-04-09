@@ -1,0 +1,28 @@
+{
+    "FOOTER" : "National Ministry's vaccination control system",
+    "LABORATORY" : {
+        "TITLE" : "Laboratories",
+        "ADD" : "ADD LABORATORY",
+        "NAME" : "Name",
+        "COUNTRY" : "Country",
+        "DIRECTION" : "Direction",
+        "CONTACT_NAME" : "Contact name",
+        "CONTACT_EMAIL" : "Contact email",
+        "CONFIGURATION" : "Configuration"
+    },
+    "LOGIN" : {
+        "TITLE" : "Log in",
+        "NAME" : "Username",
+        "PASSWORD" : "Password",
+        "ENTER" : "Enter"
+    },
+    "NAVBAR" : {
+        "TITLE" : "Argentinian national Ministry",
+        "LABORATORIES" : "LABORATORIES",
+        "PROVINCES" : "PROVINCES",
+        "USERS" : "USERS",
+        "VACCINATES" : "VACCINATES",
+        "BATCHADMIN" : "BATCH MANAGEMENT",
+        "BATCHINQUIRY" : "BATCH INQUIRY"
+    }
+}

@@ -1,4 +1,5 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient , HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,8 +21,12 @@ import { VacunadosComponent } from './main/components/vacunados/vacunados.compon
 import { UsuariosComponent } from './main/components/usuarios/usuarios.component';
 import { LotesAdminComponent } from './main/components/lotesAdmin/lotesAdmin.component';
 import { LotesConsultaComponent } from './main/components/lotesConsulta/loteConsulta.component';
-
 import { CommonModule } from '@angular/common';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+export function HttpLoaderFactory(http: HttpClient) {
+   return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
+}
 
 const appRoutes:Routes = [
   {path: '', component: DashboardComponent},
@@ -54,7 +59,14 @@ const appRoutes:Routes = [
     FormsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
-    CommonModule
+    CommonModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide : TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps : [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },

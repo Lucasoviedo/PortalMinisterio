@@ -1,0 +1,28 @@
+{
+    "FOOTER" : "Sistema de control de vacunacion de Ministerio de la Nación",
+    "LABORATORY" : {
+        "TITLE" : "Laboratorios",
+        "ADD" : "AGREGAR LABORATORIO",
+        "NAME" : "Nombre",
+        "COUNTRY" : "Pais",
+        "DIRECTION" : "Direccion",
+        "CONTACT_NAME" : "Nombre contacto",
+        "CONTACT_EMAIL" : "Email contacto",
+        "CONFIGURATION" : "Configuracion"
+    },
+    "LOGIN" : {
+        "TITLE" : "Iniciar sesion",
+        "NAME" : "Nombre de usuario",
+        "PASSWORD" : "Contraseña",
+        "ENTER" : "Entrar"
+    },
+    "NAVBAR" : {
+        "TITLE" : "Ministerio de la Nación Argetina",
+        "LABORATORIES" : "LABORATORIOS",
+        "PROVINCES" : "PROVINCIAS",
+        "USERS" : "USUARIOS",
+        "VACCINATED" : "VACUNADOS",
+        "BATCHADMIN" : "ADMINIATRACION DE LOTES",
+        "BATCHINQUIRY" : "CONSULTA DE LOTES"
+    }
+}

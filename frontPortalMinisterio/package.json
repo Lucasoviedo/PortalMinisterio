@@ -21,6 +21,8 @@
     "@kkoehn/ngx-resource-core": "^14.0.1",
     "@kkoehn/ngx-resource-handler-ngx-http": "^14.0.1",
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "bootstrap": "^5.2.2",
     "ngx-cookie-service": "^15.0.0",
     "ngx-resource": "^3.6.3",
