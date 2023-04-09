@@ -10,6 +10,8 @@ import { ILaboratorio } from "src/app/core/models/laboratorios/i-laboratorio";
 import { IProvincia } from "src/app/core/models/provincias/i-provincia";
 import { INuevoUsuario } from "src/app/core/models/usuarios/i-nuevoUsuario";
 import { IEditUser } from "src/app/core/models/usuarios/i-editUser";
+import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
     selector: 'app-usuarios',
@@ -62,18 +64,26 @@ export class UsuariosComponent implements OnInit {
         idIdioma : 1,
     }
     
-    constructor(private usuarioService: UsuarioService,
+    constructor(private router: Router, 
+                private cookieService: CookieService,
+                private usuarioService: UsuarioService,
                 private laboratorioService : LaboratorioService,
                 private provinciaService : ProvinciaService) { }
 
     ngOnInit(){
+        if(this.cookieService.get('rolUsuario')){
+            if(this.cookieService.get('rolUsuario') != "1"){
+                this.router.navigate(['/']);
+            }
+        }
+
         this.usuarioService.getUsuarios()
         .subscribe((response: any) => {
             this.usuariosData = response;
             this.usuariosDataComplete = response;
         });
 
-        this.usuarioService.getIdiomas(null)
+        this.usuarioService.getIdiomas()
         .subscribe((response: any) => {
             this.idiomasData = response
             console.log(response);

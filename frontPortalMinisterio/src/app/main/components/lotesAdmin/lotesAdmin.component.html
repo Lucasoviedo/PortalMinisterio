@@ -121,15 +121,29 @@
       <div class="modal-body">
         <table class="table table-striped">
           <thead>
+            <th>Cod. lote</th>
             <th>Cod. vacuna</th>
-            <th>Nro. vacuna</th>
-            <th>Cod. estado vacuna</th>
+            <th>Estado</th>
+            <th>Desc. problema</th>
           </thead>
           <tbody>
             <tr *ngFor="let vaccine of vaccinesData">
+              <td>{{vaccine.codigoLote}}</td>
               <td>{{vaccine.codigoVacuna}}</td>
-              <td>{{vaccine.nroVacuna}}</td>
-              <td>{{vaccine.codigoEstadoVacuna}}</td>
+              <td>
+                <select>
+                  <option hidden selected>Select</option>
+                  <option *ngFor="let state of vaccinesStatesData" 
+                    value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
+                </select>
+                {{vaccine.estado}}</td>
+              <td>
+                <select>
+                  <option hidden selected>Select</option>
+                  <option *ngFor="let reason of rejectionReasonsData" 
+                    value={{reason.idMotivoDevolucion}}>{{reason.tipoMotivo}}</option>
+                </select>
+              </td>
             </tr>
           </tbody>
         </table>

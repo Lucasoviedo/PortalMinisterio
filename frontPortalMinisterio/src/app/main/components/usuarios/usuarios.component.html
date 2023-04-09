@@ -25,11 +25,11 @@
         <div *ngFor="let usuario of usuariosData" class="card-usuario">
             <h3>{{usuario.nombreUsuario}}</h3>
             <hr/>
-            <h5>
+            <h6>
                 {{usuario.nombreProvincia || usuario.nombreLaboratorio || "Ministerio"}}
                 : {{usuario.rol}}
-            </h5>
-            <h5>{{usuario.email}}</h5>
+            </h6>
+            <h6>{{usuario.email}}</h6>
             <hr/>
             <img src="../../../../assets/configurar.svg" class="configurar-img"   
                 data-toggle="modal" data-target="#newUserModal"

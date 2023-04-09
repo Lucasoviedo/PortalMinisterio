@@ -23,16 +23,7 @@ export class UsuarioService {
     }, {headers} );
   }
 
-  logout(){
-    const headers = new HttpHeaders({
-      'Authorization': this.cookieService.get('authToken')
-    });
-    return this.http.post<IUsuario>(this.url + '/usuarios/logout' ,{
-    }, {headers} );
-  }
-
-  getIdiomas(idioma2 : any){
-    // const params = new HttpParams().set('idioma', idioma);
+  getIdiomas(){
     let idioma = <IIdioma> {
       idioma : undefined
     }
@@ -65,4 +56,18 @@ export class UsuarioService {
     , {headers} );
   }
 
+  getDashboardUser(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/dashboard',{} , {headers} );
+  }
+
+
+  getRolNumber(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/rol', {} , {headers} );
+  }
 }

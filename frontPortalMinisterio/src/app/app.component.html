@@ -4,19 +4,19 @@
       <div *ngIf="showHeaderOptions" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <div class="nav-link" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
           </li>
           <li class="nav-item">
-            <div class="nav-link" (click)="ruteoHeader('/provincias')">Provincias</div>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/provincias')">Provincias</div>
           </li>
           <li class="nav-item">
-            <div class="nav-link" (click)="ruteoHeader('/usuarios')">Usuarios</div>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/usuarios')">Usuarios</div>
           </li>
           <li class="nav-item">
-            <div class="nav-link" (click)="ruteoHeader('/vacunados')">Vacunados</div>
+            <div *ngIf="userPermissions != 2" class="nav-link" (click)="ruteoHeader('/vacunados')">Vacunados</div>
           </li>
           <li class="nav-item">
-            <div class="nav-link" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
           </li>
           <li class="nav-item">
             <div class="nav-link" (click)="ruteoHeader('/lotes-consulta')">Consulta de lotes</div>
@@ -25,7 +25,7 @@
       </div>
       <div *ngIf="showHeaderOptions" class="header-buttons">
         <div class="logout-img-container disapear-desktop" (click)="clickShowHeaderOptionsMovile()">
-          <img src="../assets/menu-hamburguesa.svg" class="logout-img" alt="logout" />
+          <img src="../assets/menu-hamburguesa.svg" class="logout-img" alt="menu" />
         </div>
         <div class="logout-img-container" (click)="logout()">
           <img src="../assets/salida.svg" class="logout-img" alt="logout" />
@@ -34,13 +34,18 @@
     </div>
 </nav>
 <div *ngIf="showHeaderOptionsMovile" class="header-options-movile">
-  <div class="header-option-movile" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
-  <div class="header-option-movile" (click)="ruteoHeader('/provincias')">Provincias</div>
-  <div class="header-option-movile" (click)="ruteoHeader('/usuarios')">Usuarios</div>
-  <div class="header-option-movile" (click)="ruteoHeader('/vacunados')">Vacunados</div>
-  <div class="header-option-movile" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
+  <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/laboratorios')">Laboratorios</div>
+  <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/provincias')">Provincias</div>
+  <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/usuarios')">Usuarios</div>
+  <div *ngIf="userPermissions != 2" class="header-option-movile" (click)="ruteoHeader('/vacunados')">Vacunados</div>
+  <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/lotes-admin')">Administracion de lotes</div>
   <div class="header-option-movile" (click)="ruteoHeader('/lotes-consulta')">Consulta de lotes</div>
 </div>
 
+<div class="content-container">
+  <router-outlet></router-outlet>
+</div>
 
-<router-outlet></router-outlet>
+<div class="footer-container">
+  Sistema de control de vacunacion de Ministerio de la Nación
+</div>
