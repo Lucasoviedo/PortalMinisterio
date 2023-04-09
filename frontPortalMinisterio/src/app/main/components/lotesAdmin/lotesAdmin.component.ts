@@ -7,9 +7,13 @@ import { LotesGeneralService } from "../../api/resources/lotesGeneral.service";
 import { LotesMinLabService } from "../../api/resources/lotesMinLab.service";
 import { VacunasService } from "../../api/resources/vacunas.service";
 import { IEditarLoteRecepcion } from "src/app/core/models/lotesMinLab/i-editarLote";
+import { IEstadosVacunas } from "src/app/core/models/vacunas/i-estadosVacunas"
+import { IRejectReason } from "src/app/core/models/vacunas/i-rejectReason" 
 
 import { Modal } from 'bootstrap';
 import { IVacuna } from "src/app/core/models/vacunas/i-vacunas";
+import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -51,14 +55,23 @@ export class LotesAdminComponent implements OnInit{
     estadosData : Array<IEstado> = [];
     laboratoriosData : Array<ILaboratorio> = [];
     vaccinesData : Array<IVacuna> = [];
-    
+    vaccinesStatesData : Array<IEstadosVacunas> = [];
+    rejectionReasonsData : Array<IRejectReason> = []
 
-    constructor(private lotesMinLabService : LotesMinLabService,
+    constructor(private router: Router, 
+        private cookieService: CookieService,
+        private lotesMinLabService : LotesMinLabService,
         private lotesGeneralService : LotesGeneralService,
         private laboratorioService : LaboratorioService,
         private vacunasService : VacunasService) { }
 
     ngOnInit() {
+        if(this.cookieService.get('rolUsuario')){
+            if(this.cookieService.get('rolUsuario') != "1"){
+                this.router.navigate(['/']);
+            }
+        }
+        
         this.laboratorioService.getLaboratorios()
         .subscribe((response: any) => {
             this.laboratoriosData = response
@@ -76,15 +89,19 @@ export class LotesAdminComponent implements OnInit{
 
         this.vacunasService.getVacunas()
         .subscribe((response: any) => {
+            console.log(response)
         });
 
         this.lotesGeneralService.getVaccinesStates()
         .subscribe((response: any) => {
-            console.log(response)
+            this.vaccinesStatesData = response;
         });
 
-
-
+        this.vacunasService.getRejectReasons()
+        .subscribe((response: any) => {
+            this.rejectionReasonsData = response;
+            console.log(response)
+        })
     }
 
     filtrarPorLaboratorio(evento: any){
@@ -138,7 +155,6 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
         .subscribe((response:any) =>{
             this.vaccinesData = response;
-            console.log(response)
         })
     }
 

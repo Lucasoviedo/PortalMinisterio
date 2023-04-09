@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { ActivatedRoute, Router } from "@angular/router";
-import { UsuarioService } from './main/api/resources/usuarios.service';
+import { Router } from "@angular/router";
 import { LoginService } from './main/api/resources/login.service';
+import { UsuarioService } from './main/api/resources/usuarios.service';
 
 @Component({
   selector: 'app-root',
@@ -15,23 +15,26 @@ export class AppComponent implements OnInit{
   showHeaderOptions = false;
   showHeaderOptionsMovile = false
 
+  userPermissions : number = 0;
+
   constructor(  private router: Router, 
     private cookieService: CookieService,
-    private usuarioService: UsuarioService,
-    private loginService : LoginService){}
+    private loginService : LoginService,
+    private usuariosService : UsuarioService){}
 
   ngOnInit(): void {
-    
     //Comprobar que exista la sesion
     if(!this.cookieService.get('authToken')){
         this.showHeaderOptions = false;
+        this.cookieService.delete('rolUsuario');
         this.router.navigate(['/login']);
     } else {
-
-      if(!this.cookieService.get('idUsuario')){
-        this.loginService.getUsuarioIdByToken()
+      
+      if(!this.cookieService.get('rolUsuario')){
+        this.usuariosService.getRolNumber()
         .subscribe((response) => {
-            this.cookieService.set('idUsuario', response.toString());
+            this.cookieService.set('rolUsuario', response);
+            this.userPermissions = response;
         })
       }
 
@@ -41,10 +44,12 @@ export class AppComponent implements OnInit{
         this.router.navigate(['/login']);
       }
     }
+
+    
   }
 
   logout(){
-    this.usuarioService.logout()
+    this.loginService.logout()
     .subscribe((response: any) => {
       this.router.navigate(['/login']);
       this.cookieService.delete('authToken');
@@ -61,6 +66,7 @@ export class AppComponent implements OnInit{
 
   ruteoHeader(ruta : String){
     this.router.navigate([ruta]);
+    this.clickShowHeaderOptionsMovile();
   }
 
   clickShowHeaderOptionsMovile(){

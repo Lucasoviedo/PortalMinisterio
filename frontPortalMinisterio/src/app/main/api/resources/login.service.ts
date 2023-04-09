@@ -20,6 +20,14 @@ export class LoginService {
     });
   }
 
+  logout(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/logout' ,{
+    }, {headers} );
+  }
+
   getUsuarioIdByToken() {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')

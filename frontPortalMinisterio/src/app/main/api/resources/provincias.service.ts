@@ -27,7 +27,7 @@ export class ProvinciaService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IProvincia>(this.url + '/provincias/centros-vac' ,{
+    return this.http.post<any>(this.url + '/provincias/centros-vac' ,{
       codigoProvincia
     }, {headers} );
   }

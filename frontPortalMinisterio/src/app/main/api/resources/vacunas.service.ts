@@ -13,13 +13,17 @@ export class VacunasService {
   constructor(private http: HttpClient,
     private cookieService : CookieService) { }
 
-  // getVaccinateds(){
-  //   const headers = new HttpHeaders({
-  //     'Authorization': this.cookieService.get('authToken')
-  //   });
-  //   return this.http.post<IVacuna>(this.url + '/vacunas/' ,{
-  //   }, {headers} );
-  // }
+  getVaccinateds(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/vacunaciones/' , {} , {headers} );
+    // const headers = new HttpHeaders({
+    //   'Authorization': this.cookieService.get('authToken')
+    // });
+    // return this.http.post<IUsuario>(this.url + '/usuarios/roles' ,{
+    // }, {headers} );
+  }
     
   getVacunas() {
     const headers = new HttpHeaders({
@@ -27,6 +31,13 @@ export class VacunasService {
     });
     return this.http.post<IVacuna>(this.url + '/vacunas/' ,{
     }, {headers} );
+  }
+
+  getRejectReasons(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/devoluciones/motivos' );
   }
 
 }
