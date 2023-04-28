@@ -1,1 +1,29 @@
-<p>Consulta de lotes</p>
+<div class="container">
+    <h1 class="tituloConsulta">CONSULTA DE LOTES</h1>
+    <div *ngIf="devolucionesLaboratorios.length > 0">
+        <h3>DEVOLUCIONES LABORATORIOS</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Cod. Lab.</th>
+                    <th>Cod. Lote</th>
+                    <th>Fecha Envio</th>
+                    <th>Fecha Recepcion</th>
+                    <th>Cod. Dev.</th>
+                    <th>Cant. vacunas devueltas</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let lote of devolucionesLaboratorios">
+                    <td>{{lote.codigoLaboratorio}}</td>
+                    <td>{{lote.codigoLote}}</td>
+                    <td>{{lote.fechaEnvio}}</td>
+                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.codigoDevolucion}}</td>
+                    <td>{{lote.cantidadVacunas}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
+</div>

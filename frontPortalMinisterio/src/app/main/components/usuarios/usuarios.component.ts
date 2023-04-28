@@ -81,12 +81,12 @@ export class UsuariosComponent implements OnInit {
         .subscribe((response: any) => {
             this.usuariosData = response;
             this.usuariosDataComplete = response;
+            console.log(response)
         });
 
         this.usuarioService.getIdiomas()
         .subscribe((response: any) => {
-            this.idiomasData = response
-            console.log(response);
+            this.idiomasData = response;
         });
 
         this.usuarioService.getRoles()

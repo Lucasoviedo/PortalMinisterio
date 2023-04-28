@@ -3,6 +3,7 @@ import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { IProvincia } from 'src/app/core/models/provincias/i-provincia';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import { INuevaVacunaProv } from 'src/app/core/models/lotesMinProv/i-nuevaVacunaProv';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,26 @@ export class ProvinciaService {
     return this.http.post<any>(this.url + '/provincias/centros-vac' ,{
       codigoProvincia
     }, {headers} );
+  }
+
+  obtenerProvinciasDistribuir(codLote : string) {
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/provincias/a-distribuir' ,{codLote}, {headers} );
+  }
+
+  insertarLoteProvincia(vacuna : INuevaVacunaProv) {
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<INuevaVacunaProv>(this.url + '/vacunas-provincias/insertar-vacunas' , {vacuna}, {headers} );
+  }
+
+  obtenerLotesProvincias() {
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/vacunas-provincias/' , {}, {headers} );
   }
 }

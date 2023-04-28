@@ -19,8 +19,7 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IUsuario>(this.url + '/usuarios/' ,{
-    }, {headers} );
+    return this.http.get<IUsuario>(this.url + '/usuarios/' , {headers} );
   }
 
   getIdiomas(){
@@ -36,8 +35,7 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IUsuario>(this.url + '/usuarios/roles' ,{
-    }, {headers} );
+    return this.http.get<IUsuario>(this.url + '/usuarios/roles', {headers} );
   }
 
   agregarUsuario( nuevoUsuario : INuevoUsuario){
@@ -60,7 +58,7 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<any>(this.url + '/usuarios/dashboard',{} , {headers} );
+    return this.http.post<any>(this.url + '/usuarios/dashboard', {}, {headers} );
   }
 
 
@@ -69,5 +67,12 @@ export class UsuarioService {
       'Authorization': this.cookieService.get('authToken')
     });
     return this.http.post<any>(this.url + '/usuarios/rol', {} , {headers} );
+  }
+
+  getLanguage(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/usuarios/id-idioma', {headers} );
   }
 }

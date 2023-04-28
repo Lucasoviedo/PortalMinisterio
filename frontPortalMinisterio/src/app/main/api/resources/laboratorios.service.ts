@@ -17,8 +17,7 @@ export class LaboratorioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<ILaboratorio>(this.url + '/laboratorios/' ,{
-    }, {headers} );
+    return this.http.get<ILaboratorio>(this.url + '/laboratorios/' , {headers} );
   }
 
 }

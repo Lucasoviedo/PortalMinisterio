@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { IEstado } from 'src/app/core/models/i-estado';
-import { ILoteLab } from 'src/app/core/models/lotesMinLab/i-loteLab';
 import { IEditarLoteRecepcion } from 'src/app/core/models/lotesMinLab/i-editarLote';
 import { IEstadosVacunas } from 'src/app/core/models/vacunas/i-estadosVacunas';
+import { IEmpresaTransporte } from 'src/app/core/models/i-empresaTransporte';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,14 @@ export class LotesGeneralService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IEstado>(this.url + '/lotes/estados', {}, {headers});
+    return this.http.get<IEstado>(this.url + '/lotes/estados', {headers});
+  }
+
+  obtenerEmpresasTransporte() {
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<IEmpresaTransporte>(this.url + '/lotes/empresas-transporte', {headers});
   }
 
   actualizarLoteAdmin(lote : String){
@@ -34,6 +41,6 @@ export class LotesGeneralService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IEstadosVacunas>(this.url + '/vacunas/estados', {}, {headers});
+    return this.http.get<IEstadosVacunas>(this.url + '/vacunas/estados', {headers});
   }
 }
