@@ -49,6 +49,13 @@ export class AppComponent implements OnInit{
         this.cookieService.delete('authToken');
         this.router.navigate(['/login']);
       }
+
+      this.usuariosService.getLanguage()
+      .subscribe((response: any) => {
+        if(response !== 1){
+          this.translate.use('en')
+        }
+      })
     }
 
     if(this.cookieService.get('rolUsuario')){

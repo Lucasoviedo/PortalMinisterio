@@ -1,7 +1,13 @@
 {
+    "BUTTONS" : {
+        "ADD" : "AGREGAR",
+        "CANCEL" : "CANCELAR",
+        "CONFIRM" : "CONFIRMAR",
+        "SAVE" : "GUARDAR"
+    },
     "FOOTER" : "Sistema de control de vacunacion de Ministerio de la Nación",
     "LABORATORY" : {
-        "TITLE" : "Laboratorios",
+        "TITLE" : "LABORATORIOS",
         "ADD" : "AGREGAR LABORATORIO",
         "NAME" : "Nombre",
         "COUNTRY" : "Pais",
@@ -21,8 +27,55 @@
         "LABORATORIES" : "LABORATORIOS",
         "PROVINCES" : "PROVINCIAS",
         "USERS" : "USUARIOS",
-        "VACCINATED" : "VACUNADOS",
+        "VACCINATES" : "VACUNADOS",
         "BATCHADMIN" : "ADMINIATRACION DE LOTES",
         "BATCHINQUIRY" : "CONSULTA DE LOTES"
+    },
+    "PROVINCE" : {
+        "EDIT" : {
+            "EMAIL" : "Email",
+            "NAME" : "Nombre",
+            "TITLE" : "Editar provincia"
+        },
+        "HEALTH" : {
+            "CONTACT_EMAIL" : "Email contacto",
+            "CONTACT_NAME" : "Nombre contacto",
+            "DIRECTION" : "Direccion",
+            "NAME" : "Nombre",
+            "TITLE" : "Centros de salud"
+        },
+        "TABLE" : {
+            "NAME" : "Nombre",
+            "CONTACT" : "Contacto",
+            "EMAIL" : "Email",
+            "CONFIG" : "Configuracion"
+        },
+        "TITLE" : "PROVINCIAS"
+    },
+    "USERS" : {
+        "ADD" : {
+            "DNI" : "Ingrese DNI",
+            "EMAIL" : "Ingrese Email",
+            "LASTNAME" : "Ingrese apellido",
+            "LANGUAGE" : "Idioma",
+            "NAME" : "Ingrese nombre",
+            "ORIGIN" : "Origen",
+            "PASSWORD" : "Contraseña",
+            "PASSWORD-REPEAT" : "Repita contraseña",
+            "ROL" : "Rol",
+            "SELECT-LANGUAGE" : "SELECCIONE LENGUAJE",
+            "SELECT-ORIGIN" : "SELECCIONE ORIGEN",
+            "SELECT-ROL" : "SELECCIONE ROL",
+            "USAR-NAME" : "Nombre de usuario"
+        },
+        "BUTTON" : "AGREGAR USUARIO",
+        "DELETE" : {
+            "MESSAGE" : "¿Está seguro que desea eliminar este usuario?",
+            "TITLE" : "Eliminar usuario"
+        },
+        "SELECT" : {
+            "ALL" : "TODOS",
+            "ROL" : "SELECCIONE UN ROL"},
+        "TITLE" : "USUARIOS"
     }
 }

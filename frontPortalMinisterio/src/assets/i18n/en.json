@@ -1,7 +1,13 @@
 {
+    "BUTTONS" : {
+        "ADD" : "ADD",
+        "CANCEL" : "CANCEL",
+        "CONFIRM" : "CONFIRM",
+        "SAVE" : "SAVE"
+    },
     "FOOTER" : "National Ministry's vaccination control system",
     "LABORATORY" : {
-        "TITLE" : "Laboratories",
+        "TITLE" : "LABORATORIES",
         "ADD" : "ADD LABORATORY",
         "NAME" : "Name",
         "COUNTRY" : "Country",
@@ -24,5 +30,52 @@
         "VACCINATES" : "VACCINATES",
         "BATCHADMIN" : "BATCH MANAGEMENT",
         "BATCHINQUIRY" : "BATCH INQUIRY"
+    },
+    "PROVINCE" : {
+        "EDIT" : {
+            "EMAIL" : "Email",
+            "NAME" : "Name",
+            "TITLE" : "Edit province"
+        },
+        "HEALTH" : {
+            "CONTACT_EMAIL" : "Contact email",
+            "CONTACT_NAME" : "Contact name",
+            "DIRECTION" : "Direction",
+            "NAME" : "Name",
+            "TITLE" : "Health centers"
+        },
+        "TABLE" : {
+            "NAME" : "Name",
+            "CONTACT" : "Contact",
+            "EMAIL" : "Email",
+            "CONFIG" : "Configuration"
+        },
+        "TITLE" : "PROVINCES"
+    },
+    "USERS" : {
+        "ADD" : {
+            "DNI" : "",
+            "EMAIL" : "",
+            "LASTNAME" : "",
+            "LANGUAGE" : "",
+            "NAME" : "",
+            "ORIGIN" : "",
+            "PASSWORD" : "",
+            "PASSWORD-REPEAT" : "",
+            "ROL" : "",
+            "SELECT-LANGUAGE" : "",
+            "SELECT-ORIGIN" : "",
+            "SELECT-ROL" : "",
+            "USAR-NAME" : ""
+        },
+        "BUTTON" : "ADD USER",
+        "DELETE" : {
+            "MESSAGE" : "¿Are you sure that you want to delete this user?",
+            "TITLE" : "Delete user"
+        },
+        "SELECT" : {
+            "ALL" : "ALL",
+            "ROL" : "SELECT A ROL"},
+        "TITLE" : "USERS"
     }
 }

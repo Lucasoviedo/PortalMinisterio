@@ -73,19 +73,43 @@
                     </td>
                 </ng-template>
 
-                <td *ngIf="lote.distribuido">DISTRIBUIDO</td>
-                <td *ngIf="!lote.distribuido && !lote.fechaRecepcion"> ------------ </td>
-                <td *ngIf="!lote.distribuido && lote.fechaRecepcion">
-                    <div class="btn-table" 
+                <td *ngIf="lote.estado === 'ACEPTADO' 
+                  || lote.estado === 'RECHAZADO' 
+                  || lote.estado === 'ACEPTADO_PARCIALMENTE' 
+                  ; else demasDistribucion "> 
+                  <div class="btn-table" (click)="distribuirVacunas(lote)"
                         type="button" data-toggle="modal" data-target="#seguimiento-lote">
                         DISTRIBUIR
                     </div>
                 </td>
+                <ng-template #demasDistribucion>
+                  <td *ngIf="!lote.distribuido"> ------------ </td>
+                  <td *ngIf="lote.distribuido">DISTRIBUIDO</td>
+                </ng-template>
             </tr>
         </tbody>
     </table>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal actualizacion recepcion -->
 <div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
@@ -108,6 +132,30 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Modal verificar vacunas-->
 <div class="modal fade" id="check-vaccines-modal" tabindex="-1" role="dialog" aria-labelledby="check-vaccines-ModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -118,39 +166,136 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
-        <table class="table table-striped">
-          <thead>
-            <th>Cod. lote</th>
-            <th>Cod. vacuna</th>
-            <th>Estado</th>
-            <th>Desc. problema</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let vaccine of vaccinesData">
-              <td>{{vaccine.codigoLote}}</td>
-              <td>{{vaccine.codigoVacuna}}</td>
-              <td>
-                <select>
-                  <option hidden selected>Select</option>
-                  <option *ngFor="let state of vaccinesStatesData" 
-                    value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
-                </select>
-                {{vaccine.estado}}</td>
-              <td>
-                <select>
-                  <option hidden selected>Select</option>
-                  <option *ngFor="let reason of rejectionReasonsData" 
-                    value={{reason.idMotivoDevolucion}}>{{reason.tipoMotivo}}</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <h6 *ngIf="vaccinesData[0]">Nombre Lab: {{vaccinesData[0].nombreLab}}</h6>
+          <h6 *ngIf="vaccinesData[0]">COD: LOTE: {{vaccinesData[0].codigoLote}}</h6>
+        </div>
+
+        <div *ngIf="optionCheckModal === 1">
+          <table class="table table-striped">
+            <thead>
+              <th>Cod. vacuna</th>
+              <th>Estado</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vaccine of vaccinesData">
+                <td>{{vaccine.codigoVacuna}}</td>
+                <td>
+                  <select  (change)="changeVaccineCode($event,vaccine.codigoVacuna)">
+                    <option hidden selected>{{vaccine.estado || "Select"}}</option>
+                    <option *ngFor="let state of vaccinesStatesData" 
+                      value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="optionCheckModal = 2">Siguiente</button>
+         <!-- *ngIf="readyToDistribute disabled"  (click)="optionCheck()" -->
+          </div>
+        </div>
+
+        <div *ngIf="optionCheckModal === 2">
+          <div class="modal-body">
+            <!-- rejectionReasonsData -->
+            <div class="loteAdmin-modal2-row">
+              <label>Seleccione empresa de transporte: </label>
+              <select (change)="cambioEmpresaTransporte($event)">
+                <option hidden selected>Select</option>
+                <option *ngFor="let empresa of empresasTransporte" 
+                  value={{empresa.idEmpresaTransporte}}>{{empresa.nombre}}</option>
+              </select>
+            </div>
+            <div class="loteAdmin-modal2-row">
+              <label>Seleccione motivo devolucion: </label>
+              <select (change)="cambioMotivoDevolucion($event)">
+                <option hidden selected>Select</option>
+                <option *ngFor="let reject of rejectionReasonsData" 
+                  value={{reject.idMotivoDevolucion}}>{{reject.tipoMotivo}}</option>
+              </select>
+            </div>
+            <div class="loteAdmin-modal2-row">
+              <textarea (change)="cambioDescripcionProblema($event)"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="optionCheckModal = 1">Volver</button>
+            <button type="button" class="btn btn-primary" (click)="editarVacunas()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal verificar vacunas-->
+<div class="modal fade" id="seguimiento-lote" tabindex="-1" role="dialog" aria-labelledby="seguimiento-loteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="seguimiento-loteLabel">Distribuir vacunas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h6 *ngIf="vacunasDistribuirData[0]">Nombre Lab: {{vacunasDistribuirData[0].nombreLab}}</h6>
+          <h6 *ngIf="vacunasDistribuirData[0]">COD: LOTE: {{vacunasDistribuirData[0].codigoLote}}</h6>
+        </div>
+        <span>Cantidad de vacunas a distribuir: {{vacunasDistribuirData.length}}</span>
+        <div *ngIf="provinciasDistribuirData.length > 0">
+          <br/>
+          <h5>Provincias a distribuir</h5>
+          <div>
+            <label>Tipo distribucion: </label>
+            <select (change)="cambioProvinciaDistribucion($event)">
+              <option hidden selected>Select</option>
+              <option value="1">Equitativa</option>
+              <option value="2">Manual</option>
+            </select>
+          </div>
+          <div *ngFor="let provincia of provinciasDistribuirData">
+            <h6>{{provincia.nombre}}</h6>
+          </div>
+        </div>
+        <div *ngIf="provinciasNoDistribuirData.length > 0">
+          <select (change)="cambioProvinciaDistribuir($event)">
+            <option hidden selected>Select</option>
+            <option *ngFor="let provincia of provinciasNoDistribuirData" 
+              value={{provincia.codigoProvincia}}>{{provincia.nombre}}</option>
+          </select>
+          <button (click)="agregarProvinciaDistribuir()">Agregar</button>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Actualizar</button>
+        <button type="button" class="btn btn-primary" *ngIf="provinciasDistribuirData.length > 0 && provinciaTipoDistribucion != 0"
+          (click)="distribucionVacunas()"
+          >Siguiente</button>
       </div>
     </div>
   </div>
