@@ -23,7 +23,11 @@
     </div>
     <div *ngIf="usuariosData" class="card-usuario-container">
         <div *ngFor="let usuario of usuariosData" class="card-usuario">
-            <h3>{{usuario.nombreUsuario}}</h3>
+            <div>
+                <h3>{{usuario.nombreUsuario}}</h3>
+                <div *ngIf="usuario.habilitado" class="user-up"></div>
+                <div *ngIf="!usuario.habilitado" class="user-down"></div>
+            </div>
             <hr/>
             <h6>
                 {{usuario.nombreProvincia || usuario.nombreLaboratorio || "Ministerio"}}
@@ -32,7 +36,7 @@
             <h6>{{usuario.email}}</h6>
             <hr/>
             <img src="../../../../assets/configurar.svg" class="configurar-img"   
-                data-toggle="modal" data-target="#newUserModal"
+                data-toggle="modal" data-target="#updateModal"
                 (click)="editUser(usuario)"/>
             <img src="../../../../assets/eliminar.svg" class="configurar-img" 
                 data-toggle="modal" data-target="#eliminarModal"
@@ -40,6 +44,13 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
     
 <!-- Modal add user -->
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
@@ -118,11 +129,20 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-          <button type="submit" (click)="agregarUsuario()" class="btn btn-primary">{{ "BUTTONS.ADD" | translate }}</button>
+          <button type="submit" (click)="agregarUsuario()"  data-dismiss="modal" class="btn btn-primary">{{ "BUTTONS.ADD" | translate }}</button>
         </div>
       </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
 
 <!-- Modal delete user -->
 <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
@@ -139,11 +159,40 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-          <button type="button" class="btn btn-primary" (click)="eliminarUsuario()">{{ "BUTTONS.CONFIRM" | translate }}</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarUsuario()">{{ "BUTTONS.CONFIRM" | translate }}</button>
         </div>
       </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal update user -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -156,11 +205,55 @@
           </button>
         </div>
         <div class="modal-body">
-          <h5>DATA</h5>
+            <div class="flexRow">
+                <label style="width: 15%">Ingrese email: </label>
+                <input [(ngModel)] = "userToEdit.email" style="width: 85%" type="email" class="form-control" required/>
+            </div>
+            <hr/>
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>Rol: </label>
+                    <select [(ngModel)] = "userToEdit.rol" class="form-control" required (change)="rolOnChange($event)">
+                        <option hidden selected value={{userToEdit.rol}}>{{userToEdit.rol}}</option>
+                        <option *ngFor="let rol of rolesData" 
+                                value={{rol.nroRol}}>{{rol.nombreRol}}</option>
+                    </select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Origen: </label>
+                    <select [(ngModel)] = "userToEdit.nombreLaboratorio" class="form-control" required>
+                        <option hidden selected>SELECCIONE ORIGEN</option>
+                        <option *ngFor="let e of dataToSelectRol"
+                            [value]="e.codigoProvincia ? e.codigoProvincia : e.codigoLaboratorio"
+                        > {{e.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Idioma: </label>
+                    <select [(ngModel)] = "userToEdit.idioma" type="password" class="form-control" required>
+                        <option hidden selected value={{userToEdit.idioma}}>{{userToEdit.idioma}}</option>
+                        <option *ngFor="let idioma of idiomasData"
+                            [value]="idioma.idIdioma"
+                        > {{idioma.idioma}}
+                        </option></select>
+                </div>
+            </div>
+            <hr/>
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>Nombre de usuario: </label>
+                    <input [(ngModel)] = "userToEdit.nombreUsuario" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>Habilitado: </label>
+                    <input [(ngModel)] = "userToEdit.habilitado" class="form-control" required/>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Confirmar</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="confirmarActualizacion()">Confirmar</button>
         </div>
       </div>
     </div>

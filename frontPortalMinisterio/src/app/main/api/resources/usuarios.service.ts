@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { INuevoUsuario } from 'src/app/core/models/usuarios/i-nuevoUsuario';
 import { IIdioma } from 'src/app/core/models/usuarios/i-idiomas';
+import { IEditUser } from 'src/app/core/models/usuarios/i-editUser';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,7 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
+    console.log(userToDelete)
     return this.http.post<IUsuario>(this.url + '/usuarios/eliminar' , userToDelete
     , {headers} );
   }
@@ -75,4 +77,13 @@ export class UsuarioService {
     });
     return this.http.get<any>(this.url + '/usuarios/id-idioma', {headers} );
   }
+
+  
+  updateUser(user: IEditUser){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/editar', {user},{headers} );
+  }
+  
 }
