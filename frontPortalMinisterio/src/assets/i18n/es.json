@@ -1,10 +1,15 @@
 {
   "BATCH_TABLE": {
+    "LAB_CODE": "Cod. lab",
+    "LAB_NAME": "Nombre laboratorio",
+    "VACCINE_CODE": "Cod. vacuna",
     "COD_BATCH": "Cod. Lote",
     "STATE": "Estado",
     "SEND_DATE": "Fecha Envio",
+    "RETURN_CODE": "Cod. devolucion",
     "GET_DATE": "Fecha Recepcion",
     "VALIDATE": "Validacion",
+    "VACCINES_QUANTITY": "Cantidad vacunas",
     "DISPATCH": "Despache",
     "DISTRIBUTE": "Distribucion",
     "STATES": {
@@ -40,12 +45,41 @@
     "PASSWORD": "Contraseña",
     "ENTER": "Entrar"
   },
+  "INQUIRY": {
+    "TITLE": "CONSULTA DE LOTES",
+    "LABS_RETURNINGS": "DEVOLUCIONES LABORATORIOS",
+    "PROVINCES_BATCHES": "LOTES PROVINCIAS"
+  },
   "MANAGMENT": {
     "TITLE": "ADMINISTRACION DE LOTES",
     "NO_DATA": "Sin informacion todavia",
     "MESSAGE": "Seleccione un laboratorio para comenzar su consulta",
     "LABS": "Laboratorios",
-    "STATES": "Estados"
+    "STATES": "Estados",
+    "MODAL": {
+      "GET_BATCH": {
+        "TITLE": "Confirmar fecha",
+        "MESSAGE": "Seguro que quiere marcar la fecha de recepcion como"
+      },
+      "DISPATCH": {
+        "TITLE": "Dispatch vaccines",
+        "RETURNING_CODE": "Returning code",
+        "FOLLOWING_CODE": "Following code",
+        "DEVOLUTION_DATE": "Devolution date",
+        "SELECT_TRANSPORT": "Select transport company",
+        "SELECT_REASON": "Select devolution reason"
+      },
+      "DISTRIBUTE": {
+        "TITLE": "Distribute vaccines",
+        "QUANTITY": "Quantity of vaccines to distribute",
+        "MANUAL": "Manual",
+        "EQUITATIVE": "Equitative"
+      },
+      "VERIFY": {
+        "TITLE": "Verficar vacunas",
+        "MESSAGE": "Estado general"
+      }
+    }
   },
   "NAVBAR": {
     "TITLE": "Ministerio de la Nación Argetina",
@@ -77,8 +111,18 @@
     },
     "TITLE": "PROVINCIAS"
   },
+  "SELECT": {
+    "ALL": "TODOS",
+    "LAB": "Seleccione un laboratorio",
+    "ROL": "Seleccione un rol",
+    "STATE": "Seleccione un estado",
+    "SELECT": "Select"
+  },
   "USERS": {
+    "ENABLE": "Habilitado",
+    "DISABLE": "Deshabilitado",
     "ADD": {
+      "ENABLED": "Habilitado",
       "DNI": "Ingrese DNI",
       "EMAIL": "Ingrese Email",
       "LASTNAME": "Ingrese apellido",
@@ -98,12 +142,7 @@
       "MESSAGE": "¿Está seguro que desea eliminar este usuario?",
       "TITLE": "Eliminar usuario"
     },
-    "SELECT": {
-      "ALL": "TODOS",
-      "LAB": "Seleccione un laboratorio",
-      "ROL": "Seleccione un rol",
-      "STATE": "Seleccione un estado"
-    },
+    "UPDATE": "Actualizar usuario",
     "TITLE": "USUARIOS"
   }
 }

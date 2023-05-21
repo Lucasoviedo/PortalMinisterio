@@ -21,6 +21,11 @@
     background:grey;
 }
 
+.card-usuario{
+    
+    height: 275px;
+}
+
 .card-usuario > div {
     display: flex;
     align-items: center;
