@@ -1,27 +1,27 @@
 <div class="container">
-    <h1 class="tituloConsulta">ADMINISTRACION DE LOTES</h1>
+    <h1 class="tituloConsulta">{{ "MANAGMENT.TITLE" | translate }}</h1>
     <br/>
-    <p>Seleccione un laboratorio para comenzar su consulta</p>
+    <p>{{ "MANAGMENT.MESSAGE" | translate }}</p>
     <hr>
     <div class="flexRow">
       <div class="flexCol sizeUnTercio">
-        <h6>Laboratorios</h6>
+        <h6>{{ "MANAGMENT.LABS" | translate }}</h6>
         <select class="form-select" 
         (change)="filtrarPorLaboratorio($event)"
         [(ngModel)]="selectedOptionLab">
-          <option value="" hidden selected>SELECCIONE UN LABORATORIO</option>
-          <option value="">TODOS</option>
+          <option value="" hidden selected>{{ "SELECT.LAB" | translate }}</option>
+          <option value="">{{ "SELECT.ALL" | translate }}</option>
           <option *ngFor="let laboratorio of laboratoriosData" 
           value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
         </select>
       </div>
       <div class="flexCol sizeUnTercio">
-        <h6>Estados</h6>
+        <h6>{{ "MANAGMENT.STATES" | translate }}</h6>
         <select class="form-select" 
                 (change)="filtrarPorEstado($event)"
                 [(ngModel)]="selectedOptionState">
-            <option value="" hidden selected>SELECCIONE UN ESTADO</option>
-            <option value="">TODOS</option>
+            <option value="" hidden selected>{{ "SELECT.LAB" | translate }}</option>
+            <option value="">{{ "SELECT.ALL" | translate }}</option>
             <option *ngFor="let estado of estadosData" 
                     value={{estado.estado}}>{{estado.estado}}</option>
         </select>
@@ -29,19 +29,19 @@
     </div>
     <hr>
     <div *ngIf="lotesDataComplete.length == 0">
-      <h5>No hay lotes aun</h5>
+      <h5>{{ "MANAGMENT.NO_DATA" | translate }}</h5>
     </div>
     <div *ngIf="lotesData.length > 0">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Cod. Lote</th>
-                <th>Estado</th>
-                <th>Fecha Envio</th>
-                <th>Fecha Recepcion</th>
-                <th>Verificacion</th>
-                <th>Despache</th>
-                <th>Distribucion</th>
+                <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
+                <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                <th>{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
+                <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
+                <th>{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
             </tr>
         </thead>
         <tbody >
@@ -60,13 +60,13 @@
                     || lote.estado === 'RECHAZADO' 
                     || lote.estado === 'ACEPTADO_PARCIALMENTE' 
                     ; else demasEstados ">
-                    VERIFICADO
+                    {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
                 </td>
                 <ng-template #demasEstados>
                     <td *ngIf="lote.fechaRecepcion">
                         <div class="btn-table" (click)="verificarVacunas(lote)"
                         type="button" data-toggle="modal" data-target="#check-vaccines-modal">
-                            VERIFICAR
+                        {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
                         </div>
                     </td>
                     <td *ngIf="!lote.fechaRecepcion">
@@ -74,32 +74,31 @@
                     </td>
                 </ng-template>
 
-                <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas
+                <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
                   ; else demasDistribucion2 "> 
-                  <!-- (click)="distribuirVacunas(lote)" -->
                   ------------ 
                 </td>
                 <ng-template #demasDistribucion2>
                   <td *ngIf="!lote.despachado "> 
                     <div class="btn-table"  (click)="verificarVacunas(lote)"
                         type="button" data-toggle="modal" data-target="#despacho-lote">
-                        DESPACHAR
+                        {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
                     </div>
                   </td>
-                  <td *ngIf="lote.despachado">DESPACHADO</td>
+                  <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
                 </ng-template>
 
-                <td *ngIf="lote.estado === 'ACEPTADO' 
-                  || lote.estado === 'ACEPTADO_PARCIALMENTE' 
+                <td *ngIf="(lote.estado === 'ACEPTADO' 
+                  || lote.estado === 'ACEPTADO_PARCIALMENTE') && (!lote.distribuido) 
                   ; else demasDistribucion "> 
                   <div class="btn-table" (click)="distribuirVacunas(lote)"
                         type="button" data-toggle="modal" data-target="#distribucion-lote">
-                        DISTRIBUIR
+                        {{ "BATCH_TABLE.STATES.DISTRIBUTE" | translate }}
                     </div>
                 </td>
                 <ng-template #demasDistribucion>
-                  <td *ngIf="!lote.distribuido"> ------------ </td>
-                  <td *ngIf="lote.distribuido">DISTRIBUIDO</td>
+                  <td *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
+                  <td *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
                 </ng-template>
             </tr>
         </tbody>
@@ -121,8 +120,8 @@
         <h5>¿Seguro que quiere marcar la fecha de recepcion como {{fechaActualizacionRecibo}}?</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarFechaLoteAdmin()">Actualizar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarFechaLoteAdmin()">{{ "BUTTONS.UPDATE" | translate }}</button>
       </div>
     </div>
   </div>
@@ -139,14 +138,14 @@
         </button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body modal-body-verificacion">
         <div>
           <h6 *ngIf="vaccinesData[0]">Nombre Lab: {{vaccinesData[0].nombreLab}}</h6>
           <h6 *ngIf="vaccinesData[0]">COD: LOTE: {{vaccinesData[0].codigoLote}}</h6>
         </div>
 
         <div>
-          <h6>Setear estado a todas las vacunas</h6>
+          <h6>Estado general</h6>
           <select class="form-select" (change)="cambioEstadoGeneral($event)"
                   >
               <option value="" hidden selected>SELECCIONE UN ESTADO</option>
@@ -173,26 +172,13 @@
           </tbody>
         </table>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarVacunas()">Confirmar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editarVacunas()" *ngIf="finalizarVerificacion">Confirmar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Modal despachar vacunas-->
 <div class="modal fade" id="despacho-lote" tabindex="-1" role="dialog" aria-labelledby="despacho-loteLabel" aria-hidden="true">
@@ -204,8 +190,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
-      <div class="modal-body">
+      <div class="modal-body-despachar">
+        <div>
+          <h6 *ngIf="vaccinesData[0]">Nombre Lab: {{vaccinesData[0].nombreLab}}</h6>
+          <h6 *ngIf="vaccinesData[0]">COD: LOTE: {{vaccinesData[0].codigoLote}}</h6>
+        </div>
         <div>
           <div class="loteAdmin-modal2-row">
             <label>Codigo devolucion: </label>
@@ -239,43 +228,17 @@
             <textarea (change)="cambioDescripcionProblema($event)"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="despacharVacunas()">Confirmar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" 
+              *ngIf="motivoDevolucionActual !== 0 && codigoSeguiminetoActual !== '' && descripcionProblemaActual !== '' 
+              && empresaTransporteActual !== 0 && codigoDevolucion !== '' && fechaDevolucion !== undefined "
+              (click)="despacharVacunas()">Confirmar</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Modal distribuir vacunas-->
 <div class="modal fade" id="distribucion-lote" tabindex="-1" role="dialog" aria-labelledby="distribucion-loteLabel" aria-hidden="true">
@@ -287,41 +250,33 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-distribuir">
         <div>
           <h6 *ngIf="vacunasDistribuirData[0]">Nombre Lab: {{vacunasDistribuirData[0].nombreLab}}</h6>
           <h6 *ngIf="vacunasDistribuirData[0]">COD: LOTE: {{vacunasDistribuirData[0].codigoLote}}</h6>
         </div>
-        <span>Cantidad de vacunas a distribuir: {{vacunasDistribuirData.length}}</span>
-        <div *ngIf="provinciasDistribuirData.length > 0">
-          <br/>
-          <h5>Provincias a distribuir</h5>
-          <div>
-            <label>Tipo distribucion: </label>
-            <select (change)="cambioProvinciaDistribucion($event)">
-              <option hidden selected>Select</option>
-              <option value="1">Equitativa</option>
-              <option value="2">Manual</option>
-            </select>
-          </div>
-          <div *ngFor="let provincia of provinciasDistribuirData">
-            <h6>{{provincia.nombre}}</h6>
-          </div>
-        </div>
-        <div *ngIf="provinciasNoDistribuirData.length > 0">
-          <select (change)="cambioProvinciaDistribuir($event)">
-            <option hidden selected>Select</option>
-            <option *ngFor="let provincia of provinciasNoDistribuirData" 
-              value={{provincia.codigoProvincia}}>{{provincia.nombre}}</option>
+        <hr/>
+        <div>
+          <span>Cantidad de vacunas a distribuir: {{vacunasDistribuirData.length}}</span>
+          <select (change)="cambioProvinciaDistribucion($event)" [value]="provinciaTipoDistribucion">
+            <option value="1">Equitativa</option>
+            <option value="2" selected>Manual</option>
           </select>
-          <button (click)="agregarProvinciaDistribuir()">Agregar</button>
+        </div>
+        <div>
+          <table>
+            <tr *ngFor="let provincia of provinciasDistribuirData">
+              <td>{{provincia.nombre}}</td>
+              <input type="number" value={{provincia.valor}} (change)="cambioValorInput(provincia, $event)" min=0/>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" *ngIf="provinciasDistribuirData.length > 0 && provinciaTipoDistribucion != 0"
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="vacunasDistribuirData.length === totalVacunasADistribuir"
           (click)="distribucionVacunas()"
-          >Siguiente</button>
+          >{{ "BUTTONS.CONFIRM" | translate }}</button>
       </div>
     </div>
   </div>

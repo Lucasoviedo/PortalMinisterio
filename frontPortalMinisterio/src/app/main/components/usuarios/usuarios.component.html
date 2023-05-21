@@ -6,8 +6,8 @@
         <div class="user-header-options">
             <select class="form-select"
                     (change)="filtrarPorRol($event)">
-                <option hidden selected>{{ "USERS.SELECT.ROL" | translate }}</option>
-                <option value="">{{ "USERS.SELECT.ALL" | translate }}</option>
+                <option hidden selected>{{ "SELECT.ROL" | translate }}</option>
+                <option value="">{{ "SELECT.ALL" | translate }}</option>
                 <option *ngFor="let rol of rolesData" 
                         value={{rol.nombreRol}}>{{rol.nombreRol}}</option>
             </select>

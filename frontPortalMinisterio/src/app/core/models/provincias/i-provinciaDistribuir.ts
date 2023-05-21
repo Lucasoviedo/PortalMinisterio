@@ -3,5 +3,6 @@ export interface IProvinciaDistribuir{
     nombre : string,
     emailContacto : string,
     nombreContacto : string,
-    consultado: boolean
+    consultado: boolean,
+    valor: number
 }

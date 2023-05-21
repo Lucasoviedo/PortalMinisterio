@@ -44,13 +44,13 @@ export class ProvinciaService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<INuevaVacunaProv>(this.url + '/vacunas-provincias/insertar-vacunas' , {vacuna}, {headers} );
+    return this.http.post<INuevaVacunaProv>(this.url + '/vacunas-provincias/insertar-vacunas' , [vacuna], {headers} );
   }
 
   obtenerLotesProvincias() {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<any>(this.url + '/vacunas-provincias/' , {}, {headers} );
+    return this.http.post<any>(this.url + '/lotes-provincias/' , {}, {headers} );
   }
 }

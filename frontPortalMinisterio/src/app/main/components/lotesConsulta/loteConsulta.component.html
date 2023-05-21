@@ -26,4 +26,30 @@
         </table>
         <hr/>
     </div>
+
+
+    <div *ngIf="lotesProvincias.length > 0">
+        <h3>LOTES PROVINCIAS</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Cod. Lab.</th>
+                    <th>Cod. Lote</th>
+                    <th>Fecha Envio</th>
+                    <th>Fecha Recepcion</th>
+                    <th>Cant. vacunas devueltas</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let lote of lotesProvincias">
+                    <td>{{lote.codigoLaboratorio}}  {{lote.codigoProvincia}}</td>
+                    <td>{{lote.codigoLote}}</td>
+                    <td>{{lote.fechaEnvio || "----------"}}</td>
+                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.cantidadVacunas}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
 </div>
