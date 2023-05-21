@@ -1,28 +1,148 @@
 {
-    "FOOTER" : "National Ministry's vaccination control system",
-    "LABORATORY" : {
-        "TITLE" : "Laboratories",
-        "ADD" : "ADD LABORATORY",
-        "NAME" : "Name",
-        "COUNTRY" : "Country",
-        "DIRECTION" : "Direction",
-        "CONTACT_NAME" : "Contact name",
-        "CONTACT_EMAIL" : "Contact email",
-        "CONFIGURATION" : "Configuration"
-    },
-    "LOGIN" : {
-        "TITLE" : "Log in",
-        "NAME" : "Username",
-        "PASSWORD" : "Password",
-        "ENTER" : "Enter"
-    },
-    "NAVBAR" : {
-        "TITLE" : "Argentinian national Ministry",
-        "LABORATORIES" : "LABORATORIES",
-        "PROVINCES" : "PROVINCES",
-        "USERS" : "USERS",
-        "VACCINATES" : "VACCINATES",
-        "BATCHADMIN" : "BATCH MANAGEMENT",
-        "BATCHINQUIRY" : "BATCH INQUIRY"
+  "BATCH_TABLE": {
+    "LAB_CODE": "Lab cod.",
+    "LAB_NAME": "Laboratorie name",
+    "VACCINE_CODE": "Vaccine cod.",
+    "COD_BATCH": "Batch Cod.",
+    "STATE": "State",
+    "SEND_DATE": "Send Date",
+    "RETURN_CODE": "Return cod.",
+    "GET_DATE": "Reception Date",
+    "VALIDATE": "Validation",
+    "VACCINES_QUANTITY": "Vaccines Quantity",
+    "DISPATCH": "Dispatch",
+    "DISTRIBUTE": "Distribute",
+    "STATES": {
+      "DISTRIBUTE": "Distribute",
+      "DISTRIBUTED": "Distributed",
+      "DISPATCH": "Dispatch",
+      "DISPATCHED": "Dispatched",
+      "VERIFIED": "Verified",
+      "VERIFY": "Verify"
     }
+  },
+  "BUTTONS": {
+    "ADD": "ADD",
+    "CANCEL": "CANCEL",
+    "CONFIRM": "CONFIRM",
+    "SAVE": "SAVE",
+    "UPDATE": "UPDATE"
+  },
+  "FOOTER": "National Ministry's vaccination control system",
+  "LABORATORY": {
+    "TITLE": "LABORATORIES",
+    "ADD": "ADD LABORATORY",
+    "NAME": "Name",
+    "COUNTRY": "Country",
+    "DIRECTION": "Direction",
+    "CONTACT_NAME": "Contact name",
+    "CONTACT_EMAIL": "Contact email",
+    "CONFIGURATION": "Configuration"
+  },
+  "LOGIN": {
+    "TITLE": "Log in",
+    "NAME": "Username",
+    "PASSWORD": "Password",
+    "ENTER": "Enter"
+  },
+  "INQUIRY": {
+    "TITLE": "BATCH INQUIRY",
+    "LABS_RETURNINGS": "LABORATORIES RETURNINGS",
+    "PROVINCES_BATCHES": "PROVINCES BATCHES"
+  },
+  "MANAGMENT": {
+    "TITLE": "BATCH MANAGEMENT",
+    "NO_DATA": "No data yet",
+    "MESSAGE": "Select a laboratory to begin the management",
+    "LABS": "Laboratories",
+    "STATES": "States",
+    "MODAL": {
+      "GET_BATCH": {
+        "TITLE": "Confirm date",
+        "MESSAGE": "Are you sure that you want to set the getting date as"
+      },
+      "DISPATCH": {
+        "TITLE": "Dispatch vaccines",
+        "RETURNING_CODE": "Returning code",
+        "FOLLOWING_CODE": "Following code",
+        "DEVOLUTION_DATE": "Devolution date",
+        "SELECT_TRANSPORT": "Select transport company",
+        "SELECT_REASON": "Select devolution reason"
+      },
+      "DISTRIBUTE": {
+        "TITLE": "Distribute vaccines",
+        "QUANTITY": "Quantity of vaccines to distribute",
+        "MANUAL": "Manual",
+        "EQUITATIVE": "Equitative"
+      },
+      "VERIFY": {
+        "TITLE": "Verify vaccines",
+        "MESSAGE": "General state"
+      }
+    }
+  },
+  "NAVBAR": {
+    "TITLE": "Argentinian national Ministry",
+    "LABORATORIES": "LABORATORIES",
+    "PROVINCES": "PROVINCES",
+    "USERS": "USERS",
+    "VACCINATES": "VACCINATES",
+    "BATCHADMIN": "BATCH MANAGEMENT",
+    "BATCHINQUIRY": "BATCH INQUIRY"
+  },
+  "PROVINCE": {
+    "EDIT": {
+      "EMAIL": "Email",
+      "NAME": "Name",
+      "TITLE": "Edit province"
+    },
+    "HEALTH": {
+      "CONTACT_EMAIL": "Contact email",
+      "CONTACT_NAME": "Contact name",
+      "DIRECTION": "Direction",
+      "NAME": "Name",
+      "TITLE": "Health centers"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "CONTACT": "Contact",
+      "EMAIL": "Email",
+      "CONFIG": "Configuration"
+    },
+    "TITLE": "PROVINCES"
+  },
+  "SELECT": {
+    "ALL": "ALL",
+    "LAB": "Select a laboratory",
+    "ROL": "Select a role",
+    "STATE": "Select a state",
+    "SELECT": "Select"
+  },
+  "USERS": {
+    "ENABLE": "Enable",
+    "DISABLE": "Disable",
+    "ADD": {
+      "ENABLED": "Enabled",
+      "DNI": "Enter DNI",
+      "EMAIL": "Enter Email",
+      "LASTNAME": "Enter Lastname",
+      "LANGUAGE": "Lenguaje",
+      "NAME": "Enter Name",
+      "ORIGIN": "Origin",
+      "PASSWORD": "Password",
+      "PASSWORD-REPEAT": "Repeat Password",
+      "ROL": "Role",
+      "SELECT-LANGUAGE": "Select lenguaje",
+      "SELECT-ORIGIN": "Select origin",
+      "SELECT-ROL": "Select role",
+      "USAR-NAME": "Enter username"
+    },
+    "BUTTON": "ADD USER",
+    "DELETE": {
+      "MESSAGE": "¿Are you sure that you want to delete this user?",
+      "TITLE": "Delete user"
+    },
+    "UPDATE": "Update user",
+    "TITLE": "USERS"
+  }
 }

@@ -49,19 +49,14 @@ export class UsuariosComponent implements OnInit {
         idIdioma : 0,
     }
     userToEdit : IEditUser = {
-        idUsuarioAEditar : 0,
         idUsuario : 0,
-        codigoLaboratorio : undefined,
-        nroRol : 0,
-        codigoProvincia : undefined,
+        nombreLaboratorio : "",
+        rol : "",
+        nombreProvincia : "",
         nombreUsuario : "",
-        clave : "",
         email : "",
-        nombre : "",
-        apellido : "",
-        dni : 0,
         habilitado : 1,
-        idIdioma : 1,
+        idioma : "",
     }
     
     constructor(private router: Router, 
@@ -81,12 +76,12 @@ export class UsuariosComponent implements OnInit {
         .subscribe((response: any) => {
             this.usuariosData = response;
             this.usuariosDataComplete = response;
+            console.log(response)
         });
 
         this.usuarioService.getIdiomas()
         .subscribe((response: any) => {
-            this.idiomasData = response
-            console.log(response);
+            this.idiomasData = response;
         });
 
         this.usuarioService.getRoles()
@@ -144,9 +139,13 @@ export class UsuariosComponent implements OnInit {
                 alert("Existe un usuario con este mismo nombre de usuario! Se solicita cambiarlo por otro")
             } else {
                 this.usuarioService.agregarUsuario(this.nuevoUsuario)
-                .subscribe((response: any) => {
-                    alert("Se ha agregado el usuario correctamente!")
-                    window.location.reload();
+                .subscribe((res: any) => {
+                    this.usuarioService.getUsuarios()
+                    .subscribe((response: any) => {
+                        this.usuariosData = response;
+                        this.usuariosDataComplete = response;
+                        console.log(response)
+                    });
                 });
             }
         }
@@ -193,16 +192,21 @@ export class UsuariosComponent implements OnInit {
     }
 
     marcarUsuarioEliminar(idUsuario : number){
+        console.log(this.usuariosData)
         this.usuarioEliminar = idUsuario;
     }
 
     eliminarUsuario(){
         this.usuarioService.eliminarUsuario(this.usuarioEliminar)
-        .subscribe((response : any) => {
-            console.log(response);
-            alert("Se ha eliminado el usuario correctamente!");
-            window.location.reload();
+        .subscribe((res : any) => {
+            this.usuarioService.getUsuarios()
+            .subscribe((response: any) => {
+                this.usuariosData = response;
+                this.usuariosDataComplete = response;
+                console.log(response)
+            });
         });
+
     }
 
     cleanUserIdToEdit(){
@@ -211,6 +215,20 @@ export class UsuariosComponent implements OnInit {
 
     editUser(user : IUsuario){
         this.userIdToEdit = user.idUsuario;
-        console.log(user)
+        this.userToEdit.idUsuario = user.idUsuario;
+        this.userToEdit.nombreLaboratorio = user.nombreLaboratorio;
+        this.userToEdit.habilitado = user.habilitado;
+        this.userToEdit.email = user.email;
+        this.userToEdit.idioma = user.idioma;
+        this.userToEdit.nombreProvincia = user.nombreProvincia;
+        this.userToEdit.nombreUsuario = user.nombreUsuario;
+        this.userToEdit.rol = user.rol;
     } 
+
+    confirmarActualizacion(){
+        this.usuarioService.updateUser(this.userToEdit)
+        .subscribe((response: any) => {
+            console.log(response)
+        })
+    }
 }

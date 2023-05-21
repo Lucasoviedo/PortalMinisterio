@@ -1,14 +1,14 @@
 <div class="container">
-    <h1 class="tituloConsulta">PROVINCIAS</h1>
+    <h1 class="tituloConsulta">{{ "PROVINCE.TITLE" | translate }}</h1>
     <hr>
     <div *ngIf="provinciasData.length > 0">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Email</th>
-                <th>Configuracion</th>
+                <th>{{ "PROVINCE.TABLE.NAME" | translate }}</th>
+                <th>{{ "PROVINCE.TABLE.CONTACT" | translate }}</th>
+                <th>{{ "PROVINCE.TABLE.EMAIL" | translate }}</th>
+                <th>{{ "PROVINCE.TABLE.CONFIG" | translate }}</th>
             </tr>
         </thead>
         <tbody >
@@ -47,24 +47,24 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="editar-provinciaLabel">Editar provincia</h5>
+            <h5 class="modal-title" id="editar-provinciaLabel">{{ "PROVINCE.EDIT.TITLE" | translate }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
             <div class="flexRow">
-                <label>Nombre contacto: </label>
+                <label>{{ "PROVINCE.EDIT.NAME" | translate }}</label>
                 <input value={{provinciaModal.nombreContacto}} style="width: 65%;"/>
             </div>
             <div class="flexRow">
-                <label>Email contacto: </label>
+                <label>{{ "PROVINCE.TABLE.EMAIL" | translate }}</label>
                 <input value={{provinciaModal.emailContacto}} style="width: 65%;"/>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+            <button type="button" class="btn btn-primary">{{ "BUTTONS.SAVE" | translate }}</button>
         </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="modal-dialog  modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="centros-provinciaLabel">Centros de salud</h5>
+          <h5 class="modal-title" id="centros-provinciaLabel">{{ "PROVINCE.HEALTH.TITLE" | translate }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -99,10 +99,10 @@
           <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Direccion</th>
-                    <th>Nombre contacto</th>
-                    <th>Email contacto</th>
+                    <th>{{ "PROVINCE.HEALTH.NAME" | translate }}</th>
+                    <th>{{ "PROVINCE.HEALTH.DIRECTION" | translate }}</th>
+                    <th>{{ "PROVINCE.HEALTH.CONTACT_NAME" | translate }}</th>
+                    <th>{{ "PROVINCE.HEALTH.CONTACT_EMAIL" | translate }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,7 +116,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
         </div>
       </div>
     </div>

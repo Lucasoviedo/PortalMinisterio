@@ -1,1 +1,53 @@
-<p>Consulta de lotes</p>
+<div class="container">
+    <h1 class="tituloConsulta">{{ "INQUIRY.TITLE" | translate }}</h1>
+    <div *ngIf="devolucionesLaboratorios.length > 0">
+        <h3>{{ "INQUIRY.LABS_RETURNINGS" | translate }}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.RETURN_CODE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let lote of devolucionesLaboratorios">
+                    <td>{{lote.codigoLaboratorio}}</td>
+                    <td>{{lote.codigoLote}}</td>
+                    <td>{{lote.fechaEnvio || "----------"}}</td>
+                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.codigoDevolucion}}</td>
+                    <td>{{lote.cantidadVacunas}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
+    <div *ngIf="lotesProvincias.length > 0">
+        <h3>{{ "INQUIRY.PROVINCES_BATCHES" | translate }}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                    <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let lote of lotesProvincias">
+                    <td>{{lote.codigoLaboratorio}}  {{lote.codigoProvincia}}</td>
+                    <td>{{lote.codigoLote}}</td>
+                    <td>{{lote.fechaEnvio || "----------"}}</td>
+                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.cantidadVacunas}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
+</div>

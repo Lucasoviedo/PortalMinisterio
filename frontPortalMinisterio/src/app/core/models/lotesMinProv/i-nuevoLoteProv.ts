@@ -1,10 +1,19 @@
 export interface INuevoLoteProv{
-    idUsuario: number;
+    cantidadVacunas: number;
+    codigoEstado: string;
+    codigoLaboratorio: string;
     codigoLote: string;
     codigoProvincia: string;
+    codigoSeguimiento: string;
+    distribuido: number;
+    estado: string;
     fechaEnvio: Date;
     fechaRecepcion: Date;
-    codigoEstado: string;
-    codigoSeguimiento: string;
+    fechaRegistro: Date;
+    fechaVencimiento: Date;
     idEmpresaTransporte: number;
+    nombreLab: string;
+    nombreVacuna: null;
+    notificado: number;
+    nroVacuna: number;
 }
