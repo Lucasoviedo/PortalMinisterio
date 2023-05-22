@@ -101,6 +101,9 @@ export class UsuariosComponent implements OnInit {
     }
 
     rolOnChange(evento: any){
+        const rol = this.rolesData.find((rol) => rol.nroRol === parseInt(evento.target.value));
+        if(rol) this.userToEdit.rol = rol.nombreRol.toString()
+
         if(evento.target.value === "1"){
             this.dataToSelectRol = []
         } else if (evento.target.value === "2"){
@@ -225,7 +228,36 @@ export class UsuariosComponent implements OnInit {
         this.userToEdit.rol = user.rol;
     } 
 
+    cambioOrigen(evento : any){
+        console.log(evento.target.value)
+
+        const variable = this.dataToSelectRol.find(element => (element.codigoLaboratorio || element.codigoProvincia) === evento.target.value)
+        console.log(variable.nombre)
+
+        if(this.dataToSelectRol[0].codigoLaboratorio){
+            this.userToEdit.nombreLaboratorio = variable.nombre
+            this.userToEdit.nombreProvincia = undefined
+        } else if(this.dataToSelectRol[0].codigoProvincia){
+            this.userToEdit.nombreLaboratorio = undefined
+            this.userToEdit.nombreProvincia = variable.nombre
+        } else {
+            this.userToEdit.nombreLaboratorio = undefined
+            this.userToEdit.nombreProvincia = undefined
+        }
+    }
+
+    cambioLenguaje(evento : any){
+        const lenguaje = this.idiomasData.find(i => i.idIdioma === parseInt(evento.target.value))
+        if(lenguaje) this.userToEdit.idioma = lenguaje.idioma || "Español"
+    }
+
+    cambioHabilitacion(evento: any){
+        this.userToEdit.habilitado = parseInt(evento.target.value)
+    }
+
     confirmarActualizacion(){
+        console.log(this.userToEdit)
+        // console.log(this.userToEdit.rol)
         this.usuarioService.updateUser(this.userToEdit)
         .subscribe((response: any) => {
             console.log(response)

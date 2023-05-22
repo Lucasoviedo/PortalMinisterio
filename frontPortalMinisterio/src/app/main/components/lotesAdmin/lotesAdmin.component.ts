@@ -306,7 +306,6 @@ export class LotesAdminComponent implements OnInit{
                     valor: 0
                 };
             })
-            console.log(this.provinciasDistribuirData)
         })
         this.provinciaTipoDistribucion = 0;
     }

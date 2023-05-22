@@ -14,8 +14,12 @@
         <tbody >
             <tr *ngFor="let provincia of provinciasData">
                 <td (click)="mostrarCentrosSalud(provincia.codigoProvincia)"
-                    data-toggle="modal" data-target="#centros-provincia"
-                ><u><b>{{provincia.nombre}}</b></u></td>
+                    data-toggle="modal" data-target="#centros-provincia" style="display: flex; align-items: center; gap: 10px;"
+                >
+                    <div *ngIf="provincia.valor === 0" class="user-down"></div>
+                    <div *ngIf="provincia.valor === 1" class="user-up"></div>
+                    <u><b>{{provincia.nombre}}</b></u>
+                </td>
                 <td>{{provincia.nombreContacto}}</td>
                 <td>{{provincia.emailContacto}}</td>
                 <td>
@@ -36,13 +40,6 @@
 
 
 
-
-
-
-
-
-
-
 <div class="modal fade" id="editar-provincia" tabindex="-1" role="dialog" aria-labelledby="editar-provinciaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,7 +50,36 @@
             </button>
         </div>
         <div class="modal-body">
+            <h4>{{endpointEditar.codigoProvincia}}</h4>
+
             <div class="flexRow">
+                <label for="">URL</label>
+                <input type="text" value={{endpointEditar.url}}/>
+            </div>
+            
+            <div class="flexRow">
+                <label for="">Clave</label>
+                <input type="text" value={{endpointEditar.clave}}/>
+            </div>
+
+            <div class="flexRow">
+                <label for="">Tecnologia</label>
+                <input type="text" value={{endpointEditar.tecnologia}}/>
+            </div>
+            
+            <div class="flexRow">
+                <label for="">Usuario</label>
+                <input type="text" value={{endpointEditar.usuario}}/>
+            </div>
+            
+            <div class="flexRow">
+                <label for="">Habilitado</label>
+                <select [(ngModel)] = "endpointEditar.habilitado">
+                    <option value="1">{{ "USERS.ENABLE" | translate }}</option>
+                    <option value="0">{{ "USERS.DISABLE" | translate }}</option>
+                </select>
+            </div>
+            <!-- <div class="flexRow">
                 <label>{{ "PROVINCE.EDIT.NAME" | translate }}</label>
                 <input value={{provinciaModal.nombreContacto}} style="width: 65%;"/>
             </div>
@@ -61,11 +87,14 @@
                 <label>{{ "PROVINCE.TABLE.EMAIL" | translate }}</label>
                 <input value={{provinciaModal.emailContacto}} style="width: 65%;"/>
             </div>
+        </div> -->
+
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-            <button type="button" class="btn btn-primary">{{ "BUTTONS.SAVE" | translate }}</button>
-        </div>
+            <button type="button" class="btn btn-primary" *ngIf="endpointExiste">Editar</button>
+            <button type="button" class="btn btn-primary" *ngIf="!endpointExiste">Insertar</button>
         </div>
     </div>
 </div>
@@ -85,7 +114,7 @@
 
 
 
-  <!-- Modal -->
+  <!-- Modal Centros de vacunacion -->
   <div class="modal fade" id="centros-provincia" tabindex="-1" role="dialog" aria-labelledby="centros-provinciaLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg" role="document">
       <div class="modal-content">
