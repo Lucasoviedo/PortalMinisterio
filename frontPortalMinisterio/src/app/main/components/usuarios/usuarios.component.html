@@ -1,4 +1,3 @@
-
 <div class="container">
     <h1 class="tituloConsulta">{{ "USERS.TITLE" | translate }}</h1>
     <hr>
@@ -191,7 +190,7 @@
         <div class="modal-body">
             <div class="flexRow">
                 <label style="width: 15%">{{ "USERS.ADD.EMAIL" | translate }}: </label>
-                <input [(ngModel)] = "userToEdit.email" style="width: 85%" type="email" class="form-control" required/>
+                <input [(ngModel)] = "userToEdit.email" style="width: 85%" type="email" class="form-control"/>
             </div>
             <hr/>
             <div class="flexRow">
@@ -205,7 +204,7 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>{{ "USERS.ADD.ORIGIN" | translate }}: </label>
-                    <select [(ngModel)] = "userToEdit.nombreLaboratorio" class="form-control" required>
+                    <select class="form-control" (change)="cambioOrigen($event)">
                         <option hidden selected>{{ "USERS.ADD.SELECT-ORIGIN" | translate }}</option>
                         <option *ngFor="let e of dataToSelectRol"
                             [value]="e.codigoProvincia ? e.codigoProvincia : e.codigoLaboratorio"
@@ -215,10 +214,10 @@
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>{{ "USERS.ADD.LANGUAGE" | translate }}: </label>
-                    <select [(ngModel)] = "userToEdit.idioma" type="password" class="form-control" required>
+                    <select type="password" class="form-control" (change)="cambioLenguaje($event)">
                         <option hidden selected value={{userToEdit.idioma}}>{{userToEdit.idioma}}</option>
                         <option *ngFor="let idioma of idiomasData"
-                            [value]="idioma.idIdioma"
+                            value={{idioma.idIdioma}}
                         > {{idioma.idioma}}
                         </option></select>
                 </div>
@@ -227,14 +226,14 @@
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
                     <label>{{ "USERS.ADD.USAR-NAME" | translate }}: </label>
-                    <input [(ngModel)] = "userToEdit.nombreUsuario" class="form-control" required/>
+                    <input [(ngModel)] = "userToEdit.nombreUsuario" class="form-control" />
                 </div>
                 <div class="flexCol sizeUnTercio">
                     <label>{{ "USERS.ADD.ENABLED" | translate }}: </label>
-                    <select [(ngModel)] = "userToEdit.habilitado" required="">
+                    <select [(ngModel)] = "userToEdit.habilitado" (change)="cambioHabilitacion($event)">
                         <option value="1">{{ "USERS.ENABLE" | translate }}</option>
                         <option value="0">{{ "USERS.DISABLE" | translate }}</option>
-                      </select>
+                    </select>
                 </div>
             </div>
         </div>

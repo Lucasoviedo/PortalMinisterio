@@ -6,21 +6,6 @@
     margin-bottom: 50px;
 }
 
-.user-down,
-.user-up{
-    height:10px;
-    width:10px;
-    background:green;
-    -moz-border-radius:50px;
-    -webkit-border-radius:50px;
-    border-radius:50px;
-    box-shadow: 0 0 4px black;
-}
-
-.user-down{
-    background:grey;
-}
-
 .card-usuario{
     
     height: 275px;
