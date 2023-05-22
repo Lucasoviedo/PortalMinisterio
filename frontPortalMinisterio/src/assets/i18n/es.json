@@ -1,81 +1,148 @@
 {
-    "BUTTONS" : {
-        "ADD" : "AGREGAR",
-        "CANCEL" : "CANCELAR",
-        "CONFIRM" : "CONFIRMAR",
-        "SAVE" : "GUARDAR"
-    },
-    "FOOTER" : "Sistema de control de vacunacion de Ministerio de la Nación",
-    "LABORATORY" : {
-        "TITLE" : "LABORATORIOS",
-        "ADD" : "AGREGAR LABORATORIO",
-        "NAME" : "Nombre",
-        "COUNTRY" : "Pais",
-        "DIRECTION" : "Direccion",
-        "CONTACT_NAME" : "Nombre contacto",
-        "CONTACT_EMAIL" : "Email contacto",
-        "CONFIGURATION" : "Configuracion"
-    },
-    "LOGIN" : {
-        "TITLE" : "Iniciar sesion",
-        "NAME" : "Nombre de usuario",
-        "PASSWORD" : "Contraseña",
-        "ENTER" : "Entrar"
-    },
-    "NAVBAR" : {
-        "TITLE" : "Ministerio de la Nación Argetina",
-        "LABORATORIES" : "LABORATORIOS",
-        "PROVINCES" : "PROVINCIAS",
-        "USERS" : "USUARIOS",
-        "VACCINATES" : "VACUNADOS",
-        "BATCHADMIN" : "ADMINIATRACION DE LOTES",
-        "BATCHINQUIRY" : "CONSULTA DE LOTES"
-    },
-    "PROVINCE" : {
-        "EDIT" : {
-            "EMAIL" : "Email",
-            "NAME" : "Nombre",
-            "TITLE" : "Editar provincia"
-        },
-        "HEALTH" : {
-            "CONTACT_EMAIL" : "Email contacto",
-            "CONTACT_NAME" : "Nombre contacto",
-            "DIRECTION" : "Direccion",
-            "NAME" : "Nombre",
-            "TITLE" : "Centros de salud"
-        },
-        "TABLE" : {
-            "NAME" : "Nombre",
-            "CONTACT" : "Contacto",
-            "EMAIL" : "Email",
-            "CONFIG" : "Configuracion"
-        },
-        "TITLE" : "PROVINCIAS"
-    },
-    "USERS" : {
-        "ADD" : {
-            "DNI" : "Ingrese DNI",
-            "EMAIL" : "Ingrese Email",
-            "LASTNAME" : "Ingrese apellido",
-            "LANGUAGE" : "Idioma",
-            "NAME" : "Ingrese nombre",
-            "ORIGIN" : "Origen",
-            "PASSWORD" : "Contraseña",
-            "PASSWORD-REPEAT" : "Repita contraseña",
-            "ROL" : "Rol",
-            "SELECT-LANGUAGE" : "SELECCIONE LENGUAJE",
-            "SELECT-ORIGIN" : "SELECCIONE ORIGEN",
-            "SELECT-ROL" : "SELECCIONE ROL",
-            "USAR-NAME" : "Nombre de usuario"
-        },
-        "BUTTON" : "AGREGAR USUARIO",
-        "DELETE" : {
-            "MESSAGE" : "¿Está seguro que desea eliminar este usuario?",
-            "TITLE" : "Eliminar usuario"
-        },
-        "SELECT" : {
-            "ALL" : "TODOS",
-            "ROL" : "SELECCIONE UN ROL"},
-        "TITLE" : "USUARIOS"
+  "BATCH_TABLE": {
+    "LAB_CODE": "Cod. lab",
+    "LAB_NAME": "Nombre laboratorio",
+    "VACCINE_CODE": "Cod. vacuna",
+    "COD_BATCH": "Cod. Lote",
+    "STATE": "Estado",
+    "SEND_DATE": "Fecha Envio",
+    "RETURN_CODE": "Cod. devolucion",
+    "GET_DATE": "Fecha Recepcion",
+    "VALIDATE": "Validacion",
+    "VACCINES_QUANTITY": "Cantidad vacunas",
+    "DISPATCH": "Despache",
+    "DISTRIBUTE": "Distribucion",
+    "STATES": {
+      "DISTRIBUTE": "Distribuir",
+      "DISTRIBUTED": "Distribuido",
+      "DISPATCH": "Desachar",
+      "DISPATCHED": "Despachado",
+      "VERIFIED": "Verificado",
+      "VERIFY": "Verificar"
     }
+  },
+  "BUTTONS": {
+    "ADD": "AGREGAR",
+    "CANCEL": "CANCELAR",
+    "CONFIRM": "CONFIRMAR",
+    "SAVE": "GUARDAR",
+    "UPDATE": "ACTUALIZAR"
+  },
+  "FOOTER": "Sistema de control de vacunacion de Ministerio de la Nación",
+  "LABORATORY": {
+    "TITLE": "LABORATORIOS",
+    "ADD": "AGREGAR LABORATORIO",
+    "NAME": "Nombre",
+    "COUNTRY": "Pais",
+    "DIRECTION": "Direccion",
+    "CONTACT_NAME": "Nombre contacto",
+    "CONTACT_EMAIL": "Email contacto",
+    "CONFIGURATION": "Configuracion"
+  },
+  "LOGIN": {
+    "TITLE": "Iniciar sesion",
+    "NAME": "Nombre de usuario",
+    "PASSWORD": "Contraseña",
+    "ENTER": "Entrar"
+  },
+  "INQUIRY": {
+    "TITLE": "CONSULTA DE LOTES",
+    "LABS_RETURNINGS": "DEVOLUCIONES LABORATORIOS",
+    "PROVINCES_BATCHES": "LOTES PROVINCIAS"
+  },
+  "MANAGMENT": {
+    "TITLE": "ADMINISTRACION DE LOTES",
+    "NO_DATA": "Sin informacion todavia",
+    "MESSAGE": "Seleccione un laboratorio para comenzar su consulta",
+    "LABS": "Laboratorios",
+    "STATES": "Estados",
+    "MODAL": {
+      "GET_BATCH": {
+        "TITLE": "Confirmar fecha",
+        "MESSAGE": "Seguro que quiere marcar la fecha de recepcion como"
+      },
+      "DISPATCH": {
+        "TITLE": "Dispatch vaccines",
+        "RETURNING_CODE": "Returning code",
+        "FOLLOWING_CODE": "Following code",
+        "DEVOLUTION_DATE": "Devolution date",
+        "SELECT_TRANSPORT": "Select transport company",
+        "SELECT_REASON": "Select devolution reason"
+      },
+      "DISTRIBUTE": {
+        "TITLE": "Distribute vaccines",
+        "QUANTITY": "Quantity of vaccines to distribute",
+        "MANUAL": "Manual",
+        "EQUITATIVE": "Equitative"
+      },
+      "VERIFY": {
+        "TITLE": "Verficar vacunas",
+        "MESSAGE": "Estado general"
+      }
+    }
+  },
+  "NAVBAR": {
+    "TITLE": "Ministerio de la Nación Argetina",
+    "LABORATORIES": "LABORATORIOS",
+    "PROVINCES": "PROVINCIAS",
+    "USERS": "USUARIOS",
+    "VACCINATES": "VACUNADOS",
+    "BATCHADMIN": "ADMINIATRACION DE LOTES",
+    "BATCHINQUIRY": "CONSULTA DE LOTES"
+  },
+  "PROVINCE": {
+    "EDIT": {
+      "EMAIL": "Email",
+      "NAME": "Nombre",
+      "TITLE": "Editar provincia"
+    },
+    "HEALTH": {
+      "CONTACT_EMAIL": "Email contacto",
+      "CONTACT_NAME": "Nombre contacto",
+      "DIRECTION": "Direccion",
+      "NAME": "Nombre",
+      "TITLE": "Centros de salud"
+    },
+    "TABLE": {
+      "NAME": "Nombre",
+      "CONTACT": "Contacto",
+      "EMAIL": "Email",
+      "CONFIG": "Configuracion"
+    },
+    "TITLE": "PROVINCIAS"
+  },
+  "SELECT": {
+    "ALL": "TODOS",
+    "LAB": "Seleccione un laboratorio",
+    "ROL": "Seleccione un rol",
+    "STATE": "Seleccione un estado",
+    "SELECT": "Select"
+  },
+  "USERS": {
+    "ENABLE": "Habilitado",
+    "DISABLE": "Deshabilitado",
+    "ADD": {
+      "ENABLED": "Habilitado",
+      "DNI": "Ingrese DNI",
+      "EMAIL": "Ingrese Email",
+      "LASTNAME": "Ingrese apellido",
+      "LANGUAGE": "Idioma",
+      "NAME": "Ingrese nombre",
+      "ORIGIN": "Origen",
+      "PASSWORD": "Contraseña",
+      "PASSWORD-REPEAT": "Repita contraseña",
+      "ROL": "Rol",
+      "SELECT-LANGUAGE": "SELECCIONE LENGUAJE",
+      "SELECT-ORIGIN": "SELECCIONE ORIGEN",
+      "SELECT-ROL": "SELECCIONE ROL",
+      "USAR-NAME": "Nombre de usuario"
+    },
+    "BUTTON": "AGREGAR USUARIO",
+    "DELETE": {
+      "MESSAGE": "¿Está seguro que desea eliminar este usuario?",
+      "TITLE": "Eliminar usuario"
+    },
+    "UPDATE": "Actualizar usuario",
+    "TITLE": "USUARIOS"
+  }
 }

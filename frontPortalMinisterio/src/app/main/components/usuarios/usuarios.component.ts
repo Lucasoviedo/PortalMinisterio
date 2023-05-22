@@ -49,19 +49,14 @@ export class UsuariosComponent implements OnInit {
         idIdioma : 0,
     }
     userToEdit : IEditUser = {
-        idUsuarioAEditar : 0,
         idUsuario : 0,
-        codigoLaboratorio : undefined,
-        nroRol : 0,
-        codigoProvincia : undefined,
+        nombreLaboratorio : "",
+        rol : "",
+        nombreProvincia : "",
         nombreUsuario : "",
-        clave : "",
         email : "",
-        nombre : "",
-        apellido : "",
-        dni : 0,
         habilitado : 1,
-        idIdioma : 1,
+        idioma : "",
     }
     
     constructor(private router: Router, 
@@ -106,6 +101,9 @@ export class UsuariosComponent implements OnInit {
     }
 
     rolOnChange(evento: any){
+        const rol = this.rolesData.find((rol) => rol.nroRol === parseInt(evento.target.value));
+        if(rol) this.userToEdit.rol = rol.nombreRol.toString()
+
         if(evento.target.value === "1"){
             this.dataToSelectRol = []
         } else if (evento.target.value === "2"){
@@ -144,9 +142,13 @@ export class UsuariosComponent implements OnInit {
                 alert("Existe un usuario con este mismo nombre de usuario! Se solicita cambiarlo por otro")
             } else {
                 this.usuarioService.agregarUsuario(this.nuevoUsuario)
-                .subscribe((response: any) => {
-                    alert("Se ha agregado el usuario correctamente!")
-                    window.location.reload();
+                .subscribe((res: any) => {
+                    this.usuarioService.getUsuarios()
+                    .subscribe((response: any) => {
+                        this.usuariosData = response;
+                        this.usuariosDataComplete = response;
+                        console.log(response)
+                    });
                 });
             }
         }
@@ -193,16 +195,21 @@ export class UsuariosComponent implements OnInit {
     }
 
     marcarUsuarioEliminar(idUsuario : number){
+        console.log(this.usuariosData)
         this.usuarioEliminar = idUsuario;
     }
 
     eliminarUsuario(){
         this.usuarioService.eliminarUsuario(this.usuarioEliminar)
-        .subscribe((response : any) => {
-            console.log(response);
-            alert("Se ha eliminado el usuario correctamente!");
-            window.location.reload();
+        .subscribe((res : any) => {
+            this.usuarioService.getUsuarios()
+            .subscribe((response: any) => {
+                this.usuariosData = response;
+                this.usuariosDataComplete = response;
+                console.log(response)
+            });
         });
+
     }
 
     cleanUserIdToEdit(){
@@ -211,6 +218,49 @@ export class UsuariosComponent implements OnInit {
 
     editUser(user : IUsuario){
         this.userIdToEdit = user.idUsuario;
-        console.log(user)
+        this.userToEdit.idUsuario = user.idUsuario;
+        this.userToEdit.nombreLaboratorio = user.nombreLaboratorio;
+        this.userToEdit.habilitado = user.habilitado;
+        this.userToEdit.email = user.email;
+        this.userToEdit.idioma = user.idioma;
+        this.userToEdit.nombreProvincia = user.nombreProvincia;
+        this.userToEdit.nombreUsuario = user.nombreUsuario;
+        this.userToEdit.rol = user.rol;
     } 
+
+    cambioOrigen(evento : any){
+        console.log(evento.target.value)
+
+        const variable = this.dataToSelectRol.find(element => (element.codigoLaboratorio || element.codigoProvincia) === evento.target.value)
+        console.log(variable.nombre)
+
+        if(this.dataToSelectRol[0].codigoLaboratorio){
+            this.userToEdit.nombreLaboratorio = variable.nombre
+            this.userToEdit.nombreProvincia = undefined
+        } else if(this.dataToSelectRol[0].codigoProvincia){
+            this.userToEdit.nombreLaboratorio = undefined
+            this.userToEdit.nombreProvincia = variable.nombre
+        } else {
+            this.userToEdit.nombreLaboratorio = undefined
+            this.userToEdit.nombreProvincia = undefined
+        }
+    }
+
+    cambioLenguaje(evento : any){
+        const lenguaje = this.idiomasData.find(i => i.idIdioma === parseInt(evento.target.value))
+        if(lenguaje) this.userToEdit.idioma = lenguaje.idioma || "Español"
+    }
+
+    cambioHabilitacion(evento: any){
+        this.userToEdit.habilitado = parseInt(evento.target.value)
+    }
+
+    confirmarActualizacion(){
+        console.log(this.userToEdit)
+        // console.log(this.userToEdit.rol)
+        this.usuarioService.updateUser(this.userToEdit)
+        .subscribe((response: any) => {
+            console.log(response)
+        })
+    }
 }

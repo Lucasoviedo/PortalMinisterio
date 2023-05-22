@@ -3,4 +3,6 @@ export interface IEditarDevolucion{
     descripcionProblema : string;
     idEmpresaTransporte : number;
     idMotivoDevolucion : number;
+    fechaEnvio: Date;
+    codigoSeguimineto: string;
 }
