@@ -4,5 +4,5 @@ export interface IEditarDevolucion{
     idEmpresaTransporte : number;
     idMotivoDevolucion : number;
     fechaEnvio: Date;
-    codigoSeguimineto: string;
+    codigoSeguimiento: string;
 }
