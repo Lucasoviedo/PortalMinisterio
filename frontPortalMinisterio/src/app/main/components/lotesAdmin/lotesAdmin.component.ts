@@ -48,7 +48,7 @@ export class LotesAdminComponent implements OnInit{
         descripcionProblema : "",
         idEmpresaTransporte : 0,
         idMotivoDevolucion : 0,
-        codigoSeguimineto: "",
+        codigoSeguimiento: "",
         fechaEnvio: new Date(),
     }
 
@@ -272,7 +272,7 @@ export class LotesAdminComponent implements OnInit{
             this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
             this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
             this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
-            this.loteDevolucionEditado.codigoSeguimineto = this.codigoSeguiminetoActual;
+            this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
         }
 
         this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
@@ -352,7 +352,7 @@ export class LotesAdminComponent implements OnInit{
         this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
         this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
         this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
-        this.loteDevolucionEditado.codigoSeguimineto = this.codigoSeguiminetoActual;
+        this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
         this.loteDevolucionEditado.fechaEnvio = this.fechaDevolucion;
 
         this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
