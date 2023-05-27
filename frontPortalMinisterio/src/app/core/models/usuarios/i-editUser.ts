@@ -1,5 +1,5 @@
 export interface IEditUser{
-    idUsuario : number;
+    idUsuarioAEditar : number;
     nombreLaboratorio? : String;
     rol: String;
     nombreProvincia? : String;

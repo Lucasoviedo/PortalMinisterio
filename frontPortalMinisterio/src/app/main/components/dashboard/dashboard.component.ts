@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { CookieService } from 'ngx-cookie-service';
 import { IDashboardItem } from "src/app/core/models/i-dashboardItem";
 import { UsuarioService } from "../../api/resources/usuarios.service";
+import { EventBusService } from "../../api/resources/event-bus.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -21,7 +22,8 @@ export class DashboardComponent implements OnInit{
     constructor(
         private router: Router,
         private cookieService: CookieService,
-        private usuariosService : UsuarioService){}
+        private usuariosService : UsuarioService,
+        private eventBusService : EventBusService){}
 
     ngOnInit(): void {
         if(this.cookieService.get('authToken') === ""){
@@ -40,5 +42,7 @@ export class DashboardComponent implements OnInit{
                 }
             });
         })
+
+        this.eventBusService.onDashboardShown.emit();
     }
 }

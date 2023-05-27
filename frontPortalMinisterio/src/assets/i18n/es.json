@@ -94,7 +94,10 @@
     "EDIT": {
       "EMAIL": "Email",
       "NAME": "Nombre",
-      "TITLE": "Editar provincia"
+      "TITLE": {
+        "EDIT": "Editar provincia",
+        "INSERT": "Insertar provincia"
+      }
     },
     "HEALTH": {
       "CONTACT_EMAIL": "Email contacto",
