@@ -14,7 +14,7 @@
         <tbody >
             <tr *ngFor="let provincia of provinciasData">
                 <td (click)="mostrarCentrosSalud(provincia.codigoProvincia)"
-                    data-toggle="modal" data-target="#centros-provincia" style="display: flex; align-items: center; gap: 10px;"
+                    data-toggle="modal" data-target="#centros-provincia" class="provincia-nombre"
                 >
                     <div *ngIf="provincia.valor === 0" class="user-down"></div>
                     <div *ngIf="provincia.valor === 1" class="user-up"></div>
@@ -44,7 +44,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="editar-provinciaLabel">{{ "PROVINCE.EDIT.TITLE" | translate }}</h5>
+            <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="endpointExiste">{{ "PROVINCE.EDIT.TITLE.EDIT" | translate }}</h5>
+            <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="!endpointExiste">{{ "PROVINCE.EDIT.TITLE.INSERT" | translate }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>

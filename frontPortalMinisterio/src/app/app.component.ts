@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { LoginService } from './main/api/resources/login.service';
 import { UsuarioService } from './main/api/resources/usuarios.service';
 import { TranslateService } from '@ngx-translate/core';
+import { EventBusService } from './main/api/resources/event-bus.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,12 @@ export class AppComponent implements OnInit{
   title = 'frontPortalMinisterio';
 
   showHeaderOptions = false;
-  showHeaderOptionsMovile = false
+  showHeaderOptionsMovile = false;
 
   userPermissions : number = 0;
 
   constructor(  private router: Router, 
+    private eventBusService: EventBusService,
     private cookieService: CookieService,
     private loginService : LoginService,
     private usuariosService : UsuarioService,
@@ -64,6 +66,10 @@ export class AppComponent implements OnInit{
           this.userPermissions = response;
       })
     }
+
+    this.eventBusService.onDashboardShown.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   logout(){
@@ -72,13 +78,15 @@ export class AppComponent implements OnInit{
       this.router.navigate(['/login']);
       this.cookieService.delete('authToken');
       this.cookieService.delete('idUsuario');
-      window.location.reload();
+      this.showHeaderOptions = false;
+      this.showHeaderOptionsMovile = false;
     },
     (error => {
       this.router.navigate(['/login']);
       this.cookieService.delete('authToken');
       this.cookieService.delete('idUsuario');
-      window.location.reload();
+      this.showHeaderOptions = false;
+      this.showHeaderOptionsMovile = false;
     }));
   }
 
