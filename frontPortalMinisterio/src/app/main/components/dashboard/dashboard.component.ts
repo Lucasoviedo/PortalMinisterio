@@ -41,6 +41,22 @@ export class DashboardComponent implements OnInit{
                     this.dashboardData.push(this.keys)
                 }
             });
+            console.log(this.dashboardData)
+
+            this.usuariosService.getLanguage()
+            .subscribe((responseLenguaje: any) => {
+                console.log(responseLenguaje)
+                if (response !== 1) {
+                    if (this.dashboardData[0]) this.dashboardData[0].title = "BATCHES"
+                    if (this.dashboardData[1]) this.dashboardData[1].title = "AVAILABLE VACCINES FOR DISTRIBUTION"
+                    if (this.dashboardData[2]) this.dashboardData[2].title = "AVAILABLE VACCINES BY PROVINCES"
+                    if (this.dashboardData[3]) this.dashboardData[3].title = "ADMINISTERED VACCINES"
+                    if (this.dashboardData[4]) this.dashboardData[4].title = "RETURNED VACCINES"
+                    if (this.dashboardData[5]) this.dashboardData[5].title = "VACCINATED"
+                    if (this.dashboardData[6]) this.dashboardData[6].title = "LAST LAB UPDATE"
+                    if (this.dashboardData[7]) this.dashboardData[7].title = "LAST PROVINCE UPDATE"
+                }
+            })
         })
 
         this.eventBusService.onDashboardShown.emit();

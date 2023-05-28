@@ -41,6 +41,8 @@ export class ProvinciasComponent implements OnInit {
         usuario: "",
     };
 
+    mensajePing = ""
+
     constructor(private router: Router, 
         private eventBusService: EventBusService,
         private cookieService: CookieService,
@@ -77,7 +79,7 @@ export class ProvinciasComponent implements OnInit {
                     };
                 })
             });
-        },1000)
+        },100)
 
 
         this.endpointService.obtenerTecnologias()
@@ -124,6 +126,17 @@ export class ProvinciasComponent implements OnInit {
         });
     }
 
+    cambioUrl(evento : any){
+        this.endpointEditar.url = evento.target.value
+    }
+
+    cambioClave(evento : any){
+        this.endpointEditar.clave = evento.target.value
+    }
+    cambioUsuario(evento : any){
+        this.endpointEditar.usuario = evento.target.value
+    }
+
     editarEndpoint(){
         this.endpointService.editarEndpoint(this.endpointEditar)
         .subscribe( (data : any) => {
@@ -139,5 +152,43 @@ export class ProvinciasComponent implements OnInit {
             url: "",
             usuario: "",
         }; 
+    }
+
+    pingProvincia(provincia:IProvincia){
+        this.mensajePing = ""
+        let variable = ""
+
+        switch(provincia.codigoProvincia){
+            case "CABA":
+                this.endpointService.pingCABA()
+                .subscribe((response : any) => {
+                    variable = response.statusCode
+                })
+                break
+            case "CBA":
+                this.endpointService.pingCBA()
+                .subscribe((response : any) => {
+                    variable = response.statusCode
+                })
+                break
+            case "SA":
+                this.endpointService.pingSA()
+                .subscribe((response : any) => {
+                    variable = response.statusCode
+                })
+                break
+            default:
+                break
+        }
+
+        setTimeout(() => {
+            if(variable == "OK"){
+                this.mensajePing = "Conexion exitosa"
+            } else if(variable === "INTERNAL_SERVER_ERROR"){
+                this.mensajePing = "La conexion no se pudo establecer"
+            } else {
+                this.mensajePing = "No existe una conexion a este endpoint"
+            }
+        },100)       
     }
 }
