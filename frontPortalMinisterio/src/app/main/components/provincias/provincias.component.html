@@ -43,67 +43,56 @@
 <div class="modal fade" id="editar-provincia" tabindex="-1" role="dialog" aria-labelledby="editar-provinciaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="endpointExiste">{{ "PROVINCE.EDIT.TITLE.EDIT" | translate }}</h5>
-            <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="!endpointExiste">{{ "PROVINCE.EDIT.TITLE.INSERT" | translate }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <h4>{{endpointEditar.codigoProvincia}}</h4>
+            <div class="modal-header">
+                <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="endpointExiste">{{ "PROVINCE.EDIT.TITLE.EDIT" | translate }}</h5>
+                <h5 class="modal-title" id="editar-provinciaLabel" *ngIf="!endpointExiste">{{ "PROVINCE.EDIT.TITLE.INSERT" | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>{{endpointEditar.codigoLabOProv }}</h4>
 
-            <div class="flexRow">
-                <label for="">URL</label>
-                <input type="text" value={{endpointEditar.url}}/>
-            </div>
-            
-            <div class="flexRow">
-                <label for="">Clave</label>
-                <input type="text" value={{endpointEditar.clave}}/>
-            </div>
+                <div class="flexRow">
+                    <label for="">URL</label>
+                    <input type="text" value={{endpointEditar.url}}/>
+                </div>
+                
+                <div class="flexRow">
+                    <label for="">Clave</label>
+                    <input type="text" value={{endpointEditar.clave}}/>
+                </div>
 
-            <div class="flexRow">
-                <label for="">Tecnologia</label>
-                <input type="text" value={{endpointEditar.tecnologia}}/>
+                <div class="flexRow">
+                    <label for="">Tecnologia</label>
+                    <select [(ngModel)] = "endpointEditar.tecnologia">
+                        <option selected hidden>{{endpointEditar.tecnologia}}</option>
+                        <option *ngFor="let tecnologia of tecnologiasData" 
+                              value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
+                    </select>
+                </div>
+                
+                <div class="flexRow">
+                    <label for="">Usuario</label>
+                    <input type="text" value={{endpointEditar.usuario}}/>
+                </div>
+                
+                <div class="flexRow">
+                    <label for="">Habilitado</label>
+                    <select [(ngModel)] = "endpointEditar.habilitado">
+                        <option value="1">{{ "USERS.ENABLE" | translate }}</option>
+                        <option value="0">{{ "USERS.DISABLE" | translate }}</option>
+                    </select>
+                </div>
             </div>
-            
-            <div class="flexRow">
-                <label for="">Usuario</label>
-                <input type="text" value={{endpointEditar.usuario}}/>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+                <button type="button" class="btn btn-primary" *ngIf="endpointExiste" (click)="editarEndpoint()" data-dismiss="modal">Editar</button>
+                <button type="button" class="btn btn-primary" *ngIf="!endpointExiste">Insertar</button>
             </div>
-            
-            <div class="flexRow">
-                <label for="">Habilitado</label>
-                <select [(ngModel)] = "endpointEditar.habilitado">
-                    <option value="1">{{ "USERS.ENABLE" | translate }}</option>
-                    <option value="0">{{ "USERS.DISABLE" | translate }}</option>
-                </select>
-            </div>
-            <!-- <div class="flexRow">
-                <label>{{ "PROVINCE.EDIT.NAME" | translate }}</label>
-                <input value={{provinciaModal.nombreContacto}} style="width: 65%;"/>
-            </div>
-            <div class="flexRow">
-                <label>{{ "PROVINCE.TABLE.EMAIL" | translate }}</label>
-                <input value={{provinciaModal.emailContacto}} style="width: 65%;"/>
-            </div>
-        </div> -->
-
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-            <button type="button" class="btn btn-primary" *ngIf="endpointExiste">Editar</button>
-            <button type="button" class="btn btn-primary" *ngIf="!endpointExiste">Insertar</button>
         </div>
     </div>
 </div>
-
-
-
-
-
 
 
 
@@ -125,6 +114,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length > 0">
           <table class="table table-striped">
             <thead>
@@ -145,6 +135,10 @@
             </tbody>
           </table>
         </div>
+        <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length === 0">
+            <h6>{{ "PROVINCE.HEALTH.MESSAGE" | translate }}</h6>
+        </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
         </div>

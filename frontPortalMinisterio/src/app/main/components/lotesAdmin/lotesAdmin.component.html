@@ -20,7 +20,7 @@
         <select class="form-select" 
                 (change)="filtrarPorEstado($event)"
                 [(ngModel)]="selectedOptionState">
-            <option value="" hidden selected>{{ "SELECT.LAB" | translate }}</option>
+            <option value="" hidden selected>{{ "SELECT.STATE" | translate }}</option>
             <option value="">{{ "SELECT.ALL" | translate }}</option>
             <option *ngFor="let estado of estadosData" 
                     value={{estado.estado}}>{{estado.estado}}</option>

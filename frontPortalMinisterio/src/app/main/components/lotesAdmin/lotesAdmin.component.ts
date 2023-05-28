@@ -117,7 +117,6 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerLotes()
         .subscribe((response: any) => {
             this.lotesDataComplete = response
-            console.log(response)
         });
 
         this.lotesGeneralService.obtenerEstados()
@@ -127,7 +126,7 @@ export class LotesAdminComponent implements OnInit{
 
         this.vacunasService.getVacunas()
         .subscribe((response: any) => {
-            console.log(response)
+            //SIN FINALIZAR
         });
 
         this.lotesGeneralService.getVaccinesStates()
@@ -138,7 +137,6 @@ export class LotesAdminComponent implements OnInit{
         this.devolucionesService.getRejectReasons()
         .subscribe((response: any) => {
             this.rejectionReasonsData = response;
-            console.log(response)
         })
 
         this.lotesGeneralService.obtenerEmpresasTransporte()
@@ -214,16 +212,8 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
         .subscribe((response:any) =>{
             this.vaccinesData = response;
-            console.log(response)
         })
     }
-
-    // cerrarModal(){
-    //     this.lotesMinLabService.obtenerLotes()
-    //     .subscribe((response: any) => {
-    //         this.lotesDataComplete = response
-    //     });
-    // }
 
     changeVaccineCode(evento: any,vaccineCod : string){
         this.vaccinesData.map((element, index) => {
@@ -263,7 +253,6 @@ export class LotesAdminComponent implements OnInit{
 
         // SIN FINALIZAR
         const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
-        console.log(responseDevoluciones)
         
         const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
 
@@ -277,7 +266,6 @@ export class LotesAdminComponent implements OnInit{
 
         this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
         .subscribe((response : any) => {
-            console.log("Se generó el lote de devolucion", response)
         })
 
         this.lotesMinLabService.obtenerLotes()
@@ -312,7 +300,6 @@ export class LotesAdminComponent implements OnInit{
 
     cambioEmpresaTransporte(evento : any){
         this.empresaTransporteActual = parseInt(evento.target.value)
-        console.log(evento.target.value)
     }
 
     cambioMotivoDevolucion(evento : any){
@@ -344,9 +331,7 @@ export class LotesAdminComponent implements OnInit{
         if(this.fechaDevolucion === undefined) return
             
         const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
-        console.log(responseDevoluciones)
         const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
-
 
         this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
         this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
@@ -357,6 +342,12 @@ export class LotesAdminComponent implements OnInit{
 
         this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
         .subscribe((response : any) => {
+                this.loteDevolucionEditado.codigoDevolucion = "";
+                this.loteDevolucionEditado.descripcionProblema = "";
+                this.loteDevolucionEditado.idEmpresaTransporte = 0;
+                this.loteDevolucionEditado.idMotivoDevolucion = 0;
+                this.loteDevolucionEditado.codigoSeguimiento = "";
+                this.loteDevolucionEditado.fechaEnvio = new Date();  
         })
 
         this.lotesMinLabService.obtenerLotes()
@@ -373,8 +364,6 @@ export class LotesAdminComponent implements OnInit{
 
         for(let provincia of this.provinciasDistribuirData){
             for(let i = 0; i < provincia.valor ; i++) {
-                console.log( this.provinciasDistribuirData[0],this.vacunasDistribuirData[index2])
-
                 let data = {
                     codigoProvincia : provincia.codigoProvincia,
                     codigoLote :  this.vacunasDistribuirData[index2].codigoLote,
@@ -404,8 +393,6 @@ export class LotesAdminComponent implements OnInit{
         } catch{
             this.provinciaTipoDistribucion = evento
         }
-        // if(evento.target.value)  this.provinciaTipoDistribucion = evento.target.value
-        // else this.provinciaTipoDistribucion = evento
 
         if(this.provinciaTipoDistribucion == 1){
             this.provinciasDistribuirData = this.provinciasDistribuirData.map((element : IProvinciaDistribuir) => {

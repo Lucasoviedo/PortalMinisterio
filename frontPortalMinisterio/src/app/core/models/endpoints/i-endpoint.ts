@@ -1,6 +1,8 @@
 export interface IEndpoint{
-    codigoLaboratorio: string;
-    codigoProvincia : string;
-    url: string;
     codigoLabOProv: string;
+    clave: string;
+    habilitado: number;
+    tecnologia: string;
+    url: string;
+    usuario: string;
 }

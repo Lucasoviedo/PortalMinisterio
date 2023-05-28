@@ -93,7 +93,6 @@
   "PROVINCE": {
     "EDIT": {
       "EMAIL": "Email",
-      "NAME": "Nombre",
       "TITLE": {
         "EDIT": "Editar provincia",
         "INSERT": "Insertar provincia"
@@ -104,12 +103,12 @@
       "CONTACT_NAME": "Nombre contacto",
       "DIRECTION": "Direccion",
       "NAME": "Nombre",
-      "TITLE": "Centros de salud"
+      "TITLE": "Centros de salud",
+      "MESSAGE": "¡No existen Centros de Salud registrados en esta provincia!"
     },
     "TABLE": {
       "NAME": "Nombre",
       "CONTACT": "Contacto",
-      "EMAIL": "Email",
       "CONFIG": "Configuracion"
     },
     "TITLE": "PROVINCIAS"
