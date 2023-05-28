@@ -83,7 +83,7 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<any>(this.url + '/usuarios/editar', {user},{headers} );
+    return this.http.post<any>(this.url + '/usuarios/editar', user,{headers} );
   }
   
 }

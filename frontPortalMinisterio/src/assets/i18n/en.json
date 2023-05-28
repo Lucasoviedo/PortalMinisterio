@@ -93,20 +93,22 @@
   "PROVINCE": {
     "EDIT": {
       "EMAIL": "Email",
-      "NAME": "Name",
-      "TITLE": "Edit province"
+      "TITLE": {
+        "EDIT": "Edit province",
+        "INSERT": "Insert province"
+      }
     },
     "HEALTH": {
       "CONTACT_EMAIL": "Contact email",
       "CONTACT_NAME": "Contact name",
       "DIRECTION": "Direction",
       "NAME": "Name",
-      "TITLE": "Health centers"
+      "TITLE": "Health centers",
+      "MESSAGE": "¡There is no Health Centers registered in this province!"
     },
     "TABLE": {
       "NAME": "Name",
       "CONTACT": "Contact",
-      "EMAIL": "Email",
       "CONFIG": "Configuration"
     },
     "TITLE": "PROVINCES"

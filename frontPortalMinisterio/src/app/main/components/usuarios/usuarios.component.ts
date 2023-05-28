@@ -32,7 +32,6 @@ export class UsuariosComponent implements OnInit {
     dataToSelectRol : Array<any> = [];
 
     usuarioEliminar: number = 0;
-    userIdToEdit? : number = undefined;
 
     nuevoUsuario : INuevoUsuario  = {
         idUsuario : 100,
@@ -49,7 +48,7 @@ export class UsuariosComponent implements OnInit {
         idIdioma : 0,
     }
     userToEdit : IEditUser = {
-        idUsuario : 0,
+        idUsuarioAEditar : 0,
         nombreLaboratorio : "",
         rol : "",
         nombreProvincia : "",
@@ -125,8 +124,6 @@ export class UsuariosComponent implements OnInit {
     }
 
     agregarUsuario(){
-        console.log(this.userIdToEdit)
-
         if(this.nuevoUsuario.nroRol == 1){
             this.nuevoUsuario.codigoLaboratorio = undefined;
         } else if (this.nuevoUsuario.nroRol == 3){
@@ -212,13 +209,8 @@ export class UsuariosComponent implements OnInit {
 
     }
 
-    cleanUserIdToEdit(){
-        this.userIdToEdit = undefined;
-    }
-
     editUser(user : IUsuario){
-        this.userIdToEdit = user.idUsuario;
-        this.userToEdit.idUsuario = user.idUsuario;
+        this.userToEdit.idUsuarioAEditar = user.idUsuario;
         this.userToEdit.nombreLaboratorio = user.nombreLaboratorio;
         this.userToEdit.habilitado = user.habilitado;
         this.userToEdit.email = user.email;
@@ -256,11 +248,14 @@ export class UsuariosComponent implements OnInit {
     }
 
     confirmarActualizacion(){
-        console.log(this.userToEdit)
-        // console.log(this.userToEdit.rol)
         this.usuarioService.updateUser(this.userToEdit)
-        .subscribe((response: any) => {
-            console.log(response)
+        .subscribe((response2: any) => {
+            this.usuarioService.getUsuarios()
+            .subscribe((response: any) => {
+                this.usuariosData = response;
+                this.usuariosDataComplete = response;
+            });
         })
+        
     }
 }
