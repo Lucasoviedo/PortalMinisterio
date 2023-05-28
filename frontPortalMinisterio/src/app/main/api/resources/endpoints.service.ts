@@ -38,6 +38,28 @@ export class EndpointService {
   }
 
 
+  pingCABA(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/endpoints/estado-caba', {headers});
+  }
+
+  pingCBA(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/endpoints/estado-cba', {headers});
+  }
+
+  
+  pingSA(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/endpoints/estado-sa', {headers});
+  }
+
   // actualizarVacunas(vacuna : IVacunaEditada){
   //   const headers = new HttpHeaders({
   //     'Authorization': this.cookieService.get('authToken')
