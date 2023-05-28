@@ -43,7 +43,7 @@ export class LotesConsultaComponent implements OnInit{
     ngOnInit() {
         this.devolucionesService.obtenerDevoluciones()
         .subscribe((response : any) => {
-            this.devolucionesLaboratorios = response
+            this.devolucionesLaboratorios = response || [];
         })
  
         this.devolucionesService.getRejectReasons()
@@ -58,7 +58,7 @@ export class LotesConsultaComponent implements OnInit{
 
         this.provinciasService.obtenerLotesProvincias()
         .subscribe((response : any) => {
-            this.lotesProvincias = response
+            this.lotesProvincias = response || [];
             console.log(response)
         })
     }
