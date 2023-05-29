@@ -341,23 +341,20 @@ export class LotesAdminComponent implements OnInit{
 
         this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
         .subscribe((response : any) => {
-                this.loteDevolucionEditado.codigoDevolucion = "";
-                this.loteDevolucionEditado.descripcionProblema = "";
-                this.loteDevolucionEditado.idEmpresaTransporte = 0;
-                this.loteDevolucionEditado.idMotivoDevolucion = 0;
-                this.loteDevolucionEditado.codigoSeguimiento = "";
-                this.loteDevolucionEditado.fechaEnvio = new Date();  
-                this.fechaDevolucion = undefined;
+            this.loteDevolucionEditado.codigoDevolucion = "";
+            this.loteDevolucionEditado.descripcionProblema = "";
+            this.loteDevolucionEditado.idEmpresaTransporte = 0;
+            this.loteDevolucionEditado.idMotivoDevolucion = 0;
+            this.loteDevolucionEditado.codigoSeguimiento = "";
+            this.loteDevolucionEditado.fechaEnvio = new Date();  
+            this.fechaDevolucion = undefined;
 
-                this.lotesMinLabService.obtenerLotes()
-                .subscribe((responseLotes: any) => {
-                    this.lotesDataComplete = responseLotes
-                    this.lotesData = this.lotesDataComplete;
-                });
-        })
-
-        
-            
+            this.lotesMinLabService.obtenerLotes()
+            .subscribe((responseLotes: any) => {
+                this.lotesDataComplete = responseLotes
+                this.lotesData = this.lotesDataComplete;
+            });
+        })  
     }
 
     

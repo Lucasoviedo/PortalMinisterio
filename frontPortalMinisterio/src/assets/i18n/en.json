@@ -25,9 +25,11 @@
     "ADD": "ADD",
     "CANCEL": "CANCEL",
     "CONFIRM": "CONFIRM",
+    "CLOSE": "CLOSE",
+    "EDIT": "EDIT",
+    "INSERT": "INSERT",
     "SAVE": "SAVE",
-    "UPDATE": "UPDATE",
-    "CLOSE": "CLOSE"
+    "UPDATE": "UPDATE"
   },
   "FOOTER": "National Ministry's vaccination control system",
   "LABORATORY": {

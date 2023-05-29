@@ -40,6 +40,7 @@ export class ProvinciasComponent implements OnInit {
         tecnologia: "",
         url: "",
         usuario: "",
+        urlStatus: "",
     };
 
     mensajePing = ""
@@ -94,7 +95,6 @@ export class ProvinciasComponent implements OnInit {
     }
 
     editarProvincia(provincia:IProvincia){
-
         const variable = this.endpoints.find(endpoint => endpoint.codigoProvincia === provincia.codigoProvincia);
         if(variable) { 
             this.endpointEditar.clave = variable.clave;
@@ -102,17 +102,19 @@ export class ProvinciasComponent implements OnInit {
             this.endpointEditar.habilitado = variable.habilitado;
             this.endpointEditar.tecnologia = variable.tecnologia;
             this.endpointEditar.url = variable.url;
+            this.endpointEditar.urlStatus = variable.urlStatus;
             this.endpointEditar.usuario = variable.usuario;
 
             this.endpointExiste = 1
         } else {
             this.endpointEditar = {
                 clave: "",
-                codigoLabOProv: "",
+                codigoLabOProv: provincia.codigoProvincia,
                 habilitado: 1,
                 tecnologia: "",
                 url: "",
                 usuario: "",
+                urlStatus: ""
             }; 
             this.endpointExiste = 0
         }
@@ -129,6 +131,10 @@ export class ProvinciasComponent implements OnInit {
 
     cambioUrl(evento : any){
         this.endpointEditar.url = evento.target.value
+    }
+
+    cambioUrlStatus(evento : any){
+        this.endpointEditar.urlStatus = evento.target.value
     }
 
     cambioClave(evento : any){
@@ -152,6 +158,7 @@ export class ProvinciasComponent implements OnInit {
             tecnologia: "",
             url: "",
             usuario: "",
+            urlStatus: ""
         }; 
     }
 
@@ -177,5 +184,15 @@ export class ProvinciasComponent implements OnInit {
             })
             
         })    
+    }
+
+    insertarEndpoint(){
+        console.log(this.endpointEditar)
+
+        this.endpointService.insertarEndpoint(this.endpointEditar)
+        .subscribe( (data : any) => {
+            console.log(data)
+            this.eventBusService.onEndpointEdit.emit();
+        })
     }
 }
