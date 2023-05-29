@@ -244,7 +244,6 @@ export class LotesAdminComponent implements OnInit{
                 estado : element.estado
             }
             try{
-                this.vacunasService.actualizarVacunas(data).toPromise();
                 await this.vacunasService.actualizarVacunas(data).toPromise();
             } catch (error) {
                 console.log(error)
@@ -349,13 +348,15 @@ export class LotesAdminComponent implements OnInit{
                 this.loteDevolucionEditado.codigoSeguimiento = "";
                 this.loteDevolucionEditado.fechaEnvio = new Date();  
                 this.fechaDevolucion = undefined;
+
+                this.lotesMinLabService.obtenerLotes()
+                .subscribe((responseLotes: any) => {
+                    this.lotesDataComplete = responseLotes
+                    this.lotesData = this.lotesDataComplete;
+                });
         })
 
-        this.lotesMinLabService.obtenerLotes()
-        .subscribe((response: any) => {
-            this.lotesDataComplete = response
-            this.lotesData = this.lotesDataComplete;
-        });
+        
             
     }
 

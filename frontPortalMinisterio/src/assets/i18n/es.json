@@ -26,7 +26,8 @@
     "CANCEL": "CANCELAR",
     "CONFIRM": "CONFIRMAR",
     "SAVE": "GUARDAR",
-    "UPDATE": "ACTUALIZAR"
+    "UPDATE": "ACTUALIZAR",
+    "CLOSE": "CERRAR"
   },
   "FOOTER": "Sistema de control de vacunacion de Ministerio de la Nación",
   "LABORATORY": {

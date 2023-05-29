@@ -100,8 +100,10 @@ export class AppComponent implements OnInit {
   }
 
   ruteoHeader(ruta: String) {
-    this.router.navigate([ruta]);
-    this.clickShowHeaderOptionsMovile();
+    if (this.cookieService.get('authToken')){
+      this.router.navigate([ruta]);
+      this.clickShowHeaderOptionsMovile();
+    }
   }
 
   clickShowHeaderOptionsMovile() {
