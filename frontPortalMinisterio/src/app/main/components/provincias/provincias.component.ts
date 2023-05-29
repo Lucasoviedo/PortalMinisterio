@@ -9,6 +9,7 @@ import { IEndpoints } from "src/app/core/models/endpoints/i-endpoints";
 import { IEndpoint } from "src/app/core/models/endpoints/i-endpoint";
 import { ITecnologia } from "src/app/core/models/endpoints/i-tecnologia";
 import { EventBusService } from "../../api/resources/event-bus.service";
+import { UsuarioService } from "../../api/resources/usuarios.service";
 
 @Component({
     selector: 'app-provincias',
@@ -46,6 +47,7 @@ export class ProvinciasComponent implements OnInit {
     constructor(private router: Router, 
         private eventBusService: EventBusService,
         private cookieService: CookieService,
+        private usuariosService : UsuarioService,
         private provinciaService: ProvinciaService,
         private endpointService: EndpointService) { }
 
@@ -59,9 +61,8 @@ export class ProvinciasComponent implements OnInit {
         this.endpointService.obtenerEndpoints()
         .subscribe((response : any) => {
             this.endpoints = response;
-        })
+            console.log(response);
 
-        setTimeout(() => {
             this.provinciaService.getProvincias(1)
             .subscribe((response: any) => {
                 this.provinciasData = response.map((data: any) => {
@@ -79,8 +80,7 @@ export class ProvinciasComponent implements OnInit {
                     };
                 })
             });
-        },100)
-
+        })
 
         this.endpointService.obtenerTecnologias()
         .subscribe((data : any) => {
@@ -156,22 +156,26 @@ export class ProvinciasComponent implements OnInit {
     }
 
     pingProvincia(provincia:IProvincia){
-        this.mensajePing = ""
-        let variable = ""
 
+        this.provinciaModal = provincia
+        console.log(provincia)
+
+        this.mensajePing = ""
         this.endpointService.pingEndpoint(provincia.codigoProvincia)
         .subscribe((response : any) => {
-            variable = response.statusCode
-        })
-        
-        setTimeout(() => {
-            if(variable == "OK"){
-                this.mensajePing = "Conexion exitosa"
-            } else if(variable === "INTERNAL_SERVER_ERROR"){
-                this.mensajePing = "La conexion no se pudo establecer"
-            } else {
-                this.mensajePing = "No existe una conexion a este endpoint"
-            }
-        },100)       
+
+            this.usuariosService.getLanguage()
+            .subscribe((responseLenguaje: any) => {
+                console.log(responseLenguaje)
+                if(response.statusCode == "OK"){
+                    responseLenguaje == 1 ? this.mensajePing = "Successful conection" :  this.mensajePing = "Conexion exitosa"
+                } else if(response.statusCode === "INTERNAL_SERVER_ERROR"){
+                    responseLenguaje == 1 ? this.mensajePing = "The connection could not be established" :  this.mensajePing = "La conexion no se pudo establecer"
+                } else {
+                    responseLenguaje == 1 ? this.mensajePing = "There is no connection to this endpoint" :  this.mensajePing = "No existe una conexion a este endpoint"
+                }
+            })
+            
+        })    
     }
 }
