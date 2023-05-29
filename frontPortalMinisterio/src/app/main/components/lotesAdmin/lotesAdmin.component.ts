@@ -251,28 +251,28 @@ export class LotesAdminComponent implements OnInit{
             }
         }
 
-        // SIN FINALIZAR
-        const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
+        // // SIN FINALIZAR
+        // const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
         
-        const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
+        // const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
 
-        if(loteDevolucion){
-            this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
-            this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
-            this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
-            this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
-            this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
-        }
+        // if(loteDevolucion){
+        //     this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
+        //     this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
+        //     this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
+        //     this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
+        //     this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
+        // }
 
-        this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
-        .subscribe((response : any) => {
-        })
+        // this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
+        // .subscribe((response : any) => {
+        // })
 
-        this.lotesMinLabService.obtenerLotes()
-        .subscribe((response: any) => {
-            this.lotesDataComplete = response
-            this.lotesData = this.lotesDataComplete;
-        });
+        // this.lotesMinLabService.obtenerLotes()
+        // .subscribe((response: any) => {
+        //     this.lotesDataComplete = response
+        //     this.lotesData = this.lotesDataComplete;
+        // });
     }
 
     distribuirVacunas(lote : ILoteLab){
@@ -348,6 +348,7 @@ export class LotesAdminComponent implements OnInit{
                 this.loteDevolucionEditado.idMotivoDevolucion = 0;
                 this.loteDevolucionEditado.codigoSeguimiento = "";
                 this.loteDevolucionEditado.fechaEnvio = new Date();  
+                this.fechaDevolucion = undefined;
         })
 
         this.lotesMinLabService.obtenerLotes()
