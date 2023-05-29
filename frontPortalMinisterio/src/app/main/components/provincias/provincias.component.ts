@@ -90,6 +90,7 @@ export class ProvinciasComponent implements OnInit {
         this.eventBusService.onEndpointEdit.subscribe(() => {
             this.ngOnInit();
           });
+
     }
 
     editarProvincia(provincia:IProvincia){
@@ -158,29 +159,11 @@ export class ProvinciasComponent implements OnInit {
         this.mensajePing = ""
         let variable = ""
 
-        switch(provincia.codigoProvincia){
-            case "CABA":
-                this.endpointService.pingCABA()
-                .subscribe((response : any) => {
-                    variable = response.statusCode
-                })
-                break
-            case "CBA":
-                this.endpointService.pingCBA()
-                .subscribe((response : any) => {
-                    variable = response.statusCode
-                })
-                break
-            case "SA":
-                this.endpointService.pingSA()
-                .subscribe((response : any) => {
-                    variable = response.statusCode
-                })
-                break
-            default:
-                break
-        }
-
+        this.endpointService.pingEndpoint(provincia.codigoProvincia)
+        .subscribe((response : any) => {
+            variable = response.statusCode
+        })
+        
         setTimeout(() => {
             if(variable == "OK"){
                 this.mensajePing = "Conexion exitosa"

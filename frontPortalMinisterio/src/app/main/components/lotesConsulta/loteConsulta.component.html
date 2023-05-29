@@ -17,8 +17,8 @@
                 <tr *ngFor="let lote of devolucionesLaboratorios">
                     <td>{{lote.codigoLaboratorio}}</td>
                     <td>{{lote.codigoLote}}</td>
-                    <td>{{lote.fechaEnvio || "----------"}}</td>
-                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
+                    <td>{{lote.fechaRecepcion || "PENDIENTE"}}</td>
                     <td>{{lote.codigoDevolucion}}</td>
                     <td>{{lote.cantidadVacunas}}</td>
                 </tr>
@@ -37,15 +37,14 @@
                     <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
                     <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
                     <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
-                    <th>Recepcion devolucion</th>
                 </tr>
             </thead>
             <tbody >
                 <tr *ngFor="let lote of lotesProvincias">
                     <td>{{lote.codigoLaboratorio}}  {{lote.codigoProvincia}}</td>
                     <td>{{lote.codigoLote}}</td>
-                    <td>{{lote.fechaEnvio || "----------"}}</td>
-                    <td>{{lote.fechaRecepcion || "----------"}}</td>
+                    <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
+                    <td>{{lote.fechaRecepcion || "PENDIENTE"}}</td>
                     <td>{{lote.cantidadVacunas}}</td>
                     <td *ngIf="!lote.idEmpresaTransporte "> 
                         <div class="btn-table"  (click)="despacharLote(lote)"
@@ -54,28 +53,6 @@
                         </div>
                     </td>
                     <td *ngIf="lote.idEmpresaTransporte">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
-          
-                    <!-- <td>input</td> -->
-
-                    <!-- SIN FINALIZAR -->
-                    <td *ngIf="lote.estado === 'RECHAZADO' 
-                        || lote.estado === 'ACEPTADO_PARCIALMENTE' 
-                        ; else demasEstados ">
-                        INPUT DATE
-                    </td>
-                    <ng-template #demasEstados>
-                      <td>----------</td>
-                        <!-- <td *ngIf="lote.fechaRecepcion">
-                            <div class="btn-table" (click)="verificarVacunas(lote)"
-                            type="button" data-toggle="modal" data-target="#check-vaccines-modal">
-                            {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
-                            </div>
-                        </td>
-                        <td *ngIf="!lote.fechaRecepcion">
-                            ------------ 
-                        </td> -->
-                    </ng-template>
-          
                 </tr>
             </tbody>
         </table>

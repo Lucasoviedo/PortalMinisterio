@@ -37,28 +37,35 @@ export class EndpointService {
     return this.http.put<IEndpoint>(this.url + '/endpoints/editar', endpoint, {headers});
   }
 
-
-  pingCABA(){
+  // /estado/{serviceName}
+  pingEndpoint(codigo: string){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.get<any>(this.url + '/endpoints/estado-caba', {headers});
+    return this.http.get<any>(this.url + `/endpoints/estado/${codigo}`, {headers});
   }
 
-  pingCBA(){
-    const headers = new HttpHeaders({
-      'Authorization': this.cookieService.get('authToken')
-    });
-    return this.http.get<any>(this.url + '/endpoints/estado-cba', {headers});
-  }
+  // pingCABA(){
+  //   const headers = new HttpHeaders({
+  //     'Authorization': this.cookieService.get('authToken')
+  //   });
+  //   return this.http.get<any>(this.url + '/endpoints/estado-caba', {headers});
+  // }
+
+  // pingCBA(){
+  //   const headers = new HttpHeaders({
+  //     'Authorization': this.cookieService.get('authToken')
+  //   });
+  //   return this.http.get<any>(this.url + '/endpoints/estado-cba', {headers});
+  // }
 
   
-  pingSA(){
-    const headers = new HttpHeaders({
-      'Authorization': this.cookieService.get('authToken')
-    });
-    return this.http.get<any>(this.url + '/endpoints/estado-sa', {headers});
-  }
+  // pingSA(){
+  //   const headers = new HttpHeaders({
+  //     'Authorization': this.cookieService.get('authToken')
+  //   });
+  //   return this.http.get<any>(this.url + '/endpoints/estado-sa', {headers});
+  // }
 
   // actualizarVacunas(vacuna : IVacunaEditada){
   //   const headers = new HttpHeaders({
