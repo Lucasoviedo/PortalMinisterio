@@ -268,11 +268,11 @@ export class LotesAdminComponent implements OnInit{
         // .subscribe((response : any) => {
         // })
 
-        // this.lotesMinLabService.obtenerLotes()
-        // .subscribe((response: any) => {
-        //     this.lotesDataComplete = response
-        //     this.lotesData = this.lotesDataComplete;
-        // });
+        this.lotesMinLabService.obtenerLotes()
+        .subscribe((response: any) => {
+            this.lotesDataComplete = response
+            this.lotesData = this.lotesDataComplete;
+        });
     }
 
     distribuirVacunas(lote : ILoteLab){
