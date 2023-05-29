@@ -59,7 +59,6 @@ export class LotesConsultaComponent implements OnInit{
         this.provinciasService.obtenerLotesProvincias()
         .subscribe((response : any) => {
             this.lotesProvincias = response || [];
-            console.log(response)
         })
     }
 
@@ -90,19 +89,19 @@ export class LotesConsultaComponent implements OnInit{
 
         this.provinciasService.editarLoteProvincia(this.loteDevolucionEditado)
         .subscribe((response : any) => {
-                console.log(response);
-                this.loteDevolucionEditado.idEmpresaTransporte = 0;
-                this.loteDevolucionEditado.codigoSeguimiento = "";
-                this.loteDevolucionEditado.fechaEnvio = ""; 
-                this.loteDevolucionEditado.codigoLote = "";
-                this.loteDevolucionEditado.codigoProvincia = "";
+            this.loteDevolucionEditado.idEmpresaTransporte = 0;
+            this.loteDevolucionEditado.codigoSeguimiento = "";
+            this.loteDevolucionEditado.fechaEnvio = ""; 
+            this.loteDevolucionEditado.codigoLote = "";
+            this.loteDevolucionEditado.codigoProvincia = "";
+
+            this.provinciasService.obtenerLotesProvincias()
+            .subscribe((response : any) => {
+                this.lotesProvincias = response
+                console.log(response)
+            })
         })
 
-        this.provinciasService.obtenerLotesProvincias()
-        .subscribe((response : any) => {
-            this.lotesProvincias = response
-            console.log(response)
-        })
     }
 
 }

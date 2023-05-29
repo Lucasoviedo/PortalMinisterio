@@ -4,5 +4,6 @@ export interface IEndpoint{
     habilitado: number;
     tecnologia: string;
     url: string;
+    urlStatus: string;
     usuario: string;
 }
