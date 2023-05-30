@@ -5,4 +5,5 @@ export interface ILaboratorio{
     direccion: string;
     emailContacto: string;
     nombreContacto: string;
+    valor: number;
 }
