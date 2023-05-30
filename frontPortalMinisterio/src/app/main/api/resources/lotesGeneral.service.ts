@@ -6,6 +6,7 @@ import { IEstado } from 'src/app/core/models/i-estado';
 import { IEditarLoteRecepcion } from 'src/app/core/models/lotesMinLab/i-editarLote';
 import { IEstadosVacunas } from 'src/app/core/models/vacunas/i-estadosVacunas';
 import { IEmpresaTransporte } from 'src/app/core/models/i-empresaTransporte';
+import { IConsultaDevolucion } from 'src/app/core/models/lotesMinProv/i-consultaDevolucion';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,20 @@ export class LotesGeneralService {
       'Authorization': this.cookieService.get('authToken')
     });
     return this.http.get<IEstadosVacunas>(this.url + '/vacunas/estados', {headers});
+  }
+
+
+  obtenerDevolucionesProvincias(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<IConsultaDevolucion>(this.url + '/devoluciones-provincias/' , {} , {headers} );
+  }
+
+  marcarRecepcionDevolucionProvincia(fecha : string){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.put<IConsultaDevolucion>(this.url + '/devoluciones-provincias/marcar-recepcion-devolucion' , fecha , {headers} );
   }
 }

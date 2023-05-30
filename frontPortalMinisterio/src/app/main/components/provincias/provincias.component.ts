@@ -10,6 +10,7 @@ import { IEndpoint } from "src/app/core/models/endpoints/i-endpoint";
 import { ITecnologia } from "src/app/core/models/endpoints/i-tecnologia";
 import { EventBusService } from "../../api/resources/event-bus.service";
 import { UsuarioService } from "../../api/resources/usuarios.service";
+import { INuevoEndpoint } from "src/app/core/models/endpoints/i-nuevoEndpoint";
 
 @Component({
     selector: 'app-provincias',
@@ -42,6 +43,18 @@ export class ProvinciasComponent implements OnInit {
         usuario: "",
         urlStatus: "",
     };
+
+    endpointInsertar : INuevoEndpoint = {
+        codigoLabOProv: "",
+        clave: "",
+        habilitado: 1,
+        tecnologia: "",
+        url: "",
+        usuario: "",
+        urlStatus: "",
+        codigoLaboratorio: undefined,
+        codigoProvincia: ""
+    }
 
     mensajePing = ""
 
@@ -95,10 +108,11 @@ export class ProvinciasComponent implements OnInit {
     }
 
     editarProvincia(provincia:IProvincia){
+        console.log(provincia);
         const variable = this.endpoints.find(endpoint => endpoint.codigoProvincia === provincia.codigoProvincia);
         if(variable) { 
             this.endpointEditar.clave = variable.clave;
-            this.endpointEditar.codigoLabOProv = variable.codigoLaboratorio || variable.codigoProvincia;
+            this.endpointEditar.codigoLabOProv = provincia.codigoProvincia;
             this.endpointEditar.habilitado = variable.habilitado;
             this.endpointEditar.tecnologia = variable.tecnologia;
             this.endpointEditar.url = variable.url;
@@ -116,6 +130,19 @@ export class ProvinciasComponent implements OnInit {
                 usuario: "",
                 urlStatus: ""
             }; 
+
+            this.endpointInsertar = {
+                codigoLabOProv: provincia.codigoProvincia,
+                clave: "",
+                habilitado: 1,
+                tecnologia: "",
+                url: "",
+                usuario: "",
+                urlStatus: "",
+                codigoLaboratorio: undefined,
+                codigoProvincia: provincia.codigoProvincia
+            }
+
             this.endpointExiste = 0
         }
 
@@ -131,17 +158,27 @@ export class ProvinciasComponent implements OnInit {
 
     cambioUrl(evento : any){
         this.endpointEditar.url = evento.target.value
+        this.endpointInsertar.url = evento.target.value
     }
 
     cambioUrlStatus(evento : any){
         this.endpointEditar.urlStatus = evento.target.value
+        this.endpointInsertar.urlStatus = evento.target.value
     }
 
     cambioClave(evento : any){
         this.endpointEditar.clave = evento.target.value
+        this.endpointInsertar.clave = evento.target.value
     }
+
+    cambioTecnologia(evento : any){
+        this.endpointEditar.tecnologia = evento.target.value
+        this.endpointInsertar.tecnologia = evento.target.value
+    }
+
     cambioUsuario(evento : any){
         this.endpointEditar.usuario = evento.target.value
+        this.endpointInsertar.usuario = evento.target.value
     }
 
     editarEndpoint(){
@@ -187,9 +224,9 @@ export class ProvinciasComponent implements OnInit {
     }
 
     insertarEndpoint(){
-        console.log(this.endpointEditar)
+        console.log(this.endpointInsertar)
 
-        this.endpointService.insertarEndpoint(this.endpointEditar)
+        this.endpointService.insertarEndpoint(this.endpointInsertar)
         .subscribe( (data : any) => {
             console.log(data)
             this.eventBusService.onEndpointEdit.emit();

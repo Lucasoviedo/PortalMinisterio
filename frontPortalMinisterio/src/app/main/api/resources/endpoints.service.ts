@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { IEndpoint } from 'src/app/core/models/endpoints/i-endpoint';
 import { IEndpoints } from 'src/app/core/models/endpoints/i-endpoints';
+import { INuevoEndpoint } from 'src/app/core/models/endpoints/i-nuevoEndpoint';
 // import { IEndpoint } from 'src/app/core/models/endpoints/i-endpoint';
 
 @Injectable({
@@ -37,11 +38,11 @@ export class EndpointService {
     return this.http.put<IEndpoint>(this.url + '/endpoints/editar', endpoint, {headers});
   }
 
-  insertarEndpoint(endpoint: IEndpoint){
+  insertarEndpoint(endpoint: INuevoEndpoint){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IEndpoint>(this.url + '/endpoints/insertar', endpoint, {headers});
+    return this.http.post<INuevoEndpoint>(this.url + '/endpoints/insertar', endpoint, {headers});
   }
 
   pingEndpoint(codigo: string){

@@ -70,7 +70,7 @@
 
                 <div class="flexRow">
                     <label for="">Tecnologia</label>
-                    <select [(ngModel)] = "endpointEditar.tecnologia">
+                    <select [(ngModel)] = "endpointEditar.tecnologia" (change)="cambioTecnologia($event)">
                         <option selected hidden>{{endpointEditar.tecnologia}}</option>
                         <option *ngFor="let tecnologia of tecnologiasData" 
                               value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
