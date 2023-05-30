@@ -23,6 +23,7 @@ import { LotesAdminComponent } from './main/components/lotesAdmin/lotesAdmin.com
 import { LotesConsultaComponent } from './main/components/lotesConsulta/loteConsulta.component';
 import { CommonModule } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { SplashComponent } from './main/components/splash/splash.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
@@ -51,7 +52,8 @@ const appRoutes:Routes = [
     LaboratoriosComponent,
     LotesAdminComponent,
     LotesConsultaComponent,
-    VacunadosComponent
+    VacunadosComponent,
+    SplashComponent
   ],
   imports: [
     BrowserModule,

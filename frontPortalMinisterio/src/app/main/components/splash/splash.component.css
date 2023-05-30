@@ -1,0 +1,25 @@
+.splash-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0695d6;
+}
+
+.spinner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.spinner-grow {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 10px; 
+  margin-left: 10px;
+}
+
+.logo-image {
+  width: 350px; 
+  height: auto; 
+}
