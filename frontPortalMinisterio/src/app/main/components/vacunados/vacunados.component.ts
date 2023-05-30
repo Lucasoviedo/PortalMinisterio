@@ -28,7 +28,6 @@ export class VacunadosComponent implements OnInit{
         this.vacunasService.getVaccinateds()
         .subscribe((response) => {
             this.vacunadosData = response;
-            console.log(response);
         })
     }
 }

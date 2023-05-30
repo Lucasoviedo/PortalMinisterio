@@ -1,6 +1,6 @@
 <div class="container">
-    <h3>DEVOLUCIONES PROVINCIAS</h3>
-    <table class="table table-striped">
+    <h3>VACUNADOS</h3>
+    <table class="table table-striped" *ngIf="vacunadosData.length > 0">
         <thead>
             <tr>
                 <th>cuil</th>
@@ -18,5 +18,8 @@
             </tr>
         </tbody>
     </table>
-    <hr/>
+    <div *ngIf="vacunadosData.length === 0">
+        <hr/>
+        <h6>No existe informacion de vacunados por el momento</h6>
+    </div>
 </div>

@@ -19,11 +19,6 @@ export class VacunasService {
       'Authorization': this.cookieService.get('authToken')
     });
     return this.http.post<any>(this.url + '/vacunaciones/' , {} , {headers} );
-    // const headers = new HttpHeaders({
-    //   'Authorization': this.cookieService.get('authToken')
-    // });
-    // return this.http.post<IUsuario>(this.url + '/usuarios/roles' ,{
-    // }, {headers} );
   }
     
   getVacunas() {
