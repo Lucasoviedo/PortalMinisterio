@@ -7,6 +7,7 @@ import { IEditarLoteRecepcion } from 'src/app/core/models/lotesMinLab/i-editarLo
 import { IEstadosVacunas } from 'src/app/core/models/vacunas/i-estadosVacunas';
 import { IEmpresaTransporte } from 'src/app/core/models/i-empresaTransporte';
 import { IConsultaDevolucion } from 'src/app/core/models/lotesMinProv/i-consultaDevolucion';
+import { ICriteriosBusqueda } from 'src/app/core/models/i-criteriosBusqueda';
 
 @Injectable({
   providedIn: 'root'
@@ -45,12 +46,11 @@ export class LotesGeneralService {
     return this.http.get<IEstadosVacunas>(this.url + '/vacunas/estados', {headers});
   }
 
-
-  obtenerDevolucionesProvincias(){
+  obtenerDevolucionesProvincias(criteria : ICriteriosBusqueda){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IConsultaDevolucion>(this.url + '/devoluciones-provincias/' , {} , {headers} );
+    return this.http.post<ICriteriosBusqueda>(this.url + '/devoluciones-provincias/' , criteria , {headers} );
   }
 
   marcarRecepcionDevolucionProvincia(fecha : string){

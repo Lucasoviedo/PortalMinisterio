@@ -7,10 +7,10 @@ import { IEmpresaTransporte } from "src/app/core/models/i-empresaTransporte";
 import { IRejectReason } from "src/app/core/models/vacunas/i-rejectReason";
 import { LotesGeneralService } from "../../api/resources/lotesGeneral.service";
 import { IEnvioProvincia } from "src/app/core/models/lotesMinProv/i-envioProvincia";
-import { ILoteLab } from "src/app/core/models/lotesMinLab/i-loteLab";
 import { Modal } from 'bootstrap';
 import { IEditarLoteRecepcion } from "src/app/core/models/lotesMinLab/i-editarLote";
 import { IDevolucionProvincia } from "src/app/core/models/lotesMinProv/i-devolucionProvincia";
+import { ICriteriosBusqueda } from "src/app/core/models/i-criteriosBusqueda";
 
 @Component({
     selector: 'app-loteConsulta',
@@ -54,6 +54,11 @@ export class LotesConsultaComponent implements OnInit{
     empresasTransporte : Array<IEmpresaTransporte> = [];
     rejectionReasonsData : Array<IRejectReason> = [];
 
+    criteriaBusqueda : ICriteriosBusqueda = {
+        codigoLaboratorio : undefined,
+        codigoProvincia : "CBA",
+    }
+
     ngOnInit() {
         this.devolucionesService.obtenerDevoluciones()
         .subscribe((response : any) => {
@@ -75,9 +80,9 @@ export class LotesConsultaComponent implements OnInit{
             this.lotesProvincias = response || [];
         })
 
-        this.lotesGeneralService.obtenerDevolucionesProvincias()
+        this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)
         .subscribe((response : any) => {
-            this.lotesDevolucionesProvincias = response
+            this.lotesDevolucionesProvincias = response || []
         });
     }
 
@@ -142,7 +147,7 @@ export class LotesConsultaComponent implements OnInit{
 
         this.lotesGeneralService.marcarRecepcionDevolucionProvincia(this.loteActualizacionRecibo.codigoLote + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
         .subscribe((res : any) => {
-            this.lotesGeneralService.obtenerDevolucionesProvincias()
+            this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)
             .subscribe((response : any) => {
                 this.lotesDevolucionesProvincias = response
             });

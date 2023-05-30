@@ -1,12 +1,15 @@
 <div class="container">
     <h1 class="tituloConsulta">DASHBOARD</h1>
     <hr/>
-    <div class="dashboard-container">
+    <div class="dashboard-container" *ngIf="dashboardData.length > 0">
         <div *ngFor="let data of dashboardData" class="dashboard-item">
             <div *ngIf="data.value !== null"  class="dashboard-item-container">
                 <h2>{{data.value}}</h2>
                 <h5>{{data.title}}</h5>    
             <div>
         </div>
+    </div>
+    <div *ngIf="dashboardData.length === 0">
+        <h6>No existe informacion por el momento</h6>
     </div>
 </div>

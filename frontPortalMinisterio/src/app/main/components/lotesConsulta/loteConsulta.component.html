@@ -58,12 +58,6 @@
         </table>
         <hr/>
     </div>
-
-
-
-
-
-
     <div *ngIf="lotesDevolucionesProvincias.length > 0">
       <h3>DEVOLUCIONES PROVINCIAS</h3>
       <table class="table table-striped">
@@ -91,14 +85,11 @@
               </tr>
           </tbody>
       </table>
+      <div *ngIf="devolucionesLaboratorios === [] && lotesProvincias === [] && lotesDevolucionesProvincias === []">
+        <h6>asonfoakm</h6>
+      </div>
       <hr/>
   </div>
-
-
-
-
-
-
 </div>
 
 <!-- Modal despachar vacunas-->

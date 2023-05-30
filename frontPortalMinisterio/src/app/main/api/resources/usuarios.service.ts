@@ -27,7 +27,6 @@ export class UsuarioService {
     let idioma = <IIdioma> {
       idioma : undefined
     }
-
     return this.http.post<IUsuario>(this.url + '/usuarios/idiomas' , idioma
     );
   }
@@ -63,7 +62,6 @@ export class UsuarioService {
     return this.http.post<any>(this.url + '/usuarios/dashboard', {}, {headers} );
   }
 
-
   getRolNumber(){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
@@ -78,7 +76,6 @@ export class UsuarioService {
     return this.http.get<any>(this.url + '/usuarios/id-idioma', {headers} );
   }
 
-  
   updateUser(user: IEditUser){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')

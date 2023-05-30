@@ -84,6 +84,7 @@ export class AppComponent implements OnInit {
         this.router.navigate(['/login']);
         this.cookieService.delete('authToken');
         this.cookieService.delete('idUsuario');
+        this.cookieService.delete('rolUsuario');
         this.showHeaderOptions = false;
         this.showHeaderOptionsMovile = false;
         this.cdr.detectChanges(); // Manually trigger change detection
@@ -92,6 +93,7 @@ export class AppComponent implements OnInit {
           this.router.navigate(['/login']);
           this.cookieService.delete('authToken');
           this.cookieService.delete('idUsuario');
+          this.cookieService.delete('rolUsuario');
           this.showHeaderOptions = false;
           this.showHeaderOptionsMovile = false;
           this.cdr.detectChanges(); // Manually trigger change detection
