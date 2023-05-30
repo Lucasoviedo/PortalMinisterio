@@ -58,6 +58,47 @@
         </table>
         <hr/>
     </div>
+
+
+
+
+
+
+    <div *ngIf="lotesDevolucionesProvincias.length > 0">
+      <h3>DEVOLUCIONES PROVINCIAS</h3>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+              </tr>
+          </thead>
+          <tbody >
+              <tr *ngFor="let lote of lotesDevolucionesProvincias">
+                  <td>{{lote.codigoLaboratorio}}</td>
+                  <td>{{lote.codigoLote}}</td>
+                  <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
+                  <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
+                    <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
+                  </td>
+                  <td *ngIf="lote.fechaRecepcion">
+                    {{lote.fechaRecepcion}}
+                  </td>
+                  <td>{{lote.cantidadVacunas}}</td>
+              </tr>
+          </tbody>
+      </table>
+      <hr/>
+  </div>
+
+
+
+
+
+
 </div>
 
 <!-- Modal despachar vacunas-->
@@ -103,3 +144,57 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Modal actualizacion recepcion -->
+<div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDataChangeModalLabel">{{ "MANAGMENT.MODAL.GET_BATCH.TITLE" | translate }}</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>¿{{ "MANAGMENT.MODAL.GET_BATCH.MESSAGE" | translate }} {{fechaActualizacionRecibo}}?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarFechaLoteAdmin()">{{ "BUTTONS.UPDATE" | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

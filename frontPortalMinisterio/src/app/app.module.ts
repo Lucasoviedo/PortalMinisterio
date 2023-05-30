@@ -50,7 +50,8 @@ const appRoutes:Routes = [
     UsuariosComponent,
     LaboratoriosComponent,
     LotesAdminComponent,
-    LotesConsultaComponent
+    LotesConsultaComponent,
+    VacunadosComponent
   ],
   imports: [
     BrowserModule,

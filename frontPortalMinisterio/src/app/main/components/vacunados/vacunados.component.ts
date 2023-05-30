@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { VacunasService } from "../../api/resources/vacunas.service";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { IVacunado } from "src/app/core/models/i-vacunado";
 
 @Component({
     selector: 'app-vacunados',
@@ -11,10 +12,11 @@ import { CookieService } from "ngx-cookie-service";
 
 export class VacunadosComponent implements OnInit{
 
+    vacunadosData:  Array<IVacunado> = []
     
-  constructor(private router: Router, 
-            private cookieService: CookieService,
-            private vacunasService: VacunasService){}
+    constructor(private router: Router, 
+                private cookieService: CookieService,
+                private vacunasService: VacunasService){}
 
     ngOnInit(): void {
         if(this.cookieService.get('rolUsuario')){
@@ -25,6 +27,7 @@ export class VacunadosComponent implements OnInit{
 
         this.vacunasService.getVaccinateds()
         .subscribe((response) => {
+            this.vacunadosData = response;
             console.log(response);
         })
     }

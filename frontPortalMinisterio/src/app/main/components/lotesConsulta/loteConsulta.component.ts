@@ -7,6 +7,10 @@ import { IEmpresaTransporte } from "src/app/core/models/i-empresaTransporte";
 import { IRejectReason } from "src/app/core/models/vacunas/i-rejectReason";
 import { LotesGeneralService } from "../../api/resources/lotesGeneral.service";
 import { IEnvioProvincia } from "src/app/core/models/lotesMinProv/i-envioProvincia";
+import { ILoteLab } from "src/app/core/models/lotesMinLab/i-loteLab";
+import { Modal } from 'bootstrap';
+import { IEditarLoteRecepcion } from "src/app/core/models/lotesMinLab/i-editarLote";
+import { IDevolucionProvincia } from "src/app/core/models/lotesMinProv/i-devolucionProvincia";
 
 @Component({
     selector: 'app-loteConsulta',
@@ -15,6 +19,8 @@ import { IEnvioProvincia } from "src/app/core/models/lotesMinProv/i-envioProvinc
 })
 
 export class LotesConsultaComponent implements OnInit{
+    
+    myModal = document.getElementById('#confirmDataChangeModal');
 
     empresaTransporteActual = 0;
     fechaDevolucion = "";
@@ -36,6 +42,14 @@ export class LotesConsultaComponent implements OnInit{
     lotesProvincias : Array<INuevoLoteProv> = [];
 
     loteActual : Array<INuevoLoteProv> = [];
+
+    lotesDevolucionesProvincias : Array<IDevolucionProvincia> = [];
+    fechaActualizacionRecibo = new Date();
+    loteActualizacionRecibo :  IEditarLoteRecepcion =  {
+        idUsuario: 1,
+        codigoLote: "",
+        fechaRecepcion: ""
+    } ;
 
     empresasTransporte : Array<IEmpresaTransporte> = [];
     rejectionReasonsData : Array<IRejectReason> = [];
@@ -60,6 +74,11 @@ export class LotesConsultaComponent implements OnInit{
         .subscribe((response : any) => {
             this.lotesProvincias = response || [];
         })
+
+        this.lotesGeneralService.obtenerDevolucionesProvincias()
+        .subscribe((response : any) => {
+            this.lotesDevolucionesProvincias = response
+        });
     }
 
     despacharLote(lote : INuevoLoteProv){
@@ -104,4 +123,40 @@ export class LotesConsultaComponent implements OnInit{
 
     }
 
+    openConfirmDataModal(evento : any, lote : IDevolucionProvincia){
+        if(new Date().toISOString().slice(0, 10) < evento.target.value){
+            alert("Seleccione una fecha igual o anterior al dia actual")
+        } else {
+            this.myModal = document.getElementById('confirmDataChangeModal');
+            if (this.myModal) {
+                const modal = new Modal(this.myModal);
+                    this.fechaActualizacionRecibo = evento.target.value;
+                    this.loteActualizacionRecibo.codigoLote = lote.codigoDevolucion;
+                    this.loteActualizacionRecibo.fechaRecepcion = evento.target.value;
+                    modal.show();
+              }
+        }
+    }
+
+    actualizarFechaLoteAdmin(){
+
+        this.lotesGeneralService.marcarRecepcionDevolucionProvincia(this.loteActualizacionRecibo.codigoLote + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
+        .subscribe((res : any) => {
+            this.lotesGeneralService.obtenerDevolucionesProvincias()
+            .subscribe((response : any) => {
+                this.lotesDevolucionesProvincias = response
+            });
+        })
+
+
+        // this.lotesGeneralService.actualizarLoteAdmin(this.loteActualizacionRecibo.codigoLote 
+        //     + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
+        // .subscribe((res: any) => {
+        //     this.lotesMinLabService.obtenerLotes()
+        //     .subscribe((response: any) => {
+        //         this.lotesDataComplete = response
+        //         this.lotesData = this.lotesDataComplete;
+        //     });
+        // });
+    }
 }

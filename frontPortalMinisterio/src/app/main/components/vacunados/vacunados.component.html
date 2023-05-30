@@ -1,1 +1,22 @@
-<p>Vacunados works!</p>
+<div >
+    <h3>DEVOLUCIONES PROVINCIAS</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>cuil</th>
+                <th>fechaHoraVacunacion</th>
+                <th>codigoVacuna</th>
+                <th>codigoCentroVac</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr *ngFor="let vacunado of vacunadosData">
+                <td>{{vacunado.cuil}}</td>
+                <td>{{vacunado.fechaHoraVacunacion}}</td>
+                <td>{{vacunado.codigoVacuna}}</td>
+                <td>{{vacunado.codigoCentroVac}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+</div>
