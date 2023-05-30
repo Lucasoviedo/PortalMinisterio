@@ -1,5 +1,5 @@
 .footer-container{
-    background-color: rgba(var(--bs-primary-rgb));
+    background-color: rgba(var(--bs-primary-rgb)); /* #37bbed */
     padding: 20px;
     color: white;
     box-shadow: 0 0 10px rgba(var(--bs-primary-rgb));

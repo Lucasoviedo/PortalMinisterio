@@ -31,8 +31,12 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['es', 'en']);
     this.translate.setDefaultLang('es');
   }
+  showSplash = true;
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.showSplash = false;
+    }, 2000);
     //Comprobar que exista la sesion
     if (!this.cookieService.get('authToken')) {
       this.showHeaderOptions = false;
