@@ -3,6 +3,7 @@ import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { IEditarDevolucion } from 'src/app/core/models/devoluciones/i-editarDevolucion';
+import { ICriteriosBusquedaDevolucionesLabs } from 'src/app/core/models/i-criteriosBusquedaDevolucionesLabs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,11 @@ export class DevolucionesService {
     return this.http.get<any>(this.url + '/devoluciones/motivos' );
   }
 
-  obtenerDevoluciones(){
+  obtenerDevoluciones(criteria: ICriteriosBusquedaDevolucionesLabs){
     const headers = new HttpHeaders({
           'Authorization': this.cookieService.get('authToken')
         });
-        return this.http.post<any>(this.url + '/devoluciones/', {}, {headers});
+        return this.http.post<any>(this.url + '/devoluciones/', criteria, {headers});
   }
 
   crearDevolucion(devolucion : IEditarDevolucion){

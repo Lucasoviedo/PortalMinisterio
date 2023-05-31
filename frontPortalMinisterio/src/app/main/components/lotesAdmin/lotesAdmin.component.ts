@@ -19,6 +19,8 @@ import { DevolucionesService } from "../../api/resources/devoluciones.service";
 import { ProvinciaService } from "../../api/resources/provincias.service";
 import { IProvinciaDistribuir } from "src/app/core/models/provincias/i-provinciaDistribuir";
 import { IEditarDevolucion } from "src/app/core/models/devoluciones/i-editarDevolucion";
+import { ICriteriosBusquedaLotesLabs } from "src/app/core/models/i-criteriosBusquedaLotesLabs";
+import { ICriteriosBusquedaDevolucionesLabs } from "src/app/core/models/i-criteriosBusquedaDevolucionesLabs";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -93,6 +95,15 @@ export class LotesAdminComponent implements OnInit{
     provinciaCambioCod : String = "";
     provinciaTipoDistribucion: number = 1;
 
+    criteriaBusquedaLotesLabs : ICriteriosBusquedaLotesLabs = {
+        codigoLaboratorio : undefined,
+        codigoEstado : undefined,
+    }
+
+    criteriaBusquedaDevolucionesLabs: ICriteriosBusquedaDevolucionesLabs = {
+        codigoLaboratorio: undefined
+    }
+
     constructor(private router: Router, 
         private cookieService: CookieService,
         private lotesMinLabService : LotesMinLabService,
@@ -114,7 +125,7 @@ export class LotesAdminComponent implements OnInit{
             this.laboratoriosData = response
         });
 
-        this.lotesMinLabService.obtenerLotes()
+        this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
         });
@@ -187,7 +198,7 @@ export class LotesAdminComponent implements OnInit{
         this.lotesGeneralService.actualizarLoteAdmin(this.loteActualizacionRecibo.codigoLote 
             + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
         .subscribe((res: any) => {
-            this.lotesMinLabService.obtenerLotes()
+            this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
             .subscribe((response: any) => {
                 this.lotesDataComplete = response
                 this.lotesData = this.lotesDataComplete;
@@ -267,7 +278,7 @@ export class LotesAdminComponent implements OnInit{
         // .subscribe((response : any) => {
         // })
 
-        this.lotesMinLabService.obtenerLotes()
+        this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
             this.lotesData = this.lotesDataComplete;
@@ -329,7 +340,7 @@ export class LotesAdminComponent implements OnInit{
         
         if(this.fechaDevolucion === undefined) return
             
-        const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
+        const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs).toPromise();
         const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
 
         this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
@@ -349,7 +360,7 @@ export class LotesAdminComponent implements OnInit{
             this.loteDevolucionEditado.fechaEnvio = new Date();  
             this.fechaDevolucion = undefined;
 
-            this.lotesMinLabService.obtenerLotes()
+            this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
             .subscribe((responseLotes: any) => {
                 this.lotesDataComplete = responseLotes
                 this.lotesData = this.lotesDataComplete;
@@ -378,7 +389,7 @@ export class LotesAdminComponent implements OnInit{
             }
         }
 
-        this.lotesMinLabService.obtenerLotes()
+        this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
             this.lotesData = this.lotesDataComplete;
