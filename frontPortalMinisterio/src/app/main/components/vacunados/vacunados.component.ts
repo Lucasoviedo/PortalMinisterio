@@ -44,17 +44,22 @@ export class VacunadosComponent implements OnInit{
 
         this.laboratorioService.getLaboratorios()
         .subscribe((response: any) => {
+            console.log(response);
             this.laboratoriosData = response.map((laboratorio : any) => {
                 return laboratorio.nombre;
             })
         })
 
-        this.provinciaService.getProvincias(1)
-        .subscribe((response: any) => {
-            this.provinciasData = response.map((laboratorio : any) => {
-                return laboratorio.nombre;
+        if(this.cookieService.get('rolUsuario') == "1"){
+            this.provinciaService.getProvincias(1)
+            .subscribe((response: any) => {
+                this.provinciasData = response.map((laboratorio : any) => {
+                    return laboratorio.nombre;
+                })
             })
-        })
+        }
+
+        
     }
 
     filtrarPorLaboratorio(evento : any){

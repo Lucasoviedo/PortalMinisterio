@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private eventBusService: EventBusService,
     private cookieService: CookieService,
-    private loginService: LoginService,
     private usuariosService: UsuarioService,
+    private loginService: LoginService,
     public translate: TranslateService,
     private cdr: ChangeDetectorRef
   ) {

@@ -3,8 +3,8 @@
 
     <div class="flexRow">
         <div class="flexCol sizeUnTercio">
-            <h6>{{ "MANAGMENT.LABS" | translate }}</h6>
-            <select class="form-select" 
+            <h6 *ngIf="laboratoriosData.length > 0">{{ "MANAGMENT.LABS" | translate }}</h6>
+            <select class="form-select" *ngIf="laboratoriosData.length > 0"
             (change)="filtrarPorLaboratorio($event)">
                 <option selected hidden>Seleccione un laboratorio</option>
                 <option  value="">TODOS</option>
@@ -13,8 +13,8 @@
             </select>
         </div>
         <div class="flexCol sizeUnTercio">
-            <h6>{{ "MANAGMENT.STATES" | translate }}</h6>
-            <select class="form-select" 
+            <h6 *ngIf="provinciasData.length > 0">{{ "MANAGMENT.STATES" | translate }}</h6>
+            <select class="form-select" *ngIf="provinciasData.length > 0"
             (change)="filtrarPorProvincia($event)">
                 <option selected hidden>Seleccione una provincia</option>
                 <option  value="">TODOS</option>
