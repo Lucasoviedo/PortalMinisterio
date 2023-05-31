@@ -78,6 +78,7 @@ export class LotesConsultaComponent implements OnInit{
         this.provinciasService.obtenerLotesProvincias()
         .subscribe((response : any) => {
             this.lotesProvincias = response || [];
+            console.log(this.lotesProvincias)
         })
 
         this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)

@@ -3,7 +3,7 @@
     <br/>
     <p>{{ "MANAGMENT.MESSAGE" | translate }}</p>
     <hr>
-    <div class="flexRow">
+    <div class="flexRow" style="margin-bottom: 20px;">
       <div class="flexCol sizeUnTercio">
         <h6>{{ "MANAGMENT.LABS" | translate }}</h6>
         <select class="form-select" 
@@ -16,7 +16,7 @@
         </select>
       </div>
       <div class="flexCol sizeUnTercio">
-        <h6>{{ "MANAGMENT.STATES" | translate }}</h6>
+        <h6>PROVINCIAS</h6>
         <select class="form-select" 
                 (change)="filtrarPorEstado($event)"
                 [(ngModel)]="selectedOptionState">
@@ -27,82 +27,82 @@
         </select>
       </div>
     </div>
-    <hr>
+    
     <div *ngIf="lotesDataComplete.length == 0">
       <h5>{{ "MANAGMENT.NO_DATA" | translate }}</h5>
     </div>
     <div *ngIf="lotesData.length > 0">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
-                <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
-                <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
-                <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
-                <th>{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
-                <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
-                <th>{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
-            </tr>
-        </thead>
-        <tbody >
-            <tr *ngFor="let lote of lotesData">
-                <td>{{lote.codigoLote}}</td>
-                <td>{{lote.estado}}</td>
-                <td>{{lote.fechaEnvio}}</td>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
+              </tr>
+          </thead>
+          <tbody >
+              <tr *ngFor="let lote of lotesData">
+                  <td>{{lote.codigoLote}}</td>
+                  <td>{{lote.estado}}</td>
+                  <td>{{lote.fechaEnvio}}</td>
 
-                <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion }}</td>
-                <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
-                    <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
-                </td>
-                <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
-
-                <td *ngIf="lote.estado === 'ACEPTADO' 
-                    || lote.estado === 'RECHAZADO' 
-                    || lote.estado === 'ACEPTADO_PARCIALMENTE' 
-                    ; else demasEstados ">
-                    {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
-                </td>
-                <ng-template #demasEstados>
-                    <td *ngIf="lote.fechaRecepcion">
-                        <div class="btn-table" (click)="verificarVacunas(lote)"
-                        type="button" data-toggle="modal" data-target="#check-vaccines-modal">
-                        {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
-                        </div>
-                    </td>
-                    <td *ngIf="!lote.fechaRecepcion">
-                         ------------ 
-                    </td>
-                </ng-template>
-
-                <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
-                  ; else demasDistribucion2 "> 
-                  ------------ 
-                </td>
-                <ng-template #demasDistribucion2>
-                  <td *ngIf="!lote.despachado "> 
-                    <div class="btn-table"  (click)="verificarVacunas(lote)"
-                        type="button" data-toggle="modal" data-target="#despacho-lote">
-                        {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
-                    </div>
+                  <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion }}</td>
+                  <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
+                      <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
                   </td>
-                  <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
-                </ng-template>
+                  <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
 
-                <td *ngIf="(lote.estado === 'ACEPTADO' 
-                  || lote.estado === 'ACEPTADO_PARCIALMENTE') && (!lote.distribuido) 
-                  ; else demasDistribucion "> 
-                  <div class="btn-table" (click)="distribuirVacunas(lote)"
-                        type="button" data-toggle="modal" data-target="#distribucion-lote">
-                        {{ "BATCH_TABLE.STATES.DISTRIBUTE" | translate }}
-                    </div>
-                </td>
-                <ng-template #demasDistribucion>
-                  <td *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
-                  <td *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
-                </ng-template>
-            </tr>
-        </tbody>
-    </table>
+                  <td *ngIf="lote.estado === 'ACEPTADO' 
+                      || lote.estado === 'RECHAZADO' 
+                      || lote.estado === 'ACEPTADO_PARCIALMENTE' 
+                      ; else demasEstados ">
+                      {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
+                  </td>
+                  <ng-template #demasEstados>
+                      <td *ngIf="lote.fechaRecepcion">
+                          <div class="btn-table" (click)="verificarVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#check-vaccines-modal">
+                          {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
+                          </div>
+                      </td>
+                      <td *ngIf="!lote.fechaRecepcion">
+                          ------------ 
+                      </td>
+                  </ng-template>
+
+                  <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
+                    ; else demasDistribucion2 "> 
+                    ------------ 
+                  </td>
+                  <ng-template #demasDistribucion2>
+                    <td *ngIf="!lote.despachado "> 
+                      <div class="btn-table"  (click)="verificarVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#despacho-lote">
+                          {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
+                      </div>
+                    </td>
+                    <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
+                  </ng-template>
+
+                  <td *ngIf="(lote.estado === 'ACEPTADO' 
+                    || lote.estado === 'ACEPTADO_PARCIALMENTE') && (!lote.distribuido) 
+                    ; else demasDistribucion "> 
+                    <div class="btn-table" (click)="distribuirVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#distribucion-lote">
+                          {{ "BATCH_TABLE.STATES.DISTRIBUTE" | translate }}
+                      </div>
+                  </td>
+                  <ng-template #demasDistribucion>
+                    <td *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
+                    <td *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
+                  </ng-template>
+              </tr>
+          </tbody>
+      </table>
     </div>
 </div>
 

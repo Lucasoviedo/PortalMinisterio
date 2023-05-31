@@ -12,8 +12,6 @@ import { EventBusService } from './main/api/resources/event-bus.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontPortalMinisterio';
-
   showHeaderOptions = false;
   showHeaderOptionsMovile = false;
 
@@ -102,6 +100,8 @@ export class AppComponent implements OnInit {
           this.showHeaderOptionsMovile = false;
           this.cdr.detectChanges(); // Manually trigger change detection
         }));
+
+        this.userPermissions = 0;
   }
 
   ruteoHeader(ruta: String) {
