@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from "../../api/resources/login.service";
+import { EventBusService } from "../../api/resources/event-bus.service";
 
 @Component({
     selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private loginService: LoginService, 
         private router: Router,
+        private eventBusService : EventBusService,
         private cookieService: CookieService) { }
 
     ngOnInit(): void{
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
         .subscribe((response) => {
             this.cookieService.set('authToken', response.token.toString());
             this.router.navigate(['/']);
+            this.eventBusService.onLogin.emit();
         });
     }
 }

@@ -1,5 +1,7 @@
 <div class="background-loading" *ngIf="loaded">
     <div class="loading-container">
-        <div class="loader"></div>
+        <div class="loader" [ngClass]="{
+            'background-color-2': userPermissions == 2,
+            'background-color-3': userPermissions == 3}"></div>
     </div>
 </div>
