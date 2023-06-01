@@ -97,8 +97,8 @@
     "EDIT": {
       "EMAIL": "Email",
       "TITLE": {
-        "EDIT": "Edit province",
-        "INSERT": "Insert province"
+        "EDIT": "Edit province endpoint",
+        "INSERT": "Insert province endpoint"
       }
     },
     "HEALTH": {
@@ -109,10 +109,18 @@
       "TITLE": "Health centers",
       "MESSAGE": "¡There is no Health Centers registered in this province!"
     },
+    "MODAL": {
+      "STATUS": "URL status",
+      "PASSWORD": "Password",
+      "TEC": "Technology",
+      "USER": "User",
+      "ENABLE": "Enable status"
+    },
     "TABLE": {
       "NAME": "Name",
       "CONTACT": "Contact",
-      "CONFIG": "Configuration"
+      "CONFIG": "Configuration",
+      "EMAIL": "Email"
     },
     "TITLE": "PROVINCES"
   },
