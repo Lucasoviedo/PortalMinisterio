@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { INuevaVacunaProv } from 'src/app/core/models/lotesMinProv/i-nuevaVacunaProv';
 import { IEnvioProvincia } from 'src/app/core/models/lotesMinProv/i-envioProvincia';
+import { ICriteriosBusquedaProv } from 'src/app/core/models/i-criteriosBusquedaProv';
 
 @Injectable({
   providedIn: 'root'
@@ -47,11 +48,11 @@ export class ProvinciaService {
     return this.http.post<INuevaVacunaProv>(this.url + '/vacunas-provincias/insertar-vacunas' , [vacuna], {headers} );
   }
 
-  obtenerLotesProvincias() {
+  obtenerLotesProvincias(criteria : ICriteriosBusquedaProv ) {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<any>(this.url + '/lotes-provincias/' , {}, {headers} );
+    return this.http.post<any>(this.url + '/lotes-provincias/' , criteria, {headers} );
   }
 
   editarLoteProvincia(lote: IEnvioProvincia){
@@ -59,5 +60,19 @@ export class ProvinciaService {
       'Authorization': this.cookieService.get('authToken')
     });
     return this.http.put<any>(this.url + '/lotes-provincias/editar' , lote, {headers} );
+  }
+
+  getCodigoProvinciaFromIdUsuarioConectado(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/provincias/codigo' , {headers} );
+  }
+
+  getCodigosProvinciasConEndpoints(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/provincias/codigos' , {headers} );
   }
 }

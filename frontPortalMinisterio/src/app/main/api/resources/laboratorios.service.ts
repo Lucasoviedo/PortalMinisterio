@@ -28,4 +28,13 @@ export class LaboratorioService {
     return this.http.post<INuevoLaboratorio>(this.url + '/laboratorios/insertar', laboratorio , {headers} );
   }
 
+  getCodigoLaboratorioFromIdUsuarioConectado(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/laboratorios/codigo' , {headers} );
+  }
+
+
+
 }
