@@ -4,3 +4,20 @@
     gap: 10px; 
     cursor: pointer;
 }
+
+.message-color-1,
+.message-color-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+}
+
+.message-color-2{
+    color: red;
+}
+
+.message-color-1 > h4,
+.message-color-2 > h4{
+    font-weight: 800;
+}

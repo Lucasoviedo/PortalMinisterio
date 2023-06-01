@@ -97,8 +97,8 @@
     "EDIT": {
       "EMAIL": "Email",
       "TITLE": {
-        "EDIT": "Editar provincia",
-        "INSERT": "Insertar provincia"
+        "EDIT": "Editar endpoint provincia",
+        "INSERT": "Insertar endpoint provincia"
       }
     },
     "HEALTH": {
@@ -109,10 +109,18 @@
       "TITLE": "Centros de salud",
       "MESSAGE": "¡No existen Centros de Salud registrados en esta provincia!"
     },
+    "MODAL": {
+      "STATUS": "Estado URL",
+      "PASSWORD": "Clave",
+      "TEC": "Tecnología",
+      "USER": "Usuario",
+      "ENABLE": "Estado habilitacion"
+    },
     "TABLE": {
       "NAME": "Nombre",
       "CONTACT": "Contacto",
-      "CONFIG": "Configuracion"
+      "CONFIG": "Configuracion",
+      "EMAIL": "Email"
     },
     "TITLE": "PROVINCIAS"
   },

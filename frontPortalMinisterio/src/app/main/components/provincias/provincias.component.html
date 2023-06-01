@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="tituloConsulta">{{ "PROVINCE.TITLE" | translate }}</h1>
-    <hr>
+    <input type="text" class="form-control col-12" [formControl]="filtro" placeholder={{placeholderBuscador}}>
     <div *ngIf="provinciasData.length > 0">
-    <table class="table table-striped">
+    <table class="table table-striped table-Light">
         <thead>
             <tr>
                 <th>{{ "PROVINCE.TABLE.NAME" | translate }}</th>
@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody >
-            <tr *ngFor="let provincia of provinciasData">
+            <tr *ngFor="let provincia of provinciasData  | filtrarPor:['nombre', 'nombreContacto', 'emailContacto']:filtro.value">
                 <td (click)="mostrarCentrosSalud(provincia.codigoProvincia)" data-toggle="modal" data-target="#centros-provincia" class="provincia-nombre">
                     <div>
                         <div *ngIf="provincia.valor === 0" class="user-down"></div>
@@ -51,39 +51,32 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h4>{{endpointEditar.codigoLabOProv }}</h4>
-
                 <div class="flexRow">
                     <label for="">URL</label>
                     <input type="text" value={{endpointEditar.url}} (change)="cambioUrl($event)"/>
                 </div>
-
                 <div class="flexRow">
-                    <label for="">URL Status</label>
+                    <label for="">{{ "PROVINCE.MODAL.STATUS" | translate }}</label>
                     <input type="text" value={{endpointEditar.urlStatus}} (change)="cambioUrlStatus($event)"/>
                 </div>
-                
                 <div class="flexRow">
-                    <label for="">Clave</label>
+                    <label for="">{{ "PROVINCE.MODAL.USER" | translate }}</label>
+                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
+                </div>
+                <div class="flexRow">
+                    <label for="">{{ "PROVINCE.MODAL.PASSWORD" | translate }}</label>
                     <input type="text" value={{endpointEditar.clave}} (change)="cambioClave($event)"/>
                 </div>
-
                 <div class="flexRow">
-                    <label for="">Tecnologia</label>
+                    <label for="">{{ "PROVINCE.MODAL.TEC" | translate }}</label>
                     <select [(ngModel)] = "endpointEditar.tecnologia" (change)="cambioTecnologia($event)">
                         <option selected hidden>{{endpointEditar.tecnologia}}</option>
                         <option *ngFor="let tecnologia of tecnologiasData" 
                               value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
                     </select>
                 </div>
-                
                 <div class="flexRow">
-                    <label for="">Usuario</label>
-                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
-                </div>
-                
-                <div class="flexRow">
-                    <label for="">Habilitado</label>
+                    <label for="">{{ "PROVINCE.MODAL.ENABLE" | translate }}</label>
                     <select [(ngModel)] = "endpointEditar.habilitado">
                         <option value="1">{{ "USERS.ENABLE" | translate }}</option>
                         <option value="0">{{ "USERS.DISABLE" | translate }}</option>
@@ -92,9 +85,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-                <button type="button" class="btn btn-primary" *ngIf="endpointExiste" (click)="editarEndpoint()" data-dismiss="modal">{{ "BUTTONS.EDIT" | translate }}</button>
-                <button type="button" class="btn btn-primary" *ngIf="!endpointExiste && endpointEditar.url !== '' && endpointEditar.urlStatus !== '' 
-                && endpointEditar.clave !== '' && endpointEditar.usuario !== '' && endpointEditar.tecnologia !== ''"
+                <button type="button" class="btn btn-primary" *ngIf="endpointExiste" data-dismiss="modal" 
+                [disabled]="endpointEditar.url == '' || endpointEditar.urlStatus == '' || endpointEditar.clave == '' || endpointEditar.usuario == '' || endpointEditar.tecnologia == '' "
+                (click)="editarEndpoint()">{{ "BUTTONS.EDIT" | translate }}</button>
+                <button type="button" class="btn btn-primary" *ngIf="!endpointExiste" data-dismiss="modal" 
+                [disabled]="endpointEditar.url == '' || endpointEditar.urlStatus == '' || endpointEditar.clave == '' || endpointEditar.usuario == ''  || endpointEditar.tecnologia == '' "
                 (click)="insertarEndpoint()">{{ "BUTTONS.INSERT" | translate }}</button>
             </div>
         </div>
@@ -103,63 +98,60 @@
 
 <!-- Modal Centros de vacunacion -->
 <div class="modal fade" id="centros-provincia" tabindex="-1" role="dialog" aria-labelledby="centros-provinciaLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="centros-provinciaLabel">{{ "PROVINCE.HEALTH.TITLE" | translate }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-        <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length > 0">
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>{{ "PROVINCE.HEALTH.NAME" | translate }}</th>
-                    <th>{{ "PROVINCE.HEALTH.DIRECTION" | translate }}</th>
-                    <th>{{ "PROVINCE.HEALTH.CONTACT_NAME" | translate }}</th>
-                    <th>{{ "PROVINCE.HEALTH.CONTACT_EMAIL" | translate }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let centros of provinciaCentrosDeSalud">
-                    <td>{{centros.nombre}}</td>
-                    <td>{{centros.direccion}}</td>
-                    <td>{{centros.nombreContacto}}</td>
-                    <td>{{centros.emailContacto}}</td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
-        <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length === 0">
-            <h6>{{ "PROVINCE.HEALTH.MESSAGE" | translate }}</h6>
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="centros-provinciaLabel">{{ "PROVINCE.HEALTH.TITLE" | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length > 0">
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ "PROVINCE.HEALTH.NAME" | translate }}</th>
+                        <th>{{ "PROVINCE.HEALTH.DIRECTION" | translate }}</th>
+                        <th>{{ "PROVINCE.HEALTH.CONTACT_NAME" | translate }}</th>
+                        <th>{{ "PROVINCE.HEALTH.CONTACT_EMAIL" | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let centros of provinciaCentrosDeSalud">
+                        <td>{{centros.nombre}}</td>
+                        <td>{{centros.direccion}}</td>
+                        <td>{{centros.nombreContacto}}</td>
+                        <td>{{centros.emailContacto}}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="modal-body"  *ngIf="provinciaCentrosDeSalud.length === 0">
+                <h6>{{ "PROVINCE.HEALTH.MESSAGE" | translate }}</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+            </div>
         </div>
     </div>
 </div>
 
-  <!-- Modal Ping provincia -->
-  <div class="modal fade" id="ping-provincia" tabindex="-1" role="dialog" aria-labelledby="ping-provinciaLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ping-provinciaLabel">{{provinciaModal.nombre}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<!-- Modal Ping provincia -->
+<div class="modal fade" id="ping-provincia" tabindex="-1" role="dialog" aria-labelledby="ping-provinciaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ping-provinciaLabel">{{provinciaModal.nombre}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" [ngClass]="{
+                'message-color-1': codigoMensajePing == 1,
+                'message-color-2': codigoMensajePing == 2}">
+                <h4>{{mensajePing}}</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CLOSE" | translate }}</button>
+            </div>
         </div>
-
-        <div class="modal-body">
-            <h4>{{mensajePing}}</h4>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CLOSE" | translate }}</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

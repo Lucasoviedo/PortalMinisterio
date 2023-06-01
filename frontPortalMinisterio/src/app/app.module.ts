@@ -25,6 +25,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SplashComponent } from './main/components/splash/splash.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from "./main/shared/shared.module";
+
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
 }
@@ -42,39 +45,41 @@ const appRoutes:Routes = [
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NotFoundPageComponent,
-    DashboardComponent,
-    ProvinciasComponent,
-    UsuariosComponent,
-    LaboratoriosComponent,
-    LotesAdminComponent,
-    LotesConsultaComponent,
-    VacunadosComponent,
-    SplashComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    CoreModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
-    CommonModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide : TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps : [HttpClient]
-      }
-    })
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: AppErrorHandler }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        NotFoundPageComponent,
+        DashboardComponent,
+        ProvinciasComponent,
+        UsuariosComponent,
+        LaboratoriosComponent,
+        LotesAdminComponent,
+        LotesConsultaComponent,
+        VacunadosComponent,
+        SplashComponent
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+        { provide: ErrorHandler, useClass: AppErrorHandler }
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        CoreModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(appRoutes),
+        CommonModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        SharedModule
+    ]
 })
 export class AppModule { }

@@ -4,6 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ResourceModule } from 'ngx-resource';
 
+
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
   ],
@@ -11,6 +14,7 @@ import { ResourceModule } from 'ngx-resource';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
     ResourceModule.forRoot()
   ],
   providers: [],
