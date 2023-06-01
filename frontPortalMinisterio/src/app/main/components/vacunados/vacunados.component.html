@@ -1,1 +1,55 @@
-<p>Vacunados works!</p>
+<div class="container">
+    <h1 class="tituloConsulta">VACUNADOS</h1>
+
+    <div class="flexRow">
+        <div class="flexCol sizeUnTercio">
+            <h6 *ngIf="laboratoriosData.length > 0">{{ "MANAGMENT.LABS" | translate }}</h6>
+            <select class="form-select" *ngIf="laboratoriosData.length > 0"
+            (change)="filtrarPorLaboratorio($event)">
+                <option selected hidden>Seleccione un laboratorio</option>
+                <option  value="">TODOS</option>
+                <option *ngFor="let laboratorio of laboratoriosData" 
+                    value={{laboratorio}}>{{laboratorio}}</option>
+            </select>
+        </div>
+        <div class="flexCol sizeUnTercio">
+            <h6 *ngIf="provinciasData.length > 0">{{ "MANAGMENT.STATES" | translate }}</h6>
+            <select class="form-select" *ngIf="provinciasData.length > 0"
+            (change)="filtrarPorProvincia($event)">
+                <option selected hidden>Seleccione una provincia</option>
+                <option  value="">TODOS</option>
+                <option *ngFor="let provincia of provinciasData" 
+                    value={{provincia}}>{{provincia}}</option>
+            </select>
+        </div>
+        
+        <div class="flexCol ">
+            <h5 style="margin: 0;">CANT VACUNADOS: {{vacunadosData.length}}</h5>
+        </div>
+    </div>
+
+    <table class="table table-striped" *ngIf="vacunadosData.length > 0">
+        <thead>
+            <tr>
+                <th>Laboratorio</th>
+                <th>CUIL</th>
+                <th>Fecha - Hora</th>
+                <th>Vacuna</th>
+                <th>Ubicacion</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr *ngFor="let vacunado of vacunadosData">
+                <td>{{vacunado.laboratorio}}</td>
+                <td>{{vacunado.cuil}}</td>
+                <td>{{vacunado.fechaHoraVacunacion}}</td>
+                <td>{{vacunado.nombreVacuna}} n°{{vacunado.nroDosis}}</td>
+                <td>{{vacunado.provincia}} - {{vacunado.centroVac}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="vacunadosData.length === 0">
+        <hr/>
+        <h6>No existe informacion de vacunados por el momento</h6>
+    </div>
+</div>

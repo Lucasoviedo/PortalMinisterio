@@ -1,64 +1,54 @@
-
 <div class="container">
-    <h1 class="tituloConsulta">USUARIOS</h1>
+    <h1 class="tituloConsulta">{{ "USERS.TITLE" | translate }}</h1>
     <hr>
     <div class="row filtrosContenedor">
-        <div class="col-3">
-            <select class="form-select">
-                <option>Seleccione un tipo</option>
-                <option>LABABORATORIO</option>
-                <option>PROVINCIA</option>
-                <option>MINISTERIO</option>
+        <div class="user-header-options">
+            <select class="form-select"
+                    (change)="filtrarPorRol($event)">
+                <option hidden selected>{{ "SELECT.ROL" | translate }}</option>
+                <option value="">{{ "SELECT.ALL" | translate }}</option>
+                <option *ngFor="let rol of rolesData" 
+                        value={{rol.nombreRol}}>{{rol.nombreRol}}</option>
             </select>
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary agregarBoton"  
-                type="button" 
-                data-toggle="modal" 
-                data-target="#newUserModal"
+        <div class="user-header-options">
+            <button class="btn btn-primary agregarBoton" type="button" 
+                data-toggle="modal" data-target="#newUserModal"
             >
-                Agregar usuario
+            {{ "USERS.BUTTON" | translate }}
             </button>
         </div>
     </div>
-
-    <div *ngIf="usuariosData.length > 0">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Idioma</th>
-                    <th>Nombre provincia</th>
-                    <th>Nombre laboratorio</th>
-                    <th>Configuracion</th>
-                </tr>
-            </thead>
-            <tbody >
-                <tr *ngFor="let usuario of usuariosData">
-                    <td>{{usuario.nombreUsuario}}</td>
-                    <td>{{usuario.email}}</td>
-                    <td>{{usuario.rol}}</td>
-                    <td>{{usuario.idioma}}</td>
-                    <td>{{usuario.nombreProvincia}}</td>
-                    <td>{{usuario.nombreLaboratorio}}</td>
-                    <td>
-                        <img src="../../../../assets/configurar.svg" class="configurar-img"/>
-                        <img src="../../../../assets/eliminar.svg" class="configurar-img"/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div *ngIf="usuariosData" class="card-usuario-container">
+        <div *ngFor="let usuario of usuariosData" class="card-usuario">
+            <div>
+                <h3>{{usuario.nombreUsuario}}</h3>
+                <div *ngIf="usuario.habilitado" class="user-up"></div>
+                <div *ngIf="!usuario.habilitado" class="user-down"></div>
+            </div>
+            <hr/>
+            <h6>
+                {{usuario.nombreProvincia || usuario.nombreLaboratorio || "Ministerio"}}
+                : {{usuario.rol}}
+            </h6>
+            <h6>{{usuario.email}}</h6>
+            <hr/>
+            <img src="../../../../assets/configurar.svg" class="configurar-img"   
+                data-toggle="modal" data-target="#updateModal"
+                (click)="editUser(usuario)"/>
+            <img src="../../../../assets/eliminar.svg" class="configurar-img" 
+                data-toggle="modal" data-target="#eliminarModal"
+                (click)="marcarUsuarioEliminar(usuario.idUsuario)"/>
+        </div>
     </div>
 </div>
-    
-    <!-- Modal -->
+
+<!-- Modal add user -->
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
-          <h5 class="modal-title" id="newUserModalLabel">Agregar usuario</h5>
+          <h5 class="modal-title" id="newUserModalLabel">{{ "USERS.BUTTON" | translate }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
@@ -66,50 +56,190 @@
         <div class="modal-body">
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
-                    <label>Ingrese nombre: </label>
-                    <input type="text" class="form-control" required/>
+                    <label>{{ "USERS.ADD.NAME" | translate }}: </label>
+                    <input  [(ngModel)] = "nuevoUsuario.nombre" type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
-                    <label>Ingrese apellido: </label>
-                    <input type="text" class="form-control" required/>
+                    <label>{{ "USERS.ADD.LASTNAME" | translate }}: </label>
+                    <input [(ngModel)] = "nuevoUsuario.apellido" type="text" class="form-control" required/>
                 </div>
                 <div class="flexCol sizeUnTercio">
-                    <label>Ingrese DNI: </label>
-                    <input type="number" class="form-control" required/>
+                    <label>{{ "USERS.ADD.DNI" | translate }}: </label>
+                    <input [(ngModel)] = "nuevoUsuario.dni" type="number" class="form-control" required/>
                 </div>
             </div>
             <div class="flexRow">
-                <label style="width: 15%">Ingrese email: </label>
-                <input style="width: 85%" type="email" class="form-control" required/>
+                <label style="width: 15%">{{ "USERS.ADD.EMAIL" | translate }}: </label>
+                <input [(ngModel)] = "nuevoUsuario.email" style="width: 85%" type="email" class="form-control" required/>
             </div>
             <hr/>
             <div class="flexRow">
                 <div class="flexCol sizeUnTercio">
-                    <label>Nombre de usuario: </label>
-                    <input class="form-control" required/>
+                    <label>{{ "USERS.ADD.ROL" | translate }}: </label>
+                    <select [(ngModel)] = "nuevoUsuario.nroRol" class="form-control" required (change)="rolOnChange($event)">
+                        <option hidden selected>{{ "USERS.ADD.SELECT-ROL" | translate }}</option>
+                        <option *ngFor="let rol of rolesData" 
+                                value={{rol.nroRol}}>{{rol.nombreRol}}</option>
+                    </select>
                 </div>
                 <div class="flexCol sizeUnTercio">
-                    <label>Habilitacion: </label>
-                    <select type="password" class="form-control" required></select>
+                    <label>{{ "USERS.ADD.ORIGIN" | translate }}: </label>
+                    <select [(ngModel)] = "nuevoUsuario.codigoLaboratorio" class="form-control" required>
+                        <option hidden selected>{{ "USERS.ADD.SELECT-ORIGIN" | translate }}</option>
+                        <option *ngFor="let e of dataToSelectRol"
+                            [value]="e.codigoProvincia ? e.codigoProvincia : e.codigoLaboratorio"
+                        > {{e.nombre}}
+                        </option>
+                    </select>
                 </div>
                 <div class="flexCol sizeUnTercio">
-                    <label>Idioma: </label>
-                    <select type="password" class="form-control" required></select>
+                    <label>{{ "USERS.ADD.LANGUAGE" | translate }}: </label>
+                    <select [(ngModel)] = "nuevoUsuario.idIdioma" type="password" class="form-control" required>
+                        <option hidden selected>{{ "USERS.ADD.SELECT-LANGUAGE" | translate }}</option>
+                        <option *ngFor="let idioma of idiomasData"
+                            [value]="idioma.idIdioma"
+                        > {{idioma.idioma}}
+                        </option></select>
                 </div>
             </div>
+            <hr/>
             <div class="flexRow">
-                <label>Contraseña: </label>
-                <input type="password" class="form-control" required/>
-            </div>
-            <div class="flexRow">
-                <label>Repita contraseña: </label>
-                <input type="password" class="form-control" required/>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.USAR-NAME" | translate }}: </label>
+                    <input [(ngModel)] = "nuevoUsuario.nombreUsuario" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.PASSWORD" | translate }}: </label>
+                    <input [(ngModel)] = "nuevoUsuario.clave" type="password" class="form-control" required/>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.PASSWORD-REPEAT" | translate }}: </label>
+                    <input [(ngModel)] = "nuevoUsuarioClaveRepetida" type="password" class="form-control" required/>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Agregar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+          <button type="submit" (click)="agregarUsuario()"  data-dismiss="modal" class="btn btn-primary">{{ "BUTTONS.ADD" | translate }}</button>
         </div>
       </div>
     </div>
-  </div>
+</div>
+
+<!-- Modal delete user -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">{{ "USERS.DELETE.TITLE" | translate }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>{{ "USERS.DELETE.MESSAGE" | translate }}</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarUsuario()">{{ "BUTTONS.CONFIRM" | translate }}</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal update user -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">{{ "USERS.UPDATE" | translate }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="flexRow">
+                <label style="width: 15%">{{ "USERS.ADD.EMAIL" | translate }}: </label>
+                <input [(ngModel)] = "userToEdit.email" style="width: 85%" type="email" class="form-control"/>
+            </div>
+            <hr/>
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.ROL" | translate }}: </label>
+                    <select [(ngModel)] = "userToEdit.rol" class="form-control" required (change)="rolOnChange($event)">
+                        <option hidden selected value={{userToEdit.rol}}>{{userToEdit.rol}}</option>
+                        <option *ngFor="let rol of rolesData" 
+                                value={{rol.nroRol}}>{{rol.nombreRol}}</option>
+                    </select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.ORIGIN" | translate }}: </label>
+                    <select class="form-control" (change)="cambioOrigen($event)">
+                        <option hidden selected>{{ "USERS.ADD.SELECT-ORIGIN" | translate }}</option>
+                        <option *ngFor="let e of dataToSelectRol"
+                            [value]="e.codigoProvincia ? e.codigoProvincia : e.codigoLaboratorio"
+                        > {{e.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.LANGUAGE" | translate }}: </label>
+                    <select type="password" class="form-control" (change)="cambioLenguaje($event)">
+                        <option hidden selected value={{userToEdit.idioma}}>{{userToEdit.idioma}}</option>
+                        <option *ngFor="let idioma of idiomasData"
+                            value={{idioma.idIdioma}}
+                        > {{idioma.idioma}}
+                        </option></select>
+                </div>
+            </div>
+            <hr/>
+            <div class="flexRow">
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.USAR-NAME" | translate }}: </label>
+                    <input [(ngModel)] = "userToEdit.nombreUsuario" class="form-control" />
+                </div>
+                <div class="flexCol sizeUnTercio">
+                    <label>{{ "USERS.ADD.ENABLED" | translate }}: </label>
+                    <select [(ngModel)] = "userToEdit.habilitado" (change)="cambioHabilitacion($event)">
+                        <option value="1">{{ "USERS.ENABLE" | translate }}</option>
+                        <option value="0">{{ "USERS.DISABLE" | translate }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="confirmarActualizacion()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+</div>

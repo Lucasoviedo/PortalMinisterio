@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { IUsuario } from 'src/app/core/models/i-usuario';
+import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
+import { IUsuario } from 'src/app/core/models/usuarios/i-usuario';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import { INuevoUsuario } from 'src/app/core/models/usuarios/i-nuevoUsuario';
+import { IIdioma } from 'src/app/core/models/usuarios/i-idiomas';
+import { IEditUser } from 'src/app/core/models/usuarios/i-editUser';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,6 @@ import { CookieService } from 'ngx-cookie-service';
 export class UsuarioService {
   private url = `${environment.apiUrl}`;
   
-
   constructor(private http: HttpClient,
     private cookieService : CookieService) { }
     
@@ -18,16 +20,67 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IUsuario>(this.url + '/usuarios/' ,{
-    }, {headers} );
+    return this.http.get<IUsuario>(this.url + '/usuarios/' , {headers} );
   }
 
-  logout(){
+  getIdiomas(){
+    let idioma = <IIdioma> {
+      idioma : undefined
+    }
+    return this.http.post<IUsuario>(this.url + '/usuarios/idiomas' , idioma
+    );
+  }
+
+  getRoles(){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    return this.http.post<IUsuario>(this.url + '/usuarios/logout' ,{
-    }, {headers} );
+    return this.http.get<IUsuario>(this.url + '/usuarios/roles', {headers} );
   }
 
+  agregarUsuario( nuevoUsuario : INuevoUsuario){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<IUsuario>(this.url + '/usuarios/nuevo' , nuevoUsuario
+    , {headers} );
+  }
+
+  eliminarUsuario( userToDelete : number){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    console.log(userToDelete)
+    return this.http.post<IUsuario>(this.url + '/usuarios/eliminar' , userToDelete
+    , {headers} );
+  }
+
+  getDashboardUser(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/dashboard', {}, {headers} );
+  }
+
+  getRolNumber(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/rol', {} , {headers} );
+  }
+
+  getLanguage(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/usuarios/id-idioma', {headers} );
+  }
+
+  updateUser(user: IEditUser){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/usuarios/editar', user,{headers} );
+  }
+  
 }

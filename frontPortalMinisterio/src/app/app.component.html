@@ -1,36 +1,59 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<app-splash *ngIf="showSplash"></app-splash>
+<div *ngIf="!showSplash">
+  <nav class="navbar navbar-expand-lg navbar-dark" [ngClass]="{
+    'background-color-2': userPermissions == 2,
+    'background-color-3': userPermissions == 3}">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">Ministerio de la Nación</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-brand" (click)="ruteoHeader('/')" style="padding-left: 12px;">{{ "NAVBAR.TITLE" | translate }}</div>
+      <div *ngIf="showHeaderOptions" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="laboratorios">Laboratorios</a>
+          <li class="nav-item">
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/laboratorios')">{{ "NAVBAR.LABORATORIES" | translate }}</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="provincias">Provincias</a>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/provincias')">{{ "NAVBAR.PROVINCES" | translate }}</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="usuarios">Usuarios</a>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/usuarios')">{{ "NAVBAR.USERS" | translate }}</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="vacunados">Vacunados</a>
+            <div *ngIf="userPermissions != 2" class="nav-link" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Lotes externos</a>
+            <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/lotes-admin')">{{ "NAVBAR.BATCHADMIN" | translate }}</div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Lotes internos</a>
+            <div class="nav-link" (click)="ruteoHeader('/lotes-consulta')">{{ "NAVBAR.BATCHINQUIRY" | translate }}</div>
           </li>
         </ul>
       </div>
+      <div *ngIf="showHeaderOptions" class="header-buttons">
+        <div class="logout-img-container disapear-desktop" (click)="clickShowHeaderOptionsMovile()">
+          <img src="../assets/menu-hamburguesa.svg" class="logout-img" alt="menu" />
+        </div>
+        <div class="logout-img-container" (click)="logout()">
+          <img src="../assets/salida.svg" class="logout-img" alt="logout" />
+        </div>
+      </div>
     </div>
-    <div [ngClass]="{'logout-img-container-variable': onlogin}"  class="logout-img-container" (click)="logout()">
-      <img src="../assets/salida.svg" class="logout-img" alt="logout" />
-    </div>
-</nav>
+  </nav>
+  <div *ngIf="showHeaderOptionsMovile" class="header-options-movile">
+    <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/laboratorios')">{{ "NAVBAR.LABORATORIES" | translate }}</div>
+    <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/provincias')">{{ "NAVBAR.PROVINCES" | translate }}</div>
+    <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/usuarios')">{{ "NAVBAR.USERS" | translate }}</div>
+    <div *ngIf="userPermissions != 2" class="header-option-movile" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
+    <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/lotes-admin')">{{ "NAVBAR.BATCHADMIN" | translate }}</div>
+    <div class="header-option-movile" (click)="ruteoHeader('/lotes-consulta')">{{ "NAVBAR.BATCHINQUIRY" | translate }}</div>
+  </div>
 
+  <div class="content-container">
+    <app-loader></app-loader>
+    <router-outlet></router-outlet>
+  </div>
 
-<router-outlet></router-outlet>
+  <div class="footer-container" [ngClass]="{
+    'background-color-2': userPermissions == 2,
+    'background-color-3': userPermissions == 3}">
+    {{ "FOOTER" | translate }}
+  </div>
+</div>

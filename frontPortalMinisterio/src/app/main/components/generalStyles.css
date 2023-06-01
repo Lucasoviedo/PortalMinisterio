@@ -3,10 +3,37 @@
     width: 100%;
 }
 
+.btn-table{
+    background-color: #0d6efd;
+    box-shadow: 1px 1px 5px black;
+    padding: 5px;
+    width: fit-content;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.card-usuario{
+    width: 300px;
+    background-color: white;
+    box-shadow: 0px 0px 3px black;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.card-usuario-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .configurar-img{
     border: 1px solid black;
     padding: 8px;
     border-radius: 25%;
+    box-shadow: 1px 1px 5px black;
+    margin-right: 10px;
 }
 
 .filtrosContenedor{
@@ -19,7 +46,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 .tituloConsulta{
@@ -30,3 +57,10 @@
     width: 33%;
 }
 
+@media (min-width: 768px) {
+    .card-usuario-container{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,24 @@
+.user-header-options{
+    width: 50%;
+}
+
+.card-usuario-container{
+    margin-bottom: 50px;
+}
+
+.card-usuario{
+    
+    height: 275px;
+}
+
+.card-usuario > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (min-width: 1006px){
+    .user-header-options{
+        width: 33%;
+    }
+}

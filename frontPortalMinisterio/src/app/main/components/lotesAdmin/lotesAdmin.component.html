@@ -1,0 +1,282 @@
+<div class="container">
+    <h1 class="tituloConsulta">{{ "MANAGMENT.TITLE" | translate }}</h1>
+    <br/>
+    <p>{{ "MANAGMENT.MESSAGE" | translate }}</p>
+    <hr>
+    <div class="flexRow" style="margin-bottom: 20px;">
+      <div class="flexCol sizeUnTercio">
+        <h6>{{ "MANAGMENT.LABS" | translate }}</h6>
+        <select class="form-select" 
+        (change)="filtrarPorLaboratorio($event)"
+        [(ngModel)]="selectedOptionLab">
+          <option value="" hidden selected>{{ "SELECT.LAB" | translate }}</option>
+          <option value="">{{ "SELECT.ALL" | translate }}</option>
+          <option *ngFor="let laboratorio of laboratoriosData" 
+          value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
+        </select>
+      </div>
+      <div class="flexCol sizeUnTercio">
+        <h6>PROVINCIAS</h6>
+        <select class="form-select" 
+                (change)="filtrarPorEstado($event)"
+                [(ngModel)]="selectedOptionState">
+            <option value="" hidden selected>{{ "SELECT.STATE" | translate }}</option>
+            <option value="">{{ "SELECT.ALL" | translate }}</option>
+            <option *ngFor="let estado of estadosData" 
+                    value={{estado.estado}}>{{estado.estado}}</option>
+        </select>
+      </div>
+    </div>
+    
+    <div *ngIf="lotesDataComplete.length == 0">
+      <h5>{{ "MANAGMENT.NO_DATA" | translate }}</h5>
+    </div>
+    <div *ngIf="lotesData.length > 0">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
+                  <th>{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
+              </tr>
+          </thead>
+          <tbody >
+              <tr *ngFor="let lote of lotesData">
+                  <td>{{lote.codigoLote}}</td>
+                  <td>{{lote.estado}}</td>
+                  <td>{{lote.fechaEnvio}}</td>
+
+                  <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion }}</td>
+                  <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
+                      <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
+                  </td>
+                  <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
+
+                  <td *ngIf="lote.estado === 'ACEPTADO' 
+                      || lote.estado === 'RECHAZADO' 
+                      || lote.estado === 'ACEPTADO_PARCIALMENTE' 
+                      ; else demasEstados ">
+                      {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
+                  </td>
+                  <ng-template #demasEstados>
+                      <td *ngIf="lote.fechaRecepcion">
+                          <div class="btn-table" (click)="verificarVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#check-vaccines-modal">
+                          {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
+                          </div>
+                      </td>
+                      <td *ngIf="!lote.fechaRecepcion">
+                          ------------ 
+                      </td>
+                  </ng-template>
+
+                  <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
+                    ; else demasDistribucion2 "> 
+                    ------------ 
+                  </td>
+                  <ng-template #demasDistribucion2>
+                    <td *ngIf="!lote.despachado "> 
+                      <div class="btn-table"  (click)="verificarVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#despacho-lote">
+                          {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
+                      </div>
+                    </td>
+                    <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
+                  </ng-template>
+
+                  <td *ngIf="(lote.estado === 'ACEPTADO' 
+                    || lote.estado === 'ACEPTADO_PARCIALMENTE') && (!lote.distribuido) 
+                    ; else demasDistribucion "> 
+                    <div class="btn-table" (click)="distribuirVacunas(lote)"
+                          type="button" data-toggle="modal" data-target="#distribucion-lote">
+                          {{ "BATCH_TABLE.STATES.DISTRIBUTE" | translate }}
+                      </div>
+                  </td>
+                  <ng-template #demasDistribucion>
+                    <td *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
+                    <td *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
+                  </ng-template>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+</div>
+
+<!-- Modal actualizacion recepcion -->
+<div class="modal fade" id="confirmDataChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmDataChangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDataChangeModalLabel">{{ "MANAGMENT.MODAL.GET_BATCH.TITLE" | translate }}</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>¿{{ "MANAGMENT.MODAL.GET_BATCH.MESSAGE" | translate }} {{fechaActualizacionRecibo}}?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarFechaLoteAdmin()">{{ "BUTTONS.UPDATE" | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal verificar vacunas-->
+<div class="modal fade" id="check-vaccines-modal" tabindex="-1" role="dialog" aria-labelledby="check-vaccines-ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="check-vaccines-ModalLabel">{{ "MANAGMENT.MODAL.VERIFY.MESSAGE" | translate }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-verificacion">
+        <div>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.LAB_NAME" | translate }}: {{vaccinesData[0].nombreLab}}</h6>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.COD_BATCH" | translate }}: {{vaccinesData[0].codigoLote}}</h6>
+        </div>
+        <div>
+          <h6>{{ "MANAGMENT.MODAL.VERIFY.MESSAGE" | translate }}</h6>
+          <select class="form-select" (change)="cambioEstadoGeneral($event)"
+                  >
+              <option value="" hidden selected>{{ "SELECT.STATE" | translate }}</option>
+              <option *ngFor="let state of vaccinesStatesData" 
+                    value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
+          </select>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <th>{{ "BATCH_TABLE.VACCINE_CODE" | translate }}</th>
+            <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vaccine of vaccinesData">
+              <td>{{vaccine.codigoVacuna}}</td>
+              <td>
+                <select  (change)="changeVaccineCode($event,vaccine.codigoVacuna)">
+                  <option hidden selected>{{vaccine.estado || "Select"}}</option>
+                  <option *ngFor="let state of vaccinesStatesData" 
+                    value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editarVacunas()" *ngIf="finalizarVerificacion">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal despachar vacunas-->
+<div class="modal fade" id="despacho-lote" tabindex="-1" role="dialog" aria-labelledby="despacho-loteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="despacho-loteLabel">{{ "MANAGMENT.MODAL.DISPATCH.TITLE" | translate }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body-despachar">
+        <div>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.LAB_NAME" | translate }}: {{vaccinesData[0].nombreLab}}</h6>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.COD_BATCH" | translate }}: {{vaccinesData[0].codigoLote}}</h6>
+        </div>
+        <div>
+          <div class="loteAdmin-modal2-row">
+            <label>{{ "MANAGMENT.MODAL.DISPATCH.RETURNING_CODE" | translate }}: </label>
+            <input type="text" (change)="cambioCodigoDevolucion($event)"/>
+          </div>
+          <div class="loteAdmin-modal2-row">
+            <label>{{ "MANAGMENT.MODAL.DISPATCH.FOLLOWING_CODE" | translate }}: </label>
+            <input type="text" (change)="cambioCodigoSeguimiento($event)"/>
+          </div>
+          <div class="loteAdmin-modal2-row">
+            <label>{{ "MANAGMENT.MODAL.DISPATCH.DEVOLUTION_DATE" | translate }}: </label>
+            <input type="date" (change)="cambioFechaDevolucion($event)"/>
+          </div>
+          <div class="loteAdmin-modal2-row">
+            <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_TRANSPORT" | translate }}: </label>
+            <select (change)="cambioEmpresaTransporte($event)">
+              <option hidden selected>Select</option>
+              <option *ngFor="let empresa of empresasTransporte" 
+                value={{empresa.idEmpresaTransporte}}>{{empresa.nombre}}</option>
+            </select>
+          </div>
+          <div class="loteAdmin-modal2-row">
+            <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_REASON" | translate }}: </label>
+            <select (change)="cambioMotivoDevolucion($event)">
+              <option hidden selected>{{ "SELECT.SELECT" | translate }}</option>
+              <option *ngFor="let reject of rejectionReasonsData" 
+                value={{reject.idMotivoDevolucion}}>{{reject.tipoMotivo}}</option>
+            </select>
+          </div>
+          <div class="loteAdmin-modal2-row">
+            <textarea (change)="cambioDescripcionProblema($event)"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" 
+              *ngIf="motivoDevolucionActual !== 0 && codigoSeguiminetoActual !== '' && descripcionProblemaActual !== '' 
+              && empresaTransporteActual !== 0 && codigoDevolucion !== '' && fechaDevolucion !== undefined "
+              (click)="despacharVacunas()">{{ "BUTTONS.CONFIRM" | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal distribuir vacunas-->
+<div class="modal fade" id="distribucion-lote" tabindex="-1" role="dialog" aria-labelledby="distribucion-loteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="distribucion-loteLabel">{{ "MANAGMENT.MODAL.DISTRIBUTE.TITLE" | translate }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-distribuir">
+        <div>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.LAB_NAME" | translate }}: {{vaccinesData[0].nombreLab}}</h6>
+          <h6 *ngIf="vaccinesData[0]">{{ "BATCH_TABLE.COD_BATCH" | translate }}: {{vaccinesData[0].codigoLote}}</h6>
+        </div>
+        <hr/>
+        <div>
+          <span>{{ "MANAGMENT.MODAL.DISTRIBUTE.QUANTITY" | translate }}: {{vacunasDistribuirData.length}}</span>
+          <select (change)="cambioProvinciaDistribucion($event)" [value]="provinciaTipoDistribucion">
+            <option value="1">{{ "MANAGMENT.MODAL.DISTRIBUTE.EQUITATIVE" | translate }}</option>
+            <option value="2" selected>{{ "MANAGMENT.MODAL.DISTRIBUTE.MANUAL" | translate }}</option>
+          </select>
+          <img src="../../../../assets/informacion.svg" class="configurar-img-info" type="button"/>
+        </div>
+        <div>
+          <table>
+            <tr *ngFor="let provincia of provinciasDistribuirData">
+              <td>{{provincia.nombre}}</td>
+              <input type="number" value={{provincia.valor}} (change)="cambioValorInput(provincia, $event)" min=0/>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="vacunasDistribuirData.length === totalVacunasADistribuir"
+          (click)="distribucionVacunas()"
+          >{{ "BUTTONS.CONFIRM" | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
