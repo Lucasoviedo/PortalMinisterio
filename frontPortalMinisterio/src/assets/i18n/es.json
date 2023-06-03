@@ -15,7 +15,7 @@
     "STATES": {
       "DISTRIBUTE": "Distribuir",
       "DISTRIBUTED": "Distribuido",
-      "DISPATCH": "Desachar",
+      "DISPATCH": "Despachar",
       "DISPATCHED": "Despachado",
       "VERIFIED": "Verificado",
       "VERIFY": "Verificar"
@@ -37,10 +37,10 @@
     "ADD": "AGREGAR LABORATORIO",
     "NAME": "Nombre",
     "COUNTRY": "Pais",
-    "DIRECTION": "Direccion",
     "CONTACT_NAME": "Nombre contacto",
     "CONTACT_EMAIL": "Email contacto",
-    "CONFIGURATION": "Configuracion"
+    "CONFIGURATION": "Configuracion",
+    "PLACEHOLDER": "Filtrar por nombre, pais, contacto o email"
   },
   "LOGIN": {
     "TITLE": "Iniciar sesion",
@@ -65,18 +65,19 @@
         "MESSAGE": "Seguro que quiere marcar la fecha de recepcion como"
       },
       "DISPATCH": {
-        "TITLE": "Dispatch vaccines",
-        "RETURNING_CODE": "Returning code",
-        "FOLLOWING_CODE": "Following code",
-        "DEVOLUTION_DATE": "Devolution date",
-        "SELECT_TRANSPORT": "Select transport company",
-        "SELECT_REASON": "Select devolution reason"
+        "TITLE": "Despachar vacunas",
+        "FOLLOWING_CODE": "Codigo seguimiento",
+        "DEVOLUTION_DATE": "Fecha devolucion",
+        "SELECT_TRANSPORT": "Empresa de transporte",
+        "SELECT_REASON": "Motivo devolucion",
+        "COMMENTS": "Añade comentarios"
       },
       "DISTRIBUTE": {
-        "TITLE": "Distribute vaccines",
-        "QUANTITY": "Quantity of vaccines to distribute",
+        "TITLE": "Distribuir vacunas",
+        "QUANTITY": "Cantidad de vacunas a distribuir",
         "MANUAL": "Manual",
-        "EQUITATIVE": "Equitative"
+        "EQUITATIVE": "Equitativo",
+        "MESSAGE": "Equitativo enviara la misma cantidad de vacunas a cada provincia, el resto irá a la primera provincia"
       },
       "VERIFY": {
         "TITLE": "Verficar vacunas",
@@ -122,13 +123,15 @@
       "CONFIG": "Configuracion",
       "EMAIL": "Email"
     },
-    "TITLE": "PROVINCIAS"
+    "TITLE": "PROVINCIAS",
+    "PLACEHOLDER": "Filtrar por nombre, contacto o email"
   },
   "SELECT": {
     "ALL": "TODOS",
     "LAB": "Seleccione un laboratorio",
     "ROL": "Seleccione un rol",
     "STATE": "Seleccione un estado",
+    "PROVINCE": "Seleccione un provincia",
     "SELECT": "Select"
   },
   "USERS": {
@@ -156,6 +159,7 @@
       "TITLE": "Eliminar usuario"
     },
     "UPDATE": "Actualizar usuario",
-    "TITLE": "USUARIOS"
+    "TITLE": "USUARIOS",
+    "PLACEHOLDER": "Filtrar por nombre, email u origen"
   }
 }

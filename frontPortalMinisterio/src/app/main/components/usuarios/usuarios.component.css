@@ -1,5 +1,5 @@
 .user-header-options{
-    width: 50%;
+    width: 33.33%;
 }
 
 .card-usuario-container{
@@ -15,6 +15,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.usuarios-sumarizacion{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (min-width: 1006px){

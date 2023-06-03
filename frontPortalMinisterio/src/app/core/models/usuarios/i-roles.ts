@@ -1,6 +1,7 @@
 export interface IRoles{
     nroRol: number;
     nombreRol: RolNombre;
+    nombre : string;
 }
 
 enum RolNombre {

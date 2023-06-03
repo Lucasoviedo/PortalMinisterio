@@ -17,6 +17,8 @@ import { LotesMinLabService } from "../../api/resources/lotesMinLab.service";
 import { ILoteLab } from "src/app/core/models/lotesMinLab/i-loteLab";
 import { ICriteriosBusquedaLotesLabs } from "src/app/core/models/i-criteriosBusquedaLotesLabs";
 import { ICriteriosBusquedaDevolucionesLabs } from "src/app/core/models/i-criteriosBusquedaDevolucionesLabs";
+import { CookieService } from "ngx-cookie-service";
+import { UsuarioService } from "../../api/resources/usuarios.service";
 
 @Component({
     selector: 'app-loteConsulta',
@@ -25,26 +27,24 @@ import { ICriteriosBusquedaDevolucionesLabs } from "src/app/core/models/i-criter
 })
 
 export class LotesConsultaComponent implements OnInit {
+    
+    constructor(private devolucionesService: DevolucionesService,
+        private lotesGeneralService: LotesGeneralService,
+        private provinciasService: ProvinciaService,
+        private cookieService: CookieService,
+        private usuariosService: UsuarioService,
+        private laboratoriosService: LaboratorioService,
+        private lotesMinLabService: LotesMinLabService) { }
 
     myModal = document.getElementById('#confirmDataChangeModal');
+
+    userPermissions: number = 0;
 
     empresaTransporteActual = 0;
     fechaDevolucion = "";
     codigoSeguiminetoActual = "";
 
-    loteDevolucionEditado: IEnvioProvincia = {
-        codigoLote: "",
-        codigoProvincia: "",
-        idEmpresaTransporte: 0,
-        fechaEnvio: "",
-        codigoSeguimiento: "",
-    }
-
-    constructor(private devolucionesService: DevolucionesService,
-        private lotesGeneralService: LotesGeneralService,
-        private provinciasService: ProvinciaService,
-        private laboratoriosService: LaboratorioService,
-        private lotesMinLabService: LotesMinLabService) { }
+    loteDevolucionEditado: IEnvioProvincia = {codigoLote: "", codigoProvincia: "", idEmpresaTransporte: 0, fechaEnvio: "", codigoSeguimiento: ""}
 
     devolucionesLaboratorios: Array<INuevaDevolucionLab> = [];
     lotesProvincias: Array<INuevoLoteProv> = [];
@@ -53,11 +53,8 @@ export class LotesConsultaComponent implements OnInit {
 
     lotesDevolucionesProvincias: Array<IDevolucionProvincia> = [];
     fechaActualizacionRecibo = new Date();
-    loteActualizacionRecibo: IEditarLoteRecepcion = {
-        idUsuario: 1,
-        codigoLote: "",
-        fechaRecepcion: ""
-    };
+
+    loteActualizacionRecibo: IEditarLoteRecepcion = {idUsuario: 1, codigoLote: "", fechaRecepcion: ""};
 
     empresasTransporte: Array<IEmpresaTransporte> = [];
     rejectionReasonsData: Array<IRejectReason> = [];
@@ -85,106 +82,73 @@ export class LotesConsultaComponent implements OnInit {
 
     lotesData: Array<ILoteLab> = [];
 
-
-
     ngOnInit() {
-
-        this.provinciasService.getCodigoProvinciaFromIdUsuarioConectado().subscribe(
-            (response: any) => {
-
-                if (response.codigoProvincia == "-2") {
-                    this.laboratoriosService.getCodigoLaboratorioFromIdUsuarioConectado().subscribe(
-                        (response: any) => {
-
-                            this.criteriaBusquedaLotesLabs.codigoLaboratorio = response.codigoLaboratorio;
-                            this.criteriaBusquedaDevolucionesLabs.codigoLaboratorio = response.codigoLaboratorio;
-
-                            this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs).subscribe(
-                                (response: any) => {
-                                    this.lotesData = response || [];
-                                    console.log(this.lotesData);
-                                }
-                            );
-                            this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs)
-                                .subscribe((response: any) => {
-                                    this.devolucionesLaboratorios = response || [];
-                                })
-
-                        }
-                    );
-                }
-                else if (response.codigoProvincia == "-1") {
-                    this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs).subscribe(
-                        (response: any) => {
-                            this.lotesData = response || [];
-                            console.log(this.lotesData);
-                        }
-                    );
-                    this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs)
-                        .subscribe((response: any) => {
-                            this.devolucionesLaboratorios = response || [];
-                        });
-                    this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia).subscribe(
-                        (response: any) => {
-                            this.lotesProvincias = response || [];
-                            console.log(this.lotesProvincias);
-                        },
-                        (error: any) => {
-                            console.log("Error obteniendo lotes provincias:", error);
-                        }
-                    );
-                    this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)
-                        .subscribe((response: any) => {
-                            this.lotesDevolucionesProvincias = response || []
-                        },
-                        (error: any) => {
-                            console.log("Error obteniendo devoluciones provincias:", error);
-                        });
-
-                }
-
-                else {
-                    this.criteriaBusquedaProvincia.codigoProvincia = response.codigoProvincia;
-                    this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia).subscribe(
-                        (response: any) => {
-                            this.lotesProvincias = response || [];
-                            console.log(this.lotesProvincias);
-                        },
-                        (error: any) => {
-                            console.log("Error obteniendo lotes provincias:", error);
-                        }
-                    );
-                    this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusquedaProvincia)
-                        .subscribe((response: any) => {
-                            this.lotesDevolucionesProvincias = response || []
-                        },
-                            (error: any) => {
-                                console.log("Error obteniendo devoluciones provincias:", error);
-                            });
-                }
+        this.provinciasService.getCodigoProvinciaFromIdUsuarioConectado()
+        .subscribe((provincia: any) => {
+            if (provincia.codigoProvincia == "-1" || provincia.codigoProvincia == "-2"){
+                this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs)
+                .subscribe((response: any) => {
+                    this.devolucionesLaboratorios = response || [];
+                });
+                
+                this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
+                .subscribe((response: any) => {
+                    this.lotesData = response || [];
+                });
             }
-        );
-
-
-
-
-
+            if (provincia.codigoProvincia == "-2") {
+                this.laboratoriosService.getCodigoLaboratorioFromIdUsuarioConectado()
+                .subscribe((response: any) => {
+                    this.criteriaBusquedaLotesLabs.codigoLaboratorio = response.codigoLaboratorio;
+                    this.criteriaBusquedaDevolucionesLabs.codigoLaboratorio = response.codigoLaboratorio;
+                });
+            }
+            else if (provincia.codigoProvincia == "-1") {
+                this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
+                .subscribe((response: any) => {
+                    this.lotesProvincias = response || [];
+                });
+                this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)
+                .subscribe((response: any) => {
+                    this.lotesDevolucionesProvincias = response || []
+                });
+            }
+            else {
+                this.criteriaBusquedaProvincia.codigoProvincia = provincia.codigoProvincia;
+                this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
+                .subscribe((response: any) => {
+                    this.lotesProvincias = response || [];
+                    console.log(this.lotesProvincias);
+                });
+                this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusquedaProvincia)
+                .subscribe((response: any) => {
+                    this.lotesDevolucionesProvincias = response || []
+                });
+            }
+        });
 
         this.devolucionesService.getRejectReasons()
-            .subscribe((response: any) => {
-                this.rejectionReasonsData = response;
-            })
+        .subscribe((response: any) => {
+            this.rejectionReasonsData = response;
+        })
 
         this.lotesGeneralService.obtenerEmpresasTransporte()
-            .subscribe((response: any) => {
-                this.empresasTransporte = response;
-            })
+        .subscribe((response: any) => {
+            this.empresasTransporte = response;
+        })
 
-
+        if (this.cookieService.get('rolUsuario')) {
+            this.usuariosService.getRolNumber()
+            .subscribe((response : any) => {
+                this.userPermissions = response;
+            })}
     }
 
     despacharLote(lote: INuevoLoteProv) {
         this.loteActual = [lote]
+        this.empresaTransporteActual = 0;
+        this.fechaDevolucion = "";
+        this.codigoSeguiminetoActual = "";
     }
 
     cambioEmpresaTransporte(evento: any) {
@@ -203,25 +167,16 @@ export class LotesConsultaComponent implements OnInit {
         this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
         this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
         this.loteDevolucionEditado.fechaEnvio = this.fechaDevolucion;
-        this.loteActual
         this.loteDevolucionEditado.codigoLote = this.loteActual[0].codigoLote || "",
-            this.loteDevolucionEditado.codigoProvincia = this.loteActual[0].codigoProvincia || "",
+        this.loteDevolucionEditado.codigoProvincia = this.loteActual[0].codigoProvincia || "",
 
-
-            this.provinciasService.editarLoteProvincia(this.loteDevolucionEditado)
+        this.provinciasService.editarLoteProvincia(this.loteDevolucionEditado)
+        .subscribe((response: any) => {
+            this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
                 .subscribe((response: any) => {
-                    this.loteDevolucionEditado.idEmpresaTransporte = 0;
-                    this.loteDevolucionEditado.codigoSeguimiento = "";
-                    this.loteDevolucionEditado.fechaEnvio = "";
-                    this.loteDevolucionEditado.codigoLote = "";
-                    this.loteDevolucionEditado.codigoProvincia = "";
-
-                    this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
-                        .subscribe((response: any) => {
-                            this.lotesProvincias = response
-                            console.log(response)
-                        })
+                    this.lotesProvincias = response
                 })
+        })
 
     }
 

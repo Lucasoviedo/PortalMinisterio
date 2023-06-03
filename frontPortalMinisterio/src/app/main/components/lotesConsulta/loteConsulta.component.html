@@ -1,9 +1,7 @@
 <div class="container">
   <h1 class="tituloConsulta">{{ "INQUIRY.TITLE" | translate }}</h1>
-
-
-  <h3>LOTES</h3>
   <div *ngIf="lotesData.length > 0">
+    <h3>LOTES LABORATORIOS</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -18,16 +16,11 @@
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.estado}}</td>
           <td>{{lote.fechaEnvio}}</td>
-          <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion }}</td>
-          <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
-
+          <td>{{lote.fechaRecepcion || "PENDIENTE"}}</td>
         </tr>
       </tbody>
     </table>
   </div>
-
-
-
 
   <div *ngIf="devolucionesLaboratorios.length > 0">
     <h3>{{ "INQUIRY.LABS_RETURNINGS" | translate }}</h3>
@@ -53,7 +46,6 @@
         </tr>
       </tbody>
     </table>
-    <hr />
   </div>
   <div *ngIf="lotesProvincias.length > 0">
     <h3>{{ "INQUIRY.PROVINCES_BATCHES" | translate }}</h3>
@@ -65,7 +57,7 @@
           <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
-          <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
+          <th *ngIf="userPermissions == 1">{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -75,13 +67,13 @@
           <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
           <td>{{lote.fechaRecepcion || "PENDIENTE"}}</td>
           <td>{{lote.cantidadVacunas}}</td>
-          <td *ngIf="!lote.idEmpresaTransporte ">
+          <td *ngIf="!lote.idEmpresaTransporte && userPermissions == 1">
             <div class="btn-table" (click)="despacharLote(lote)" type="button" data-toggle="modal"
               data-target="#despacho-lote">
               {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
             </div>
           </td>
-          <td *ngIf="lote.idEmpresaTransporte">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
+          <td *ngIf="lote.idEmpresaTransporte && userPermissions == 1">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
         </tr>
       </tbody>
     </table>
@@ -140,26 +132,25 @@
         <div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.FOLLOWING_CODE" | translate }}: </label>
-            <input type="text" (change)="cambioCodigoSeguimiento($event)" />
+            <input type="text" (change)="cambioCodigoSeguimiento($event)" value={{codigoSeguiminetoActual}}/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.DEVOLUTION_DATE" | translate }}: </label>
-            <input type="date" (change)="cambioFechaDevolucion($event)" />
+            <input type="date" (change)="cambioFechaDevolucion($event)" value={{fechaDevolucion}}/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_TRANSPORT" | translate }}: </label>
-            <select (change)="cambioEmpresaTransporte($event)">
+            <select (change)="cambioEmpresaTransporte($event)" value={{empresaTransporteActual}}>
               <option hidden selected>Select</option>
               <option *ngFor="let empresa of empresasTransporte" value={{empresa.idEmpresaTransporte}}>
                 {{empresa.nombre}}</option>
             </select>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate
-              }}</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal"
-              *ngIf="codigoSeguiminetoActual !== '' && empresaTransporteActual !== 0 && fechaDevolucion !== undefined "
+              [disabled]="codigoSeguiminetoActual == '' || empresaTransporteActual == 0 || fechaDevolucion == undefined "
               (click)="despacharLoteProvincia()">{{ "BUTTONS.CONFIRM" | translate }}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate}}</button>
           </div>
         </div>
       </div>

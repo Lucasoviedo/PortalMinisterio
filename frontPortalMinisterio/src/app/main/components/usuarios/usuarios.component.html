@@ -1,6 +1,5 @@
 <div class="container">
     <h1 class="tituloConsulta">{{ "USERS.TITLE" | translate }}</h1>
-    <hr>
     <div class="row filtrosContenedor">
         <div class="user-header-options">
             <select class="form-select"
@@ -8,19 +7,19 @@
                 <option hidden selected>{{ "SELECT.ROL" | translate }}</option>
                 <option value="">{{ "SELECT.ALL" | translate }}</option>
                 <option *ngFor="let rol of rolesData" 
-                        value={{rol.nombreRol}}>{{rol.nombreRol}}</option>
+                        value={{rol.nombreRol}}>{{rol.nombre}}</option>
             </select>
         </div>
         <div class="user-header-options">
-            <button class="btn btn-primary agregarBoton" type="button" 
-                data-toggle="modal" data-target="#newUserModal"
-            >
-            {{ "USERS.BUTTON" | translate }}
-            </button>
+            <input type="text" class="form-control" [formControl]="filtro" placeholder="{{ 'USERS.PLACEHOLDER' | translate }}" name="nombre" autocomplete="off">
+        </div>
+        <div class="user-header-options">
+            <button class="btn btn-primary agregarBoton" type="button" data-toggle="modal" data-target="#newUserModal"
+            >{{ "USERS.BUTTON" | translate }}</button>
         </div>
     </div>
     <div *ngIf="usuariosData" class="card-usuario-container">
-        <div *ngFor="let usuario of usuariosData" class="card-usuario">
+        <div *ngFor="let usuario of usuariosData | filtrarPor:['nombreUsuario', 'nombreProvincia', 'nombreLaboratorio', 'email']:filtro.value" class="card-usuario">
             <div>
                 <h3>{{usuario.nombreUsuario}}</h3>
                 <div *ngIf="usuario.habilitado" class="user-up"></div>
@@ -40,6 +39,12 @@
                 data-toggle="modal" data-target="#eliminarModal"
                 (click)="marcarUsuarioEliminar(usuario.idUsuario)"/>
         </div>
+    </div>
+    <div class="usuarios-sumarizacion">
+        <h4>Cantidad usuarios totales:</h4>
+        <h6>Admin. {{usuarioRolAdmin.length}}</h6>
+        <h6>Lab. {{usuarioRolLabs.length}}</h6>
+        <h6>Prov. {{usuarioRolProv.length}}</h6>
     </div>
 </div>
 
@@ -146,35 +151,6 @@
       </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Modal update user -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
