@@ -1,6 +1,6 @@
 <div class="container">
     <h1 class="tituloConsulta">{{ "PROVINCE.TITLE" | translate }}</h1>
-    <input type="text" class="form-control col-12" [formControl]="filtro" placeholder={{placeholderBuscador}}>
+    <input type="text" class="form-control col-12" [formControl]="filtro" placeholder="{{ 'PROVINCE.PLACEHOLDER' | translate }}">
     <div *ngIf="provinciasData.length > 0">
     <table class="table table-striped table-Light">
         <thead>
@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody >
-            <tr *ngFor="let provincia of provinciasData  | filtrarPor:['nombre', 'nombreContacto', 'emailContacto']:filtro.value">
+            <tr *ngFor="let provincia of provinciasData | filtrarPor:['nombre', 'nombreContacto', 'emailContacto']:filtro.value">
                 <td (click)="mostrarCentrosSalud(provincia.codigoProvincia)" data-toggle="modal" data-target="#centros-provincia" class="provincia-nombre">
                     <div>
                         <div *ngIf="provincia.valor === 0" class="user-down"></div>

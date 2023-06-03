@@ -37,7 +37,6 @@ export class LotesAdminComponent implements OnInit{
     empresaTransporteActual = 0;
     motivoDevolucionActual = 0;
     descripcionProblemaActual = "";
-    codigoDevolucion = "";
     fechaDevolucion = undefined;
     codigoSeguiminetoActual = "";
 
@@ -128,6 +127,7 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
+            console.log(response)
         });
 
         this.lotesGeneralService.obtenerEstados()
@@ -208,22 +208,14 @@ export class LotesAdminComponent implements OnInit{
 
     cambioEstadoGeneral(evento: any){
         this.vaccinesData.map((element, index) => {
-            this.vaccinesData[index].codigoEstadoVacuna = evento.target.value
+           element.codigoEstadoVacuna = evento.target.value
             if(evento.target.value === "A"){
-                this.vaccinesData[index].estado = "ACEPTADA"
+                element.estado = "ACEPTADA"
             } else {
-                this.vaccinesData[index].estado = "RECHAZADA"
+                element.estado = "RECHAZADA"
             }
         })
-
         this.finalizarVerificacion = true
-    }
-    
-    verificarVacunas(lote : ILoteLab){
-        this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
-        .subscribe((response:any) =>{
-            this.vaccinesData = response;
-        })
     }
 
     changeVaccineCode(evento: any,vaccineCod : string){
@@ -237,16 +229,26 @@ export class LotesAdminComponent implements OnInit{
                 }
             }
         })
-
-        
-        // finalizarVerificacion
         const ready = this.vaccinesData.find((vacuna: { estado: string; }) => vacuna.estado === null)
-        if(!ready) this.finalizarVerificacion = true
-        else this.finalizarVerificacion = false
+        !ready ? this.finalizarVerificacion = true : this.finalizarVerificacion = false;
+    }
+    
+    verificarVacunas(lote : ILoteLab){
+        this.loteDevolucionEditado.codigoDevolucion = "";
+        this.loteDevolucionEditado.descripcionProblema = "";
+        this.loteDevolucionEditado.idEmpresaTransporte = 0;
+        this.loteDevolucionEditado.idMotivoDevolucion = 0;
+        this.loteDevolucionEditado.codigoSeguimiento = "";
+        this.loteDevolucionEditado.fechaEnvio = new Date();  
+        this.fechaDevolucion = undefined;
+        this.finalizarVerificacion = false
+        this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
+        .subscribe((response:any) =>{
+            this.vaccinesData = response;
+        })
     }
 
     async editarVacunas(){
-
         for (let element of this.vaccinesData) {
             let data = {
                 codigoVacuna : element.codigoVacuna,
@@ -260,24 +262,6 @@ export class LotesAdminComponent implements OnInit{
                 console.log(error)
             }
         }
-
-        // // SIN FINALIZAR
-        // const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones().toPromise();
-        
-        // const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
-
-        // if(loteDevolucion){
-        //     this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
-        //     this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
-        //     this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
-        //     this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
-        //     this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
-        // }
-
-        // this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
-        // .subscribe((response : any) => {
-        // })
-
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
@@ -324,10 +308,6 @@ export class LotesAdminComponent implements OnInit{
         this.provinciaCambioCod = evento.target.value
     }
 
-    cambioCodigoDevolucion(evento: any){
-        this.codigoDevolucion = evento.target.value
-    }
-
     cambioCodigoSeguimiento(evento: any){
         this.codigoSeguiminetoActual = evento.target.value
     }
@@ -338,40 +318,28 @@ export class LotesAdminComponent implements OnInit{
 
     async despacharVacunas(){
         
-        if(this.fechaDevolucion === undefined) return
+        // if(this.fechaDevolucion === undefined) return
             
-        const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs).toPromise();
-        const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
+        // const responseDevoluciones = await this.devolucionesService.obtenerDevoluciones(this.criteriaBusquedaDevolucionesLabs).toPromise();
+        // const loteDevolucion = await responseDevoluciones.find((devolucion: { codigoLote: string; }) => devolucion.codigoLote === this.vaccinesData[0].codigoLote)
 
-        this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
-        this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
-        this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
-        this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
-        this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
-        this.loteDevolucionEditado.fechaEnvio = this.fechaDevolucion;
+        // this.loteDevolucionEditado.codigoDevolucion = loteDevolucion.codigoDevolucion;
+        // this.loteDevolucionEditado.descripcionProblema = this.descripcionProblemaActual;
+        // this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
+        // this.loteDevolucionEditado.idMotivoDevolucion = this.motivoDevolucionActual;
+        // this.loteDevolucionEditado.codigoSeguimiento = this.codigoSeguiminetoActual;
+        // this.loteDevolucionEditado.fechaEnvio = this.fechaDevolucion;
 
-        this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
-        .subscribe((response : any) => {
-            this.loteDevolucionEditado.codigoDevolucion = "";
-            this.loteDevolucionEditado.descripcionProblema = "";
-            this.loteDevolucionEditado.idEmpresaTransporte = 0;
-            this.loteDevolucionEditado.idMotivoDevolucion = 0;
-            this.loteDevolucionEditado.codigoSeguimiento = "";
-            this.loteDevolucionEditado.fechaEnvio = new Date();  
-            this.fechaDevolucion = undefined;
-
-            this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
-            .subscribe((responseLotes: any) => {
-                this.lotesDataComplete = responseLotes
-                this.lotesData = this.lotesDataComplete;
-            });
-        })  
+        // this.devolucionesService.crearDevolucion(this.loteDevolucionEditado)
+        // .subscribe(() => {
+        //     this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
+        //     .subscribe(() => {this.ngOnInit()});
+        // })  
     }
 
     
     async distribucionVacunas(){
         let index2 = 0;
-
         for(let provincia of this.provinciasDistribuirData){
             for(let i = 0; i < provincia.valor ; i++) {
                 let data = {
@@ -390,10 +358,7 @@ export class LotesAdminComponent implements OnInit{
         }
 
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
-        .subscribe((response: any) => {
-            this.lotesDataComplete = response
-            this.lotesData = this.lotesDataComplete;
-        });
+        .subscribe(() => {this.ngOnInit()});
     }
 
     cambioProvinciaDistribucion(evento: any){
@@ -405,13 +370,15 @@ export class LotesAdminComponent implements OnInit{
         }
 
         if(this.provinciaTipoDistribucion == 1){
+            let resto = this.vacunasDistribuirData.length
             this.provinciasDistribuirData = this.provinciasDistribuirData.map((element : IProvinciaDistribuir) => {
                 return {
                     ...element,
                     valor: Math.floor(this.vacunasDistribuirData.length / this.provinciasDistribuirData.length)
                 }
             });
-            this.totalVacunasADistribuir =  Math.floor(this.vacunasDistribuirData.length / this.provinciasDistribuirData.length) * this.provinciasDistribuirData.length;
+            this.provinciasDistribuirData[0].valor += resto - Math.floor(this.vacunasDistribuirData.length / this.provinciasDistribuirData.length) * this.provinciasDistribuirData.length
+            this.totalVacunasADistribuir = this.vacunasDistribuirData.length
         }
     }
 
@@ -449,7 +416,6 @@ export class LotesAdminComponent implements OnInit{
         });
 
         this.totalVacunasADistribuir = 0;
-        
         this.provinciasDistribuirData.forEach(element => {
             this.totalVacunasADistribuir += element.valor
         })

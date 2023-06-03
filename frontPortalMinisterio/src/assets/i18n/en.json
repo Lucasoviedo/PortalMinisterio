@@ -37,10 +37,10 @@
     "ADD": "ADD LABORATORY",
     "NAME": "Name",
     "COUNTRY": "Country",
-    "DIRECTION": "Direction",
     "CONTACT_NAME": "Contact name",
     "CONTACT_EMAIL": "Contact email",
-    "CONFIGURATION": "Configuration"
+    "CONFIGURATION": "Configuration",
+    "PLACEHOLDER": "Filter by name, country, contact or email"
   },
   "LOGIN": {
     "TITLE": "Log in",
@@ -66,17 +66,18 @@
       },
       "DISPATCH": {
         "TITLE": "Dispatch vaccines",
-        "RETURNING_CODE": "Returning code",
         "FOLLOWING_CODE": "Following code",
         "DEVOLUTION_DATE": "Devolution date",
         "SELECT_TRANSPORT": "Select transport company",
-        "SELECT_REASON": "Select devolution reason"
+        "SELECT_REASON": "Select devolution reason",
+        "COMMENTS": "Add comments"
       },
       "DISTRIBUTE": {
         "TITLE": "Distribute vaccines",
         "QUANTITY": "Quantity of vaccines to distribute",
         "MANUAL": "Manual",
-        "EQUITATIVE": "Equitative"
+        "EQUITATIVE": "Equitative",
+        "MESSAGE": "Equitative will send equal amount of vaccines to each province, the rest will go to the first province"
       },
       "VERIFY": {
         "TITLE": "Verify vaccines",
@@ -122,13 +123,15 @@
       "CONFIG": "Configuration",
       "EMAIL": "Email"
     },
-    "TITLE": "PROVINCES"
+    "TITLE": "PROVINCES",
+    "PLACEHOLDER": "Filter by name, contact or email"
   },
   "SELECT": {
     "ALL": "ALL",
     "LAB": "Select a laboratory",
     "ROL": "Select a role",
     "STATE": "Select a state",
+    "PROVINCE": "Select a province",
     "SELECT": "Select"
   },
   "USERS": {
@@ -156,6 +159,7 @@
       "TITLE": "Delete user"
     },
     "UPDATE": "Update user",
-    "TITLE": "USERS"
+    "TITLE": "USERS",
+    "PLACEHOLDER": "Filter by name, email or origin"
   }
 }

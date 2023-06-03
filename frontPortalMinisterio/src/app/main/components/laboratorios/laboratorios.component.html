@@ -1,9 +1,9 @@
 
 <div class="container">
     <h1 class="tituloConsulta">{{ "LABORATORY.TITLE" | translate }}</h1>
-    <hr>
     <div class="row filtrosContenedor">
-        <div class="col-3">
+        <div class="col-9">
+            <input type="text" class="form-control col-12" [formControl]="filtro" placeholder="{{ 'LABORATORY.PLACEHOLDER' | translate }}">
         </div>
         <div class="col-3">
             <button class="btn btn-primary agregarBoton" data-toggle="modal" data-target="#insertar-laboratorio">
@@ -16,14 +16,13 @@
             <tr>
                 <th>{{ "LABORATORY.NAME" | translate }}</th>
                 <th>{{ "LABORATORY.COUNTRY" | translate }}</th>
-                <th>{{ "LABORATORY.DIRECTION" | translate }}</th>
                 <th>{{ "LABORATORY.CONTACT_NAME" | translate }}</th>
                 <th>{{ "LABORATORY.CONTACT_EMAIL" | translate }}</th>
                 <th>{{ "LABORATORY.CONFIGURATION" | translate }}</th>
             </tr>
         </thead>
         <tbody >
-            <tr *ngFor="let laboratorio of laboratoriosData">
+            <tr *ngFor="let laboratorio of laboratoriosData | filtrarPor:['nombre', 'pais', 'nombreContacto', 'emailContacto']:filtro.value">
                 <td class="laboratorio-nombre">
                     <div>
                         <div *ngIf="laboratorio.valor === 0" class="user-down"></div>
@@ -32,17 +31,14 @@
                     </div>
                 </td>
                 <td>{{laboratorio.pais}}</td>
-                <td>{{laboratorio.direccion}}</td>
                 <td>{{laboratorio.emailContacto}}</td>
                 <td>{{laboratorio.nombreContacto}}</td>
                 <td>
                     <img src="../../../../assets/configurar.svg" class="configurar-img" type="button" 
                         data-toggle="modal" data-target="#editar-laboratorio" (click)="editarLaboratorio(laboratorio)"/>
-                    <!-- <img src="../../../../assets/eliminar.svg" class="configurar-img"/> -->
                     <img src="../../../../assets/señal.svg" class="configurar-img" type="button"
                         data-toggle="modal" data-target="#ping-laboratorio" (click)="pingLaboratorio(laboratorio)"
-                        *ngIf="laboratorio.valor === 1 || laboratorio.valor === 0"
-                        />
+                        *ngIf="laboratorio.valor === 1 || laboratorio.valor === 0"/>
                 </td>
             </tr>
         </tbody>
@@ -59,7 +55,9 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" [ngClass]="{
+                'message-color-1': codigoMensajePing == 1,
+                'message-color-2': codigoMensajePing == 2}">
                 <h4>{{mensajePing}}</h4>
             </div>
             <div class="modal-footer">
@@ -80,38 +78,32 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h4>{{endpointEditar.codigoLabOProv }}</h4>
                 <div class="flexRow">
                     <label for="">URL</label>
                     <input type="text" value={{endpointEditar.url}} (change)="cambioUrl($event)"/>
                 </div>
-
                 <div class="flexRow">
-                    <label for="">URL Status</label>
+                    <label for="">{{ "PROVINCE.MODAL.STATUS" | translate }}</label>
                     <input type="text" value={{endpointEditar.urlStatus}} (change)="cambioUrlStatus($event)"/>
                 </div>
-                
                 <div class="flexRow">
-                    <label for="">Clave</label>
+                    <label for="">{{ "PROVINCE.MODAL.USER" | translate }}</label>
+                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
+                </div>
+                <div class="flexRow">
+                    <label for="">{{ "PROVINCE.MODAL.PASSWORD" | translate }}</label>
                     <input type="text" value={{endpointEditar.clave}} (change)="cambioClave($event)"/>
                 </div>
-
                 <div class="flexRow">
-                    <label for="">Tecnologia</label>
+                    <label for="">{{ "PROVINCE.MODAL.TEC" | translate }}</label>
                     <select [(ngModel)] = "endpointEditar.tecnologia" (change)="cambioTecnologia($event)">
                         <option selected hidden>{{endpointEditar.tecnologia}}</option>
                         <option *ngFor="let tecnologia of tecnologiasData" 
                               value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
                     </select>
                 </div>
-                
                 <div class="flexRow">
-                    <label for="">Usuario</label>
-                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
-                </div>
-                
-                <div class="flexRow">
-                    <label for="">Habilitado</label>
+                    <label for="">{{ "PROVINCE.MODAL.ENABLE" | translate }}</label>
                     <select [(ngModel)] = "endpointEditar.habilitado">
                         <option value="1">{{ "USERS.ENABLE" | translate }}</option>
                         <option value="0">{{ "USERS.DISABLE" | translate }}</option>
@@ -119,43 +111,14 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="editarEndpoint()" data-dismiss="modal"
+                [disabled]="endpointEditar.url == '' || endpointEditar.urlStatus == '' || endpointEditar.clave == '' || endpointEditar.usuario == ''  || endpointEditar.tecnologia == '' "
+                >{{ "BUTTONS.EDIT" | translate }}</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-                <button type="button" class="btn btn-primary" (click)="editarEndpoint()" data-dismiss="modal">{{ "BUTTONS.EDIT" | translate }}</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Modal insertar laboratorio -->
 <div class="modal fade" id="insertar-laboratorio" tabindex="-1" role="dialog" aria-labelledby="insertar-laboratorioLabel" aria-hidden="true">
@@ -168,42 +131,36 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h4>INSERTAR LABORATORIO</h4>
-                <div class="flexRow">
-                    <label for="">Codigo Laboratorio</label>
-                    <input type="text" value={{nuevoLaboratorio.codigoLaboratorio}} (change)="cambioCodigoLaboratorio($event)"/>
-                </div>
-
                 <div class="flexRow">
                     <label for="">Nombre</label>
                     <input type="text" value={{nuevoLaboratorio.nombre}} (change)="cambioNombre($event)"/>
                 </div>
-                
                 <div class="flexRow">
                     <label for="">Pais</label>
                     <input type="text" value={{nuevoLaboratorio.pais}} (change)="cambioPais($event)"/>
                 </div>
-                
                 <div class="flexRow">
                     <label for="">Direccion</label>
                     <input type="text" value={{nuevoLaboratorio.direccion}} (change)="cambioDireccion($event)"/>
                 </div>
-                
                 <div class="flexRow">
                     <label for="">Email Contato</label>
                     <input type="text" value={{nuevoLaboratorio.emailContacto}} (change)="cambioEmailContaco($event)"/>
                 </div>
-                
                 <div class="flexRow">
                     <label for="">Nombre Contato</label>
                     <input type="text" value={{nuevoLaboratorio.nombreContacto}} (change)="cambioNombreContacto($event)"/>
+                </div>
+                <div class="flexRow">
+                    <label for="">Codigo Laboratorio</label>
+                    <input type="text" value={{nuevoLaboratorio.codigoLaboratorio}} (change)="cambioCodigoLaboratorio($event)"/>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="insertarLaboratorio()"
-                *ngIf="nuevoLaboratorio.codigoLaboratorio !== '' && nuevoLaboratorio.nombre !== '' && nuevoLaboratorio.pais !== '' &&
-                nuevoLaboratorio.direccion !== '' && nuevoLaboratorio.emailContacto !== '' && nuevoLaboratorio.nombreContacto !== '' ">
+                [disabled]="nuevoLaboratorio.codigoLaboratorio == '' || nuevoLaboratorio.nombre == '' || nuevoLaboratorio.pais == '' ||
+                nuevoLaboratorio.direccion == '' || nuevoLaboratorio.emailContacto == '' || nuevoLaboratorio.nombreContacto == '' ">
                     {{ "BUTTONS.INSERT" | translate }}</button>
             </div>
         </div>

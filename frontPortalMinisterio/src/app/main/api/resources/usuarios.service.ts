@@ -50,7 +50,6 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')
     });
-    console.log(userToDelete)
     return this.http.post<IUsuario>(this.url + '/usuarios/eliminar' , userToDelete
     , {headers} );
   }

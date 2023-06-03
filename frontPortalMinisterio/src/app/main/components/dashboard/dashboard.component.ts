@@ -41,11 +41,8 @@ export class DashboardComponent implements OnInit{
                     this.dashboardData.push(this.keys)
                 }
             });
-            console.log(this.dashboardData)
-
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
-                console.log(responseLenguaje)
                 if (responseLenguaje !== 1) {
                     if (this.dashboardData[0]) this.dashboardData[0].title = "BATCHES"
                     if (this.dashboardData[1]) this.dashboardData[1].title = "AVAILABLE VACCINES FOR DISTRIBUTION"

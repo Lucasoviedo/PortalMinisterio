@@ -10,6 +10,7 @@ import { IEndpoint } from "src/app/core/models/endpoints/i-endpoint";
 import { ITecnologia } from "src/app/core/models/endpoints/i-tecnologia";
 import { EventBusService } from "../../api/resources/event-bus.service";
 import { INuevoLaboratorio } from "src/app/core/models/laboratorios/i-nuevoLaboratorio";
+import { FormControl, Validators } from "@angular/forms";
 
 @Component({
     selector: 'app-laboratorios',
@@ -18,41 +19,20 @@ import { INuevoLaboratorio } from "src/app/core/models/laboratorios/i-nuevoLabor
 })
 
 export class LaboratoriosComponent implements OnInit{
+    filtro!: FormControl;
 
     laboratoriosData: Array<ILaboratorio> = [];
 
     endpointsData : Array<IEndpoints> = [];
     tecnologiasData : Array<ITecnologia> = [];
 
-    laboratorioModal: ILaboratorio = { 
-        nombre : "",
-        codigoLaboratorio: "", 
-        pais: "",
-        direccion: "",
-        emailContacto: "", 
-        nombreContacto :"",
-        valor : 0
-    };
+    laboratorioModal: ILaboratorio = {nombre : "", codigoLaboratorio: "", pais: "", direccion: "", emailContacto: "", nombreContacto :"", valor : 0};
+    
     mensajePing = ""
+    codigoMensajePing = 0
 
-    endpointEditar : IEndpoint = {
-        clave: "",
-        codigoLabOProv: "",
-        habilitado: 1,
-        tecnologia: "",
-        url: "",
-        usuario: "",
-        urlStatus: "",
-    };
-
-    nuevoLaboratorio : INuevoLaboratorio = {
-        codigoLaboratorio: "",
-        nombre: "",
-        pais: "",
-        direccion: "",
-        emailContacto: "",
-        nombreContacto: "",
-    }
+    endpointEditar : IEndpoint = {clave: "", codigoLabOProv: "", habilitado: 1, tecnologia: "", url: "", usuario: "", urlStatus: ""};
+    nuevoLaboratorio : INuevoLaboratorio = {codigoLaboratorio: "", nombre: "", pais: "", direccion: "", emailContacto: "", nombreContacto: ""}
 
     constructor(private router: Router, 
         private eventBusService: EventBusService,
@@ -62,6 +42,8 @@ export class LaboratoriosComponent implements OnInit{
         private cookieService : CookieService) { }
 
     ngOnInit(){
+        this.filtro = new FormControl('', [Validators.maxLength(255)]);
+
         if(this.cookieService.get('rolUsuario')){
             if(this.cookieService.get('rolUsuario') != "1"){
                 this.router.navigate(['/']);
@@ -87,7 +69,6 @@ export class LaboratoriosComponent implements OnInit{
                         valor
                     };  
                 })
-                console.log(this.laboratoriosData)
             });
         })
 
@@ -104,24 +85,26 @@ export class LaboratoriosComponent implements OnInit{
     pingLaboratorio(laboratorio:ILaboratorio){
         this.laboratorioModal = laboratorio
         this.mensajePing = ""
+        this.codigoMensajePing = 2
         this.endpointService.pingEndpoint(laboratorio.codigoLaboratorio)
         .subscribe((response : any) => {
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
-                console.log(responseLenguaje)
                 if(response.statusCode == "OK"){
                     responseLenguaje == 1 ? this.mensajePing = "Successful conection" :  this.mensajePing = "Conexion exitosa"
+                    this.codigoMensajePing = 1
                 } else if(response.statusCode === "INTERNAL_SERVER_ERROR"){
                     responseLenguaje == 1 ? this.mensajePing = "The connection could not be established" :  this.mensajePing = "La conexion no se pudo establecer"
+                    this.codigoMensajePing = 2
                 } else {
                     responseLenguaje == 1 ? this.mensajePing = "There is no connection to this endpoint" :  this.mensajePing = "No existe una conexion a este endpoint"
+                    this.codigoMensajePing = 2
                 }
             })
         })    
     }
 
     editarLaboratorio(laboratorio:ILaboratorio){
-        console.log(laboratorio);
         const variable = this.endpointsData.find(endpoint => endpoint.codigoLaboratorio === laboratorio.codigoLaboratorio);
         if(variable) { 
             this.endpointEditar.clave = variable.clave;
@@ -168,49 +151,13 @@ export class LaboratoriosComponent implements OnInit{
     }
 
     editarEndpoint(){
-        console.log(this.endpointEditar)
         this.endpointService.editarEndpoint(this.endpointEditar)
         .subscribe( (data : any) => {
-            console.log(data)
-            this.eventBusService.onEndpointEdit.emit();
+            this.ngOnInit();
         })
-
-        this.endpointEditar = {
-            clave: "",
-            codigoLabOProv: "",
-            habilitado: 1,
-            tecnologia: "",
-            url: "",
-            usuario: "",
-            urlStatus: ""
-        }; 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     insertarLaboratorio(){
-        console.log(this.nuevoLaboratorio)
-
         this.laboratorioService.insertarLaboratorio(this.nuevoLaboratorio)
         .subscribe((data : any) => {
             this.eventBusService.onEndpointEdit.emit();

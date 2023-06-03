@@ -12,6 +12,7 @@ import { INuevoUsuario } from "src/app/core/models/usuarios/i-nuevoUsuario";
 import { IEditUser } from "src/app/core/models/usuarios/i-editUser";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { FormControl, Validators } from "@angular/forms";
 
 @Component({
     selector: 'app-usuarios',
@@ -20,6 +21,8 @@ import { CookieService } from "ngx-cookie-service";
 })
 
 export class UsuariosComponent implements OnInit {
+
+    filtro!: FormControl;
 
     nuevoUsuarioClaveRepetida : string = '';
 
@@ -33,31 +36,13 @@ export class UsuariosComponent implements OnInit {
 
     usuarioEliminar: number = 0;
 
-    nuevoUsuario : INuevoUsuario  = {
-        idUsuario : 100,
-        codigoLaboratorio : undefined,
-        nroRol : 0,
-        codigoProvincia : undefined,
-        nombreUsuario : "",
-        clave : "",
-        email : "",
-        nombre : "",
-        apellido : "",
-        dni : 0,
-        habilitado : 1,
-        idIdioma : 0,
-    }
-    userToEdit : IEditUser = {
-        idUsuarioAEditar : 0,
-        nombreLaboratorio : "",
-        rol : "",
-        nombreProvincia : "",
-        nombreUsuario : "",
-        email : "",
-        habilitado : 1,
-        idioma : "",
-    }
+    nuevoUsuario : INuevoUsuario  = { idUsuario : 100, codigoLaboratorio : undefined, nroRol : 0, codigoProvincia : undefined, nombreUsuario : "", clave : "", email : "", nombre : "", apellido : "", dni : 0, habilitado : 1, idIdioma : 0 }
+    userToEdit : IEditUser = {idUsuarioAEditar : 0, nombreLaboratorio : "", rol : "", nombreProvincia : "", nombreUsuario : "", email : "", habilitado : 1, idioma : "" }
     
+    usuarioRolAdmin: Array<IUsuario> = [];
+    usuarioRolLabs: Array<IUsuario> = [];
+    usuarioRolProv: Array<IUsuario> = [];
+
     constructor(private router: Router, 
                 private cookieService: CookieService,
                 private usuarioService: UsuarioService,
@@ -65,6 +50,8 @@ export class UsuariosComponent implements OnInit {
                 private provinciaService : ProvinciaService) { }
 
     ngOnInit(){
+        this.filtro = new FormControl('', [Validators.maxLength(255)]);
+
         if(this.cookieService.get('rolUsuario')){
             if(this.cookieService.get('rolUsuario') != "1"){
                 this.router.navigate(['/']);
@@ -75,7 +62,10 @@ export class UsuariosComponent implements OnInit {
         .subscribe((response: any) => {
             this.usuariosData = response;
             this.usuariosDataComplete = response;
-            console.log(response)
+            
+            this.usuarioRolAdmin = response.filter((usuario : IUsuario) => usuario.rol === "ROL_ADMIN")
+            this.usuarioRolLabs = response.filter((usuario : IUsuario) => usuario.rol === "ROL_LAB")
+            this.usuarioRolProv = response.filter((usuario : IUsuario) => usuario.rol === "ROL_PROV")
         });
 
         this.usuarioService.getIdiomas()
@@ -85,9 +75,15 @@ export class UsuariosComponent implements OnInit {
 
         this.usuarioService.getRoles()
         .subscribe((response: any) => {
-            this.rolesData = response
+            this.rolesData = response.map((rol : any) => {
+                let nombre = rol.nombreRol.replace("_"," ")
+                return{
+                    ...rol,
+                    nombre 
+                }
+            })
         });
-        
+    
         this.laboratorioService.getLaboratorios()
         .subscribe((response: any) => {
             this.laboratoriosData = response
@@ -142,9 +138,7 @@ export class UsuariosComponent implements OnInit {
                 .subscribe((res: any) => {
                     this.usuarioService.getUsuarios()
                     .subscribe((response: any) => {
-                        this.usuariosData = response;
-                        this.usuariosDataComplete = response;
-                        console.log(response)
+                        this.ngOnInit();
                     });
                 });
             }
@@ -173,7 +167,6 @@ export class UsuariosComponent implements OnInit {
             alert("Debe seleccionar el origen del rol")
         }
         else if (this.nuevoUsuario.idIdioma === 0){
-            console.log(this.nuevoUsuario.idIdioma)
             alert("Debe seleccionar el idioma del usuario")
         }
         else if(this.nuevoUsuario.nombreUsuario.length === 0){
@@ -192,7 +185,6 @@ export class UsuariosComponent implements OnInit {
     }
 
     marcarUsuarioEliminar(idUsuario : number){
-        console.log(this.usuariosData)
         this.usuarioEliminar = idUsuario;
     }
 
@@ -203,7 +195,6 @@ export class UsuariosComponent implements OnInit {
             .subscribe((response: any) => {
                 this.usuariosData = response;
                 this.usuariosDataComplete = response;
-                console.log(response)
             });
         });
 
@@ -221,11 +212,7 @@ export class UsuariosComponent implements OnInit {
     } 
 
     cambioOrigen(evento : any){
-        console.log(evento.target.value)
-
         const variable = this.dataToSelectRol.find(element => (element.codigoLaboratorio || element.codigoProvincia) === evento.target.value)
-        console.log(variable.nombre)
-
         if(this.dataToSelectRol[0].codigoLaboratorio){
             this.userToEdit.nombreLaboratorio = variable.nombre
             this.userToEdit.nombreProvincia = undefined
@@ -256,6 +243,5 @@ export class UsuariosComponent implements OnInit {
                 this.usuariosDataComplete = response;
             });
         })
-        
     }
 }

@@ -44,7 +44,6 @@ export class VacunadosComponent implements OnInit{
 
         this.laboratorioService.getLaboratorios()
         .subscribe((response: any) => {
-            console.log(response);
             this.laboratoriosData = response.map((laboratorio : any) => {
                 return laboratorio.nombre;
             })
