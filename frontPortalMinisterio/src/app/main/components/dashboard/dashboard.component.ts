@@ -32,30 +32,42 @@ export class DashboardComponent implements OnInit{
 
         this.usuariosService.getDashboardUser()
         .subscribe((response : any) => {
-            Object.keys(response).forEach(element => {
-                this.keys = {
-                    title :  element.replace(/([A-Z])/g, " $1").toUpperCase(),
-                    value : response[element]
-                };
-                if(this.keys.value != undefined){
-                    this.dashboardData.push(this.keys)
-                }
-            });
+            
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
-                if (responseLenguaje !== 1) {
-                    if (this.dashboardData[0]) this.dashboardData[0].title = "BATCHES"
-                    if (this.dashboardData[1]) this.dashboardData[1].title = "AVAILABLE VACCINES FOR DISTRIBUTION"
-                    if (this.dashboardData[2]) this.dashboardData[2].title = "AVAILABLE VACCINES BY PROVINCES"
-                    if (this.dashboardData[3]) this.dashboardData[3].title = "ADMINISTERED VACCINES"
-                    if (this.dashboardData[4]) this.dashboardData[4].title = "RETURNED VACCINES"
-                    if (this.dashboardData[5]) this.dashboardData[5].title = "VACCINATED"
-                    if (this.dashboardData[6]) this.dashboardData[6].title = "LAST LAB UPDATE"
-                    if (this.dashboardData[7]) this.dashboardData[7].title = "LAST PROVINCE UPDATE"
-                }
+
+                Object.keys(response).forEach(element => {
+                    this.keys = {
+                        title :  element.replace(/([A-Z])/g, " $1").toUpperCase(),
+                        value : response[element]
+                    };
+
+                    if (responseLenguaje !== 1) {
+                        if(this.keys.title === "LOTES"){
+                            this.keys.title = "BATCHES"
+                        } else if (this.keys.title === "VACUNAS DISPONIBLES A DISTRIBUIR"){
+                            this.keys.title = "AVAILABLE VACCINES FOR DISTRIBUTION"
+                        } else if (this.keys.title === "VACUNAS DISPONIBLES PROVINCIAS"){
+                            this.keys.title = "AVAILABLE VACCINES BY PROVINCE"
+                        } else if (this.keys.title === "VACUNAS APLICADAS"){
+                            this.keys.title = "ADMINISTERED VACCINES"
+                        } else if (this.keys.title === "VACUNAS DEVUELTAS"){
+                            this.keys.title = "RETURNED VACCINES"
+                        } else if (this.keys.title === "VACUNADOS"){
+                            this.keys.title = "VACCINATED"
+                        } else if (this.keys.title === "ULTIMA ACTUALIZACION LAB"){
+                            this.keys.title = "LAST LAB UPDATE"
+                        } else if(this.keys.title === "ULTIMA ACTUALIZACION PROV"){
+                            this.keys.title = "LAST PROVINCE UPDATE"
+                        } 
+                    }
+
+                    if(this.keys.value != undefined){
+                        this.dashboardData.push(this.keys)
+                    }
+                });
             })
         })
-
         this.eventBusService.onDashboardShown.emit();
     }
 }

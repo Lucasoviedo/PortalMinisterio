@@ -31,6 +31,9 @@
     "SAVE": "GUARDAR",
     "UPDATE": "ACTUALIZAR"
   },
+  "DASHBOARD": {
+    "MESSAGE": "No existe informacion por el momento"
+  },
   "FOOTER": "Sistema de control de vacunacion de Ministerio de la Nación",
   "LABORATORY": {
     "TITLE": "LABORATORIOS",
@@ -86,7 +89,7 @@
     }
   },
   "NAVBAR": {
-    "TITLE": "Ministerio de la Nación Argetina",
+    "TITLE": "Ministerio de la Nación Argentina",
     "LABORATORIES": "LABORATORIOS",
     "PROVINCES": "PROVINCIAS",
     "USERS": "USUARIOS",
@@ -160,6 +163,7 @@
     },
     "UPDATE": "Actualizar usuario",
     "TITLE": "USUARIOS",
-    "PLACEHOLDER": "Filtrar por nombre, email u origen"
+    "PLACEHOLDER": "Filtrar por nombre, email u origen",
+    "SUMMARIZATION": "Cantidad total de usuarios"
   }
 }

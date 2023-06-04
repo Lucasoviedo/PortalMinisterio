@@ -118,7 +118,6 @@ export class LotesConsultaComponent implements OnInit {
                 this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
                 .subscribe((response: any) => {
                     this.lotesProvincias = response || [];
-                    console.log(this.lotesProvincias);
                 });
                 this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusquedaProvincia)
                 .subscribe((response: any) => {
@@ -141,7 +140,8 @@ export class LotesConsultaComponent implements OnInit {
             this.usuariosService.getRolNumber()
             .subscribe((response : any) => {
                 this.userPermissions = response;
-            })}
+            })
+        }
     }
 
     despacharLote(lote: INuevoLoteProv) {
@@ -151,17 +151,17 @@ export class LotesConsultaComponent implements OnInit {
         this.codigoSeguiminetoActual = "";
     }
 
-    cambioEmpresaTransporte(evento: any) {
-        this.empresaTransporteActual = parseInt(evento.target.value)
-    }
+    // cambioEmpresaTransporte(evento: any) {
+    //     this.empresaTransporteActual = parseInt(evento.target.value)
+    // }
 
-    cambioCodigoSeguimiento(evento: any) {
-        this.codigoSeguiminetoActual = evento.target.value
-    }
+    // cambioCodigoSeguimiento(evento: any) {
+    //     this.codigoSeguiminetoActual = evento.target.value
+    // }
 
-    cambioFechaDevolucion(evento: any) {
-        this.fechaDevolucion = evento.target.value
-    }
+    // cambioFechaDevolucion(evento: any) {
+    //     this.fechaDevolucion = evento.target.value
+    // }
 
     despacharLoteProvincia() {
         this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;
@@ -171,13 +171,12 @@ export class LotesConsultaComponent implements OnInit {
         this.loteDevolucionEditado.codigoProvincia = this.loteActual[0].codigoProvincia || "",
 
         this.provinciasService.editarLoteProvincia(this.loteDevolucionEditado)
-        .subscribe((response: any) => {
+        .subscribe(() => {
             this.provinciasService.obtenerLotesProvincias(this.criteriaBusquedaProvincia)
-                .subscribe((response: any) => {
-                    this.lotesProvincias = response
-                })
+            .subscribe((response: any) => {
+                this.lotesProvincias = response
+            })
         })
-
     }
 
     openConfirmDataModal(evento: any, lote: IDevolucionProvincia) {

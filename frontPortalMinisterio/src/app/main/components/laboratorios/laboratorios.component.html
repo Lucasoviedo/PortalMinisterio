@@ -80,23 +80,23 @@
             <div class="modal-body">
                 <div class="flexRow">
                     <label for="">URL</label>
-                    <input type="text" value={{endpointEditar.url}} (change)="cambioUrl($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.url"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.STATUS" | translate }}</label>
-                    <input type="text" value={{endpointEditar.urlStatus}} (change)="cambioUrlStatus($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.urlStatus"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.USER" | translate }}</label>
-                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.usuario"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.PASSWORD" | translate }}</label>
-                    <input type="text" value={{endpointEditar.clave}} (change)="cambioClave($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.clave"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.TEC" | translate }}</label>
-                    <select [(ngModel)] = "endpointEditar.tecnologia" (change)="cambioTecnologia($event)">
+                    <select [(ngModel)]="endpointEditar.tecnologia">
                         <option selected hidden>{{endpointEditar.tecnologia}}</option>
                         <option *ngFor="let tecnologia of tecnologiasData" 
                               value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
@@ -133,27 +133,27 @@
             <div class="modal-body">
                 <div class="flexRow">
                     <label for="">Nombre</label>
-                    <input type="text" value={{nuevoLaboratorio.nombre}} (change)="cambioNombre($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.nombre"/>
                 </div>
                 <div class="flexRow">
                     <label for="">Pais</label>
-                    <input type="text" value={{nuevoLaboratorio.pais}} (change)="cambioPais($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.pais"/>
                 </div>
                 <div class="flexRow">
                     <label for="">Direccion</label>
-                    <input type="text" value={{nuevoLaboratorio.direccion}} (change)="cambioDireccion($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.direccion"/>
                 </div>
                 <div class="flexRow">
                     <label for="">Email Contato</label>
-                    <input type="text" value={{nuevoLaboratorio.emailContacto}} (change)="cambioEmailContaco($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.emailContacto"/>
                 </div>
                 <div class="flexRow">
                     <label for="">Nombre Contato</label>
-                    <input type="text" value={{nuevoLaboratorio.nombreContacto}} (change)="cambioNombreContacto($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.nombreContacto"/>
                 </div>
                 <div class="flexRow">
                     <label for="">Codigo Laboratorio</label>
-                    <input type="text" value={{nuevoLaboratorio.codigoLaboratorio}} (change)="cambioCodigoLaboratorio($event)"/>
+                    <input type="text" [(ngModel)]="nuevoLaboratorio.codigoLaboratorio"/>
                 </div>
             </div>
             <div class="modal-footer">
