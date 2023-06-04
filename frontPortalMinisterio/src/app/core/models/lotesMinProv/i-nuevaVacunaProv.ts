@@ -3,4 +3,5 @@ export interface INuevaVacunaProv{
     codigoLote: string;
     codigoProvincia: string;
     estado: string | null;
+    idModoDistribucion: number;
 }

@@ -132,15 +132,15 @@
         <div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.FOLLOWING_CODE" | translate }}: </label>
-            <input type="text" (change)="cambioCodigoSeguimiento($event)" value={{codigoSeguiminetoActual}}/>
+            <input type="text" [(ngModel)]="codigoSeguiminetoActual"/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.DEVOLUTION_DATE" | translate }}: </label>
-            <input type="date" (change)="cambioFechaDevolucion($event)" value={{fechaDevolucion}}/>
+            <input type="date" [(ngModel)]="fechaDevolucion"/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_TRANSPORT" | translate }}: </label>
-            <select (change)="cambioEmpresaTransporte($event)" value={{empresaTransporteActual}}>
+            <select [(ngModel)]="empresaTransporteActual">
               <option hidden selected>Select</option>
               <option *ngFor="let empresa of empresasTransporte" value={{empresa.idEmpresaTransporte}}>
                 {{empresa.nombre}}</option>

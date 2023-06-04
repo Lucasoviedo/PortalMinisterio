@@ -136,36 +136,9 @@ export class ProvinciasComponent implements OnInit {
         });
     }
 
-    cambioUrl(evento : any){
-        this.endpointEditar.url = evento.target.value
-        this.endpointInsertar.url = evento.target.value
-    }
-
-    cambioUrlStatus(evento : any){
-        this.endpointEditar.urlStatus = evento.target.value
-        this.endpointInsertar.urlStatus = evento.target.value
-    }
-
-    cambioClave(evento : any){
-        this.endpointEditar.clave = evento.target.value
-        this.endpointInsertar.clave = evento.target.value
-    }
-
-    cambioTecnologia(evento : any){
-        this.endpointEditar.tecnologia = evento.target.value
-        this.endpointInsertar.tecnologia = evento.target.value
-    }
-
-    cambioUsuario(evento : any){
-        this.endpointEditar.usuario = evento.target.value
-        this.endpointInsertar.usuario = evento.target.value
-    }
-
     editarEndpoint(){
         this.endpointService.editarEndpoint(this.endpointEditar)
-        .subscribe( (data : any) => {
-            this.ngOnInit()
-        })
+        .subscribe(() => {this.ngOnInit()})
     }
 
     pingProvincia(provincia:IProvincia){
@@ -181,10 +154,8 @@ export class ProvinciasComponent implements OnInit {
                     this.codigoMensajePing = 1
                 } else if(response.statusCode === "INTERNAL_SERVER_ERROR"){
                     responseLenguaje == 1 ? this.mensajePing = "The connection could not be established" :  this.mensajePing = "La conexion no se pudo establecer"
-                    this.codigoMensajePing = 2
                 } else {
                     responseLenguaje == 1 ? this.mensajePing = "There is no connection to this endpoint" :  this.mensajePing = "No existe una conexion a este endpoint"
-                    this.codigoMensajePing = 2
                 }
             })
         })    
@@ -192,8 +163,6 @@ export class ProvinciasComponent implements OnInit {
 
     insertarEndpoint(){
         this.endpointService.insertarEndpoint(this.endpointInsertar)
-        .subscribe( (data : any) => {
-            this.ngOnInit();
-        })
+        .subscribe( () => {this.ngOnInit();})
     }
 }

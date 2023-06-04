@@ -62,6 +62,13 @@ export class ProvinciaService {
     return this.http.put<any>(this.url + '/lotes-provincias/editar' , lote, {headers} );
   }
 
+  obtenerModosDistribucion(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/lotes-provincias/modos-distribucion' , {headers} );
+  }
+
   getCodigoProvinciaFromIdUsuarioConectado(){
     const headers = new HttpHeaders({
       'Authorization': this.cookieService.get('authToken')

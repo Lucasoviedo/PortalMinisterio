@@ -10,7 +10,13 @@
     width: fit-content;
     color: white;
     font-weight: 600;
+    border: none;
     border-radius: 10px;
+}
+
+.btn-table:disabled{
+    background-color:#8cb7f8;
+    box-shadow: none;
 }
 
 .card-usuario{

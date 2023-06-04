@@ -31,6 +31,9 @@
     "SAVE": "SAVE",
     "UPDATE": "UPDATE"
   },
+  "DASHBOARD": {
+    "MESSAGE": "There is no information at the moment"
+  },
   "FOOTER": "National Ministry's vaccination control system",
   "LABORATORY": {
     "TITLE": "LABORATORIES",
@@ -160,6 +163,7 @@
     },
     "UPDATE": "Update user",
     "TITLE": "USERS",
-    "PLACEHOLDER": "Filter by name, email or origin"
+    "PLACEHOLDER": "Filter by name, email or origin",
+    "SUMMARIZATION": "Total amount of users"
   }
 }

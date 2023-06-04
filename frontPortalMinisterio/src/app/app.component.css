@@ -22,6 +22,10 @@
     background-color: rgba(var(--bs-primary-rgb));
 }
 
+.navbar-brand{
+    cursor: pointer;
+}
+
 .nav-link{
     cursor: pointer;
 }

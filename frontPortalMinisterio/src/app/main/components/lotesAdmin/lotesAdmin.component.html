@@ -55,10 +55,7 @@
                   </td>
                   <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
 
-                  <td *ngIf="lote.estado === 'ACEPTADO' 
-                      || lote.estado === 'RECHAZADO' 
-                      || lote.estado === 'ACEPTADO_PARCIALMENTE' 
-                      ; else demasEstados ">
+                  <td *ngIf="lote.distribuido || lote.despachado; else demasEstados ">
                       {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
                   </td>
                   <ng-template #demasEstados>
@@ -79,10 +76,10 @@
                   </td>
                   <ng-template #demasDistribucion2>
                     <td *ngIf="!lote.despachado "> 
-                      <div class="btn-table"  (click)="verificarVacunas(lote)"
+                      <button class="btn-table"  (click)="verificarVacunas(lote)" [disabled]="lote.distribuido === 0 && lote.estado !== 'RECHAZADO'"
                           type="button" data-toggle="modal" data-target="#despacho-lote">
                           {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
-                      </div>
+                      </button>
                     </td>
                     <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
                   </ng-template>
@@ -194,15 +191,15 @@
         <div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.FOLLOWING_CODE" | translate }}: </label>
-            <input type="text" (change)="cambioCodigoSeguimiento($event)" value={{codigoSeguiminetoActual}}/>
+            <input type="text" [(ngModel)]="codigoSeguiminetoActual"/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.DEVOLUTION_DATE" | translate }}: </label>
-            <input type="date" (change)="cambioFechaDevolucion($event)" value={{fechaDevolucion}}/>
+            <input type="date" [(ngModel)]="fechaDevolucion"/>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_TRANSPORT" | translate }}: </label>
-            <select (change)="cambioEmpresaTransporte($event)" value={{empresaTransporteActual}}>
+            <select  [(ngModel)]="empresaTransporteActual"> 
               <option hidden selected>Select</option>
               <option *ngFor="let empresa of empresasTransporte" 
                 value={{empresa.idEmpresaTransporte}}>{{empresa.nombre}}</option>
@@ -210,15 +207,15 @@
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_REASON" | translate }}: </label>
-            <select (change)="cambioMotivoDevolucion($event)" value={{motivoDevolucionActual}}>
+            <select [(ngModel)]="motivoDevolucionActual">
               <option hidden selected>{{ "SELECT.SELECT" | translate }}</option>
               <option *ngFor="let reject of rejectionReasonsData" 
                 value={{reject.idMotivoDevolucion}}>{{reject.tipoMotivo}}</option>
             </select>
           </div>
           <div class="loteAdmin-modal2-row">
-            <textarea (change)="cambioDescripcionProblema($event)" placeholder="{{ 'MANAGMENT.MODAL.DISPATCH.COMMENTS' | translate }}"
-            value={{descripcionProblemaActual}}></textarea>
+            <textarea placeholder="{{ 'MANAGMENT.MODAL.DISPATCH.COMMENTS' | translate }}"
+            [(ngModel)]="descripcionProblemaActual"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal" 
@@ -247,8 +244,8 @@
         <div>
           <span>{{ "MANAGMENT.MODAL.DISTRIBUTE.QUANTITY" | translate }}: {{vacunasDistribuirData.length}}</span>
           <select (change)="cambioProvinciaDistribucion($event)" [value]="provinciaTipoDistribucion">
-            <option value="1">{{ "MANAGMENT.MODAL.DISTRIBUTE.EQUITATIVE" | translate }}</option>
-            <option value="2" selected>{{ "MANAGMENT.MODAL.DISTRIBUTE.MANUAL" | translate }}</option>
+            <option *ngFor="let modo of modoDistribucionData" 
+                value={{modo.idModoDistribucion}}>{{modo.modoDistribucion}}</option>
           </select>
           <img src="../../../../assets/informacion.svg" class="configurar-img-info" type="button" title="{{ 'MANAGMENT.MODAL.DISTRIBUTE.MESSAGE' | translate }}"/>
         </div>

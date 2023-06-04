@@ -125,29 +125,7 @@ export class LaboratoriosComponent implements OnInit{
                 urlStatus: ""
             }; 
         }
-
         this.laboratorioModal = laboratorio; 
-    }
-
-    
-    cambioUrl(evento : any){
-        this.endpointEditar.url = evento.target.value
-    }
-
-    cambioUrlStatus(evento : any){
-        this.endpointEditar.urlStatus = evento.target.value
-    }
-
-    cambioClave(evento : any){
-        this.endpointEditar.clave = evento.target.value
-    }
-
-    cambioTecnologia(evento : any){
-        this.endpointEditar.tecnologia = evento.target.value
-    }
-
-    cambioUsuario(evento : any){
-        this.endpointEditar.usuario = evento.target.value
     }
 
     editarEndpoint(){
@@ -162,29 +140,5 @@ export class LaboratoriosComponent implements OnInit{
         .subscribe((data : any) => {
             this.eventBusService.onEndpointEdit.emit();
         })
-    }
-
-    cambioCodigoLaboratorio(evento : any){
-        this.nuevoLaboratorio.codigoLaboratorio = evento.target.value
-    }
-
-    cambioNombre(evento : any){
-        this.nuevoLaboratorio.nombre = evento.target.value
-    }
-    
-    cambioPais(evento : any){
-        this.nuevoLaboratorio.pais = evento.target.value
-    }
-    
-    cambioDireccion(evento : any){
-        this.nuevoLaboratorio.direccion = evento.target.value
-    }
-    
-    cambioEmailContaco(evento : any){
-        this.nuevoLaboratorio.emailContacto = evento.target.value
-    }
-    
-    cambioNombreContacto(evento : any){
-        this.nuevoLaboratorio.nombreContacto = evento.target.value
     }
 }

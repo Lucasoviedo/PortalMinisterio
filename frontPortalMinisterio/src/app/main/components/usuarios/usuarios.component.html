@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="usuarios-sumarizacion">
-        <h4>Cantidad usuarios totales:</h4>
+        <h4>{{ "USERS.SUMMARIZATION" | translate }}:</h4>
         <h6>Admin. {{usuarioRolAdmin.length}}</h6>
         <h6>Lab. {{usuarioRolLabs.length}}</h6>
         <h6>Prov. {{usuarioRolProv.length}}</h6>
@@ -214,7 +214,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
-          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="confirmarActualizacion()">Confirmar</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="confirmarActualizacion()">{{ "BUTTONS.CONFIRM" | translate }}</button>
         </div>
       </div>
     </div>

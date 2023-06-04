@@ -53,23 +53,23 @@
             <div class="modal-body">
                 <div class="flexRow">
                     <label for="">URL</label>
-                    <input type="text" value={{endpointEditar.url}} (change)="cambioUrl($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.url"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.STATUS" | translate }}</label>
-                    <input type="text" value={{endpointEditar.urlStatus}} (change)="cambioUrlStatus($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.urlStatus"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.USER" | translate }}</label>
-                    <input type="text" value={{endpointEditar.usuario}} (change)="cambioUsuario($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.usuario"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.PASSWORD" | translate }}</label>
-                    <input type="text" value={{endpointEditar.clave}} (change)="cambioClave($event)"/>
+                    <input type="text" [(ngModel)]="endpointEditar.clave"/>
                 </div>
                 <div class="flexRow">
                     <label for="">{{ "PROVINCE.MODAL.TEC" | translate }}</label>
-                    <select [(ngModel)] = "endpointEditar.tecnologia" (change)="cambioTecnologia($event)">
+                    <select [(ngModel)]="endpointEditar.tecnologia">
                         <option selected hidden>{{endpointEditar.tecnologia}}</option>
                         <option *ngFor="let tecnologia of tecnologiasData" 
                               value={{tecnologia.nombre}}>{{tecnologia.nombre}}</option>
