@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
           .subscribe((response) => {
             this.cookieService.set('rolUsuario', response);
             this.userPermissions = response;
-            this.cdr.detectChanges(); // Manually trigger change detection
+            // this.cdr.detectChanges(); // Manually trigger change detection
           })
       }
 
@@ -62,14 +62,13 @@ export class AppComponent implements OnInit {
       .subscribe((response: any) => {
           if (response !== 1) {
               this.translate.use('en');
-              this.cdr.detectChanges(); // Manually trigger change detection
+              // this.cdr.detectChanges(); // Manually trigger change detection
           }
       })
 
       this.usuariosService.obtenerNombreApellido()
       .subscribe((response : any) => {
         this.nombreUsuario = `${response.apellido} ${response.nombre}`
-        console.log(this.nombreUsuario)
       })
     }
 
@@ -96,7 +95,7 @@ export class AppComponent implements OnInit {
         this.cookieService.delete('rolUsuario');
         this.showHeaderOptions = false;
         this.showHeaderOptionsMovile = false;
-        this.cdr.detectChanges(); // Manually trigger change detection
+        // this.cdr.detectChanges(); // Manually trigger change detection
       },
         (error => {
           this.router.navigate(['/login']);
