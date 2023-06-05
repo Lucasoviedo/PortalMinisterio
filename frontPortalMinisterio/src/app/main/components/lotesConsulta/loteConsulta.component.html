@@ -1,5 +1,12 @@
 <div class="container">
   <h1 class="tituloConsulta">{{ "INQUIRY.TITLE" | translate }}</h1>
+  <div class="dates-select">
+    <input type="text" style="display: flex; align-self: end;" class="form-control col-4" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">  
+      <h6>Fecha inicio: </h6>
+      <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
+      <h6>Fecha limite: </h6>
+      <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaFin($event)"/>
+  </div>
   <div *ngIf="lotesData.length > 0">
     <h3>LOTES LABORATORIOS</h3>
     <table class="table table-striped">
@@ -12,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let lote of lotesData">
+        <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.estado}}</td>
           <td>{{lote.fechaEnvio}}</td>
@@ -35,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let lote of devolucionesLaboratorios">
+        <tr *ngFor="let lote of devolucionesLaboratorios | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
@@ -60,7 +67,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let lote of lotesProvincias">
+        <tr *ngFor="let lote of lotesProvincias | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLaboratorio}} {{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
@@ -91,7 +98,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let lote of lotesDevolucionesProvincias">
+        <tr *ngFor="let lote of lotesDevolucionesProvincias | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.fechaEnvio || "PENDIENTE"}}</td>
