@@ -54,7 +54,7 @@ export class LotesConsultaComponent implements OnInit {
     lotesDevolucionesProvincias: Array<IDevolucionProvincia> = [];
     fechaActualizacionRecibo = new Date();
 
-    loteActualizacionRecibo: IEditarLoteRecepcion = {idUsuario: 1, codigoLote: "", fechaRecepcion: ""};
+    loteActualizacionRecibo: IEditarLoteRecepcion = {idUsuario: 1, codigoLote: "",codigoProvincia: "" ,fechaRecepcion: ""};
 
     empresasTransporte: Array<IEmpresaTransporte> = [];
     rejectionReasonsData: Array<IRejectReason> = [];
@@ -187,6 +187,7 @@ export class LotesConsultaComponent implements OnInit {
             if (this.myModal) {
                 const modal = new Modal(this.myModal);
                 this.fechaActualizacionRecibo = evento.target.value;
+                this.loteActualizacionRecibo.codigoProvincia = lote.codigoProvincia;
                 this.loteActualizacionRecibo.codigoLote = lote.codigoDevolucion;
                 this.loteActualizacionRecibo.fechaRecepcion = evento.target.value;
                 modal.show();
@@ -196,7 +197,8 @@ export class LotesConsultaComponent implements OnInit {
 
     actualizarFechaLoteAdmin() {
 
-        this.lotesGeneralService.marcarRecepcionDevolucionProvincia(this.loteActualizacionRecibo.codigoLote + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
+        this.lotesGeneralService.marcarRecepcionDevolucionProvincia(this.loteActualizacionRecibo.codigoLote + 'SEPARADOR' +
+                 this.loteActualizacionRecibo.fechaRecepcion + 'SEPARADOR' + this.loteActualizacionRecibo.codigoProvincia)
             .subscribe((res: any) => {
                 this.lotesGeneralService.obtenerDevolucionesProvincias(this.criteriaBusqueda)
                     .subscribe((response: any) => {
@@ -204,15 +206,5 @@ export class LotesConsultaComponent implements OnInit {
                     });
             })
 
-
-        // this.lotesGeneralService.actualizarLoteAdmin(this.loteActualizacionRecibo.codigoLote 
-        //     + 'SEPARADOR' + this.loteActualizacionRecibo.fechaRecepcion)
-        // .subscribe((res: any) => {
-        //     this.lotesMinLabService.obtenerLotes()
-        //     .subscribe((response: any) => {
-        //         this.lotesDataComplete = response
-        //         this.lotesData = this.lotesDataComplete;
-        //     });
-        // });
     }
 }

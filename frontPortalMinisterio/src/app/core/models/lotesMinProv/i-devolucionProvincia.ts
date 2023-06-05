@@ -1,6 +1,7 @@
 export interface IDevolucionProvincia{
     cantidadVacunas : number;
     codigoDevolucion : string;
+    codigoProvincia : string;
     codigoLaboratorio: string;
     codigoLote: string;
     codigoSeguimiento: string;

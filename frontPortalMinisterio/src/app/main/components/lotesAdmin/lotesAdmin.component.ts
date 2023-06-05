@@ -61,7 +61,8 @@ export class LotesAdminComponent implements OnInit{
     loteActualizacionRecibo :  IEditarLoteRecepcion =  {
         idUsuario: 1,
         codigoLote: "",
-        fechaRecepcion: ""
+        fechaRecepcion: "",
+        codigoProvincia: "",
     } ;
     modalSeguimiento : ILoteLab =  {
         idUsuario: 0,
@@ -132,6 +133,7 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
+            console.log(response)
         });
 
         this.lotesGeneralService.obtenerEstados()
