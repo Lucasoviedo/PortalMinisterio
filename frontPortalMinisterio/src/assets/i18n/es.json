@@ -19,6 +19,9 @@
       "DISPATCHED": "Despachado",
       "VERIFIED": "Verificado",
       "VERIFY": "Verificar"
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Filtrar por codigo de lote"
     }
   },
   "BUTTONS": {
@@ -71,6 +74,7 @@
         "TITLE": "Despachar vacunas",
         "FOLLOWING_CODE": "Codigo seguimiento",
         "DEVOLUTION_DATE": "Fecha devolucion",
+        "SEND_DATE": "Fecha Envio",
         "SELECT_TRANSPORT": "Empresa de transporte",
         "SELECT_REASON": "Motivo devolucion",
         "COMMENTS": "Añade comentarios"

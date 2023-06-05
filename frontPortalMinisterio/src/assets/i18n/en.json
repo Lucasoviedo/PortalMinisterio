@@ -19,6 +19,9 @@
       "DISPATCHED": "Dispatched",
       "VERIFIED": "Verified",
       "VERIFY": "Verify"
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Filter by batch code"
     }
   },
   "BUTTONS": {
@@ -71,6 +74,7 @@
         "TITLE": "Dispatch vaccines",
         "FOLLOWING_CODE": "Following code",
         "DEVOLUTION_DATE": "Devolution date",
+        "SEND_DATE": "Send date",
         "SELECT_TRANSPORT": "Select transport company",
         "SELECT_REASON": "Select devolution reason",
         "COMMENTS": "Add comments"

@@ -163,19 +163,8 @@ export class LotesConsultaComponent implements OnInit {
         this.empresaTransporteActual = 0;
         this.fechaDevolucion = "";
         this.codigoSeguiminetoActual = "";
+        console.log(this.loteActual)
     }
-
-    // cambioEmpresaTransporte(evento: any) {
-    //     this.empresaTransporteActual = parseInt(evento.target.value)
-    // }
-
-    // cambioCodigoSeguimiento(evento: any) {
-    //     this.codigoSeguiminetoActual = evento.target.value
-    // }
-
-    // cambioFechaDevolucion(evento: any) {
-    //     this.fechaDevolucion = evento.target.value
-    // }
 
     despacharLoteProvincia() {
         this.loteDevolucionEditado.idEmpresaTransporte = this.empresaTransporteActual;

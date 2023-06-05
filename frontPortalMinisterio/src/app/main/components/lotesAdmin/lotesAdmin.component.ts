@@ -23,6 +23,7 @@ import { ICriteriosBusquedaLotesLabs } from "src/app/core/models/i-criteriosBusq
 import { ICriteriosBusquedaDevolucionesLabs } from "src/app/core/models/i-criteriosBusquedaDevolucionesLabs";
 import { IModoDistribucion } from "src/app/core/models/i-modosDistribucion";
 import { UsuarioService } from "../../api/resources/usuarios.service";
+import { FormControl, Validators } from "@angular/forms";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -30,6 +31,7 @@ import { UsuarioService } from "../../api/resources/usuarios.service";
     styleUrls: ['./lotesAdmin.component.css','../generalStyles.css']
 })
 export class LotesAdminComponent implements OnInit{
+    filtro!: FormControl;
     
     myModal = document.getElementById('#confirmDataChangeModal');
 
@@ -46,42 +48,11 @@ export class LotesAdminComponent implements OnInit{
 
     finalizarVerificacion = false;
 
-    loteDevolucionEditado: IEditarDevolucion = {
-        codigoDevolucion : "",
-        descripcionProblema : "",
-        idEmpresaTransporte : 0,
-        idMotivoDevolucion : 0,
-        codigoSeguimiento: "",
-        fechaEnvio: new Date(),
-    }
-
+    loteDevolucionEditado: IEditarDevolucion = {codigoDevolucion : "", descripcionProblema : "", idEmpresaTransporte : 0, idMotivoDevolucion : 0, codigoSeguimiento: "", fechaEnvio: new Date()}
     modoDistribucionData: Array<IModoDistribucion> = [];
-
     fechaActualizacionRecibo = new Date();
-    loteActualizacionRecibo :  IEditarLoteRecepcion =  {
-        idUsuario: 1,
-        codigoLote: "",
-        fechaRecepcion: "",
-        codigoProvincia: "",
-    } ;
-    modalSeguimiento : ILoteLab =  {
-        idUsuario: 0,
-        codigoLaboratorio: "",
-        codigoEstado: "",
-        codigoLote: "",
-        fechaEnvio: new Date,
-        codigoSeguimiento: "",
-        fechaRecepcion: new Date,
-        idEmpresaTransporte: 0,
-        distribuido: 0,
-        despachado: 0,
-        estado: "",
-        cantidadVacunasADistribuir: 0,
-        cantidadVacunas: 0,
-        nombreLaboratorio: "",
-        fechaRegistro: new Date,
-        fechaVencimiento: new Date,
-    } ;
+    loteActualizacionRecibo :  IEditarLoteRecepcion =  { idUsuario: 1, codigoLote: "", fechaRecepcion: "", codigoProvincia: ""} ;
+    modalSeguimiento : ILoteLab =  { idUsuario: 0, codigoLaboratorio: "", codigoEstado: "", codigoLote: "", fechaEnvio: new Date, codigoSeguimiento: "", fechaRecepcion: new Date, idEmpresaTransporte: 0, distribuido: 0, despachado: 0, estado: "", cantidadVacunasADistribuir: 0, cantidadVacunas: 0, nombreLaboratorio: "", fechaRegistro: new Date, fechaVencimiento: new Date} ;
 
     lotesData: Array<ILoteLab> = [];
     lotesDataLab: Array<ILoteLab> = [];
@@ -99,14 +70,11 @@ export class LotesAdminComponent implements OnInit{
     provinciaCambioCod : String = "";
     provinciaTipoDistribucion: number = 1;
 
-    criteriaBusquedaLotesLabs : ICriteriosBusquedaLotesLabs = {
-        codigoLaboratorio : undefined,
-        codigoEstado : undefined,
-    }
+    criteriaBusquedaLotesLabs : ICriteriosBusquedaLotesLabs = { codigoLaboratorio : undefined, codigoEstado : undefined}
+    criteriaBusquedaDevolucionesLabs: ICriteriosBusquedaDevolucionesLabs = {codigoLaboratorio: undefined}
 
-    criteriaBusquedaDevolucionesLabs: ICriteriosBusquedaDevolucionesLabs = {
-        codigoLaboratorio: undefined
-    }
+    fechaInicio : Date =  new Date("1900-01-01");
+    fechaFin : Date =  new Date();
 
     constructor(private router: Router, 
         private cookieService: CookieService,
@@ -119,6 +87,8 @@ export class LotesAdminComponent implements OnInit{
         private provinciasService : ProvinciaService) { }
 
     ngOnInit() {
+        this.filtro = new FormControl('', [Validators.maxLength(255)]);
+
         if(this.cookieService.get('rolUsuario')){
             if(this.cookieService.get('rolUsuario') != "1"){
                 this.router.navigate(['/']);
@@ -133,7 +103,6 @@ export class LotesAdminComponent implements OnInit{
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
             this.lotesDataComplete = response
-            console.log(response)
         });
 
         this.lotesGeneralService.obtenerEstados()
@@ -166,29 +135,6 @@ export class LotesAdminComponent implements OnInit{
                 }
             })
         })
-    }
-
-    filtrarPorLaboratorio(evento: any){
-        if(evento.target.value === ""){
-            this.lotesData = this.lotesDataComplete;
-            this.lotesDataLab = this.lotesDataComplete;
-        } else {
-            const newData = this.lotesDataComplete.filter(lote => lote.codigoLaboratorio === evento.target.value);
-            this.lotesData = newData;
-            this.lotesDataLab = newData;
-        }
-        this.selectedOptionState = ""
-    }
-
-    filtrarPorEstado(evento: any){
-        if(this.lotesDataLab.length  > 0){
-                if(evento.target.value === ""){
-                    this.lotesData = this.lotesDataLab;
-                } else {
-                    const newData = this.lotesDataLab.filter(lote => lote.estado === evento.target.value);
-                    this.lotesData = newData;
-                }
-        }
     }
 
     openConfirmDataModal(evento : any, lote : ILoteLab){
@@ -413,5 +359,71 @@ export class LotesAdminComponent implements OnInit{
         this.provinciasDistribuirData.forEach(element => {
             this.totalVacunasADistribuir += element.valor
         })
+    }
+
+    reiniciarData(){
+        this.lotesData = this.lotesDataComplete;
+        if(this.selectedOptionLab !== "") this.filtrarPorLaboratorio(this.selectedOptionLab)
+        if(this.selectedOptionState !== "") this.filtrarPorEstado(this.selectedOptionState)
+        this.filtrarFechaInicio(this.fechaInicio)
+        this.filtrarFechaFin(this.fechaFin)
+    }
+
+    filtrarPorLaboratorio(evento: any){
+        try{
+            this.selectedOptionLab = evento.target.value
+        } catch {
+            this.selectedOptionLab = evento
+        }
+ 
+        if(this.selectedOptionLab == ""){
+            this.reiniciarData();
+        } else {
+            const newData = this.lotesData.filter(lote => lote.codigoLaboratorio === this.selectedOptionLab);
+            this.lotesData = newData;
+        }
+    }
+
+    filtrarPorEstado(evento: any){
+        try{
+            this.selectedOptionState = evento.target.value
+        } catch {
+            this.selectedOptionState = evento
+        }
+
+        if(this.selectedOptionState == ""){
+            this.reiniciarData();
+        } else {
+            const newData = this.lotesData.filter(lote => lote.estado === this.selectedOptionState);
+            this.lotesData = newData;
+        }
+    }
+
+    filtrarFechaInicio(evento : any){
+        try{
+            if(evento.target.value === "")  {this.fechaInicio = new Date("1900-01-01") ; this.reiniciarData()}
+            else this.fechaInicio = new Date(evento.target.value)
+        } catch {
+            this.fechaInicio = evento
+        }
+        if(this.lotesData.length  > 0){
+            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
+            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            this.lotesData = newData;
+        }
+    }
+    
+    filtrarFechaFin(evento : any){
+        try{
+            if(evento.target.value === "")  {this.fechaFin = new Date() ; this.reiniciarData()}
+            else this.fechaFin = new Date(evento.target.value)
+        } catch {
+            this.fechaFin = evento
+        }
+        if(this.lotesData.length  > 0){
+            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
+            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            this.lotesData = newData;
+        }
     }
 }

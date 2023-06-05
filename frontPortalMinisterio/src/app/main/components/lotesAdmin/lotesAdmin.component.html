@@ -6,28 +6,28 @@
     <div class="flexRow" style="margin-bottom: 20px;">
       <div class="flexCol sizeUnTercio">
         <h6>{{ "SELECT.LAB" | translate }}</h6>
-        <select class="form-select" 
-        (change)="filtrarPorLaboratorio($event)"
-        [(ngModel)]="selectedOptionLab">
+        <select class="form-select" (change)="filtrarPorLaboratorio($event)">
           <option value="" hidden selected>{{ "SELECT.LAB" | translate }}</option>
           <option value="">{{ "SELECT.ALL" | translate }}</option>
-          <option *ngFor="let laboratorio of laboratoriosData" 
-          value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
+          <option *ngFor="let laboratorio of laboratoriosData" value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
         </select>
       </div>
+      <input type="text" style="display: flex; align-self: end;" class="form-control col-4" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">
       <div class="flexCol sizeUnTercio">
         <h6>{{ "SELECT.STATE" | translate }}</h6>
-        <select class="form-select" 
-                (change)="filtrarPorEstado($event)"
-                [(ngModel)]="selectedOptionState">
+        <select class="form-select" (change)="filtrarPorEstado($event)">
             <option value="" hidden selected>{{ "SELECT.STATE" | translate }}</option>
             <option value="">{{ "SELECT.ALL" | translate }}</option>
-            <option *ngFor="let estado of estadosData" 
-                    value={{estado.estado}}>{{estado.estado}}</option>
+            <option *ngFor="let estado of estadosData" value={{estado.estado}}>{{estado.estado}}</option>
         </select>
       </div>
     </div>
-    
+    <div class="dates-select">
+        <h6>Fecha inicio: </h6>
+        <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
+        <h6>Fecha limite: </h6>
+        <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaFin($event)"/>
+    </div>
     <div *ngIf="lotesDataComplete.length == 0">
       <h5>{{ "MANAGMENT.NO_DATA" | translate }}</h5>
     </div>
@@ -45,7 +45,7 @@
               </tr>
           </thead>
           <tbody >
-              <tr *ngFor="let lote of lotesData">
+              <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
                   <td>{{lote.codigoLote}}</td>
                   <td>{{lote.estado}}</td>
                   <td>{{lote.fechaEnvio}}</td>
@@ -116,8 +116,8 @@
         <h5>¿{{ "MANAGMENT.MODAL.GET_BATCH.MESSAGE" | translate }} {{fechaActualizacionRecibo}}?</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarFechaLoteAdmin()">{{ "BUTTONS.UPDATE" | translate }}</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
       </div>
     </div>
   </div>
@@ -157,8 +157,7 @@
               <td>
                 <select  (change)="changeVaccineCode($event,vaccine.codigoVacuna)">
                   <option hidden selected>{{vaccine.estado || "Select"}}</option>
-                  <option *ngFor="let state of vaccinesStatesData" 
-                    value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
+                  <option *ngFor="let state of vaccinesStatesData" value={{state.codigoEstadoVacuna}}>{{state.estado}}</option>
                 </select>
               </td>
             </tr>
@@ -201,27 +200,23 @@
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_TRANSPORT" | translate }}: </label>
             <select  [(ngModel)]="empresaTransporteActual"> 
               <option hidden selected>Select</option>
-              <option *ngFor="let empresa of empresasTransporte" 
-                value={{empresa.idEmpresaTransporte}}>{{empresa.nombre}}</option>
+              <option *ngFor="let empresa of empresasTransporte" value={{empresa.idEmpresaTransporte}}>{{empresa.nombre}}</option>
             </select>
           </div>
           <div class="loteAdmin-modal2-row">
             <label>{{ "MANAGMENT.MODAL.DISPATCH.SELECT_REASON" | translate }}: </label>
             <select [(ngModel)]="motivoDevolucionActual">
               <option hidden selected>{{ "SELECT.SELECT" | translate }}</option>
-              <option *ngFor="let reject of rejectionReasonsData" 
-                value={{reject.idMotivoDevolucion}}>{{reject.tipoMotivo}}</option>
+              <option *ngFor="let reject of rejectionReasonsData" value={{reject.idMotivoDevolucion}}>{{reject.tipoMotivo}}</option>
             </select>
           </div>
           <div class="loteAdmin-modal2-row">
-            <textarea placeholder="{{ 'MANAGMENT.MODAL.DISPATCH.COMMENTS' | translate }}"
-            [(ngModel)]="descripcionProblemaActual"></textarea>
+            <textarea placeholder="{{ 'MANAGMENT.MODAL.DISPATCH.COMMENTS' | translate }}" [(ngModel)]="descripcionProblemaActual"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal" 
               [disabled]="motivoDevolucionActual == 0 || codigoSeguiminetoActual == '' || descripcionProblemaActual == '' 
-              || empresaTransporteActual == 0 || fechaDevolucion == undefined "
-              (click)="despacharVacunas()">{{ "BUTTONS.CONFIRM" | translate }}</button>
+              || empresaTransporteActual == 0 || fechaDevolucion == undefined " (click)="despacharVacunas()">{{ "BUTTONS.CONFIRM" | translate }}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "BUTTONS.CANCEL" | translate }}</button>
           </div>
         </div>
@@ -244,8 +239,7 @@
         <div>
           <span>{{ "MANAGMENT.MODAL.DISTRIBUTE.QUANTITY" | translate }}: {{vacunasDistribuirData.length}}</span>
           <select (change)="cambioProvinciaDistribucion($event)" [value]="provinciaTipoDistribucion">
-            <option *ngFor="let modo of modoDistribucionData" 
-                value={{modo.idModoDistribucion}}>{{modo.modoDistribucion}}</option>
+            <option *ngFor="let modo of modoDistribucionData" value={{modo.idModoDistribucion}}>{{modo.modoDistribucion}}</option>
           </select>
           <img src="../../../../assets/informacion.svg" class="configurar-img-info" type="button" title="{{ 'MANAGMENT.MODAL.DISTRIBUTE.MESSAGE' | translate }}"/>
         </div>

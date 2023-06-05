@@ -81,5 +81,12 @@ export class UsuarioService {
     });
     return this.http.post<any>(this.url + '/usuarios/editar', user,{headers} );
   }
-  
+ 
+  obtenerNombreApellido(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/usuarios/nombre-apellido', {headers} );
+  }
+
 }

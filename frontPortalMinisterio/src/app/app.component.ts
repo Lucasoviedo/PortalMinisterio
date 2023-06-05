@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   showHeaderOptionsMovile = false;
 
   userPermissions: number = 0;
+  nombreUsuario : string = "";
 
   constructor(
     private router: Router,
@@ -58,12 +59,18 @@ export class AppComponent implements OnInit {
       }
 
       this.usuariosService.getLanguage()
-        .subscribe((response: any) => {
+      .subscribe((response: any) => {
           if (response !== 1) {
-            this.translate.use('en');
-            this.cdr.detectChanges(); // Manually trigger change detection
+              this.translate.use('en');
+              this.cdr.detectChanges(); // Manually trigger change detection
           }
-        })
+      })
+
+      this.usuariosService.obtenerNombreApellido()
+      .subscribe((response : any) => {
+        this.nombreUsuario = `${response.apellido} ${response.nombre}`
+        console.log(this.nombreUsuario)
+      })
     }
 
     if (this.cookieService.get('rolUsuario')) {
@@ -102,6 +109,7 @@ export class AppComponent implements OnInit {
         }));
 
         this.userPermissions = 0;
+        this.nombreUsuario = "";
   }
 
   ruteoHeader(ruta: String) {
