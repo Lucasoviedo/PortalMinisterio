@@ -363,10 +363,25 @@ export class LotesAdminComponent implements OnInit{
 
     reiniciarData(){
         this.lotesData = this.lotesDataComplete;
-        if(this.selectedOptionLab !== "") this.filtrarPorLaboratorio(this.selectedOptionLab)
-        if(this.selectedOptionState !== "") this.filtrarPorEstado(this.selectedOptionState)
-        this.filtrarFechaInicio(this.fechaInicio)
-        this.filtrarFechaFin(this.fechaFin)
+        console.log(typeof(this.fechaFin))
+        if(this.selectedOptionLab !== "") {
+            const newData = this.lotesData.filter(lote => lote.codigoLaboratorio === this.selectedOptionLab);
+            this.lotesData = newData;
+        }
+        if(this.selectedOptionState !== "") {
+            const newData = this.lotesData.filter(lote => lote.estado === this.selectedOptionState);
+            this.lotesData = newData;
+        }
+        if(typeof(this.fechaInicio) === "object"){
+            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
+            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            this.lotesData = newData;
+        }
+        if(typeof(this.fechaFin) === "object"){
+            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
+            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            this.lotesData = newData;
+        }
     }
 
     filtrarPorLaboratorio(evento: any){
@@ -375,13 +390,7 @@ export class LotesAdminComponent implements OnInit{
         } catch {
             this.selectedOptionLab = evento
         }
- 
-        if(this.selectedOptionLab == ""){
-            this.reiniciarData();
-        } else {
-            const newData = this.lotesData.filter(lote => lote.codigoLaboratorio === this.selectedOptionLab);
-            this.lotesData = newData;
-        }
+        this.reiniciarData();
     }
 
     filtrarPorEstado(evento: any){
@@ -390,13 +399,7 @@ export class LotesAdminComponent implements OnInit{
         } catch {
             this.selectedOptionState = evento
         }
-
-        if(this.selectedOptionState == ""){
-            this.reiniciarData();
-        } else {
-            const newData = this.lotesData.filter(lote => lote.estado === this.selectedOptionState);
-            this.lotesData = newData;
-        }
+        this.reiniciarData();
     }
 
     filtrarFechaInicio(evento : any){
@@ -406,11 +409,7 @@ export class LotesAdminComponent implements OnInit{
         } catch {
             this.fechaInicio = evento
         }
-        if(this.lotesData.length  > 0){
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
-            this.lotesData = newData;
-        }
+       this.reiniciarData()
     }
     
     filtrarFechaFin(evento : any){
@@ -420,10 +419,6 @@ export class LotesAdminComponent implements OnInit{
         } catch {
             this.fechaFin = evento
         }
-        if(this.lotesData.length  > 0){
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
-            this.lotesData = newData;
-        }
+        this.reiniciarData()
     }
 }
