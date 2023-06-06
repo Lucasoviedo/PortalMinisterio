@@ -22,7 +22,12 @@
     },
     "SEARCH": {
       "PLACEHOLDER": "Filter by batch code"
-    }
+    },
+    "START_DATE": "Begining date",
+    "END_DATE": "Limit date",
+    "BATCH_LAB": "LABORATORIES BATCHES",
+    "BATCH_PROV_RETURN": "PROVINCES RETURNINGS",
+    "NO_INFO": "Ther is no info about batches at the moment"
   },
   "BUTTONS": {
     "ADD": "ADD",
@@ -46,7 +51,16 @@
     "CONTACT_NAME": "Contact name",
     "CONTACT_EMAIL": "Contact email",
     "CONFIGURATION": "Configuration",
-    "PLACEHOLDER": "Filter by name, country, contact or email"
+    "PLACEHOLDER": "Filter by name, country, contact or email",
+    "MODAL": {
+      "TITLE": "INSERT LABORATORY",
+      "NAME": "Name",
+      "COUNTRY": "Country",
+      "DIRECTION": "Direction",
+      "CONTACT_EMAIL": "Contact Email",
+      "CONTACT_NAME": "Contact name",
+      "LAB_CODE": "Laboratory code"
+    }
   },
   "LOGIN": {
     "TITLE": "Log in",
@@ -100,6 +114,10 @@
     "VACCINATES": "VACCINATES",
     "BATCHADMIN": "BATCH MANAGEMENT",
     "BATCHINQUIRY": "BATCH INQUIRY"
+  },
+  "NOT_FOUND": {
+    "TITLE": "We are sorry! The page you are trying to access is not found",
+    "BACK": "GO TO DASHBOARD"
   },
   "PROVINCE": {
     "EDIT": {
@@ -169,5 +187,14 @@
     "TITLE": "USERS",
     "PLACEHOLDER": "Filter by name, email or origin",
     "SUMMARIZATION": "Total amount of users"
+  },
+  "VACCINATED": {
+    "TITLE": "VACCINATED",
+    "AMOUNT": "Amount of vaccinated",
+    "NO_INFO": "There is no info amout vaccinated at the moment",
+    "LAB": "Laboratory",
+    "DATE": "Date",
+    "VACCINE": "Vaccine",
+    "LOCATION": "Location"
   }
 }

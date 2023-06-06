@@ -27,6 +27,7 @@ import { SplashComponent } from './main/components/splash/splash.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "./main/shared/shared.module";
+import { DateFormatPipe } from './main/api/resources/date-format.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
@@ -56,7 +57,8 @@ const appRoutes:Routes = [
         LotesAdminComponent,
         LotesConsultaComponent,
         VacunadosComponent,
-        SplashComponent
+        SplashComponent,
+        DateFormatPipe
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },

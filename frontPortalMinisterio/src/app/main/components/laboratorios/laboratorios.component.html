@@ -125,34 +125,34 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="insertar-laboratorioLabel" >INSERTAR LABORATORIO</h5>
+                <h5 class="modal-title" id="insertar-laboratorioLabel" >{{ "LABORATORY.MODAL.TITLE" | translate }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="flexRow">
-                    <label for="">Nombre</label>
+                    <label for="">{{ "LABORATORY.MODAL.NAME" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.nombre"/>
                 </div>
                 <div class="flexRow">
-                    <label for="">Pais</label>
+                    <label for="">{{ "LABORATORY.MODAL.COUNTRY" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.pais"/>
                 </div>
                 <div class="flexRow">
-                    <label for="">Direccion</label>
+                    <label for="">{{ "LABORATORY.MODAL.DIRECTION" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.direccion"/>
                 </div>
                 <div class="flexRow">
-                    <label for="">Email Contato</label>
+                    <label for="">{{ "LABORATORY.MODAL.CONTACT_EMAIL" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.emailContacto"/>
                 </div>
                 <div class="flexRow">
-                    <label for="">Nombre Contato</label>
+                    <label for="">{{ "LABORATORY.MODAL.CONTACT_NAME" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.nombreContacto"/>
                 </div>
                 <div class="flexRow">
-                    <label for="">Codigo Laboratorio</label>
+                    <label for="">{{ "LABORATORY.MODAL.LAB_CODE" | translate }}</label>
                     <input type="text" [(ngModel)]="nuevoLaboratorio.codigoLaboratorio"/>
                 </div>
             </div>

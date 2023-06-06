@@ -23,9 +23,9 @@
       </div>
     </div>
     <div class="dates-select">
-        <h6>Fecha inicio: </h6>
+        <h6>{{ "BATCH_TABLE.START_DATE" | translate }}: </h6>
         <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
-        <h6>Fecha limite: </h6>
+        <h6>{{ "BATCH_TABLE.END_DATE" | translate }}: </h6>
         <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaFin($event)"/>
     </div>
     <div *ngIf="lotesDataComplete.length == 0">
@@ -48,8 +48,8 @@
               <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
                   <td>{{lote.codigoLote}}</td>
                   <td>{{lote.estado}}</td>
-                  <td>{{lote.fechaEnvio}}</td>
-                  <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion }}</td>
+                  <td>{{lote.fechaEnvio | dateFormat}}</td>
+                  <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion  | dateFormat}}</td>
                   <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
                     <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
                   </td>

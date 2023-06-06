@@ -6,6 +6,8 @@ import { IVacunado } from "src/app/core/models/i-vacunado";
 import { LaboratorioService } from "../../api/resources/laboratorios.service";
 import { ProvinciaService } from "../../api/resources/provincias.service";
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'app-vacunados',
     templateUrl: './vacunados.component.html',
@@ -38,9 +40,8 @@ export class VacunadosComponent implements OnInit{
 
         this.vacunasService.getVaccinateds()
         .subscribe((response) => {
-            this.vacunadosData = response;
-            this.vacunadosDataCompleta = response;
-            console.log(response)
+
+            this.vacunadosDataCompleta = response
         })
 
         this.laboratorioService.getLaboratorios()
