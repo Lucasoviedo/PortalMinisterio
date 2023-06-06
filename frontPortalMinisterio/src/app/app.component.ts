@@ -41,14 +41,17 @@ export class AppComponent implements OnInit {
       this.showHeaderOptions = false;
       this.cookieService.delete('rolUsuario');
       this.router.navigate(['/login']);
-    } else {
-
-      if (!this.cookieService.get('rolUsuario')) {
-        this.usuariosService.getRolNumber()
+    } else if (!this.cookieService.get('rolUsuario')) {
+          this.usuariosService.getRolNumber()
           .subscribe((response) => {
             this.cookieService.set('rolUsuario', response);
             this.userPermissions = response;
             // this.cdr.detectChanges(); // Manually trigger change detection
+          })
+
+          this.usuariosService.obtenerNombreApellido()
+          .subscribe((response : any) => {
+            this.nombreUsuario = `${response.apellido} ${response.nombre}`
           })
       }
 
@@ -57,28 +60,15 @@ export class AppComponent implements OnInit {
         this.cookieService.delete('authToken');
         this.router.navigate(['/login']);
       }
+    
 
-      this.usuariosService.getLanguage()
-      .subscribe((response: any) => {
-          if (response !== 1) {
-              this.translate.use('en');
-              // this.cdr.detectChanges(); // Manually trigger change detection
-          }
-      })
-
-      this.usuariosService.obtenerNombreApellido()
-      .subscribe((response : any) => {
-        this.nombreUsuario = `${response.apellido} ${response.nombre}`
-      })
-    }
-
-    if (this.cookieService.get('rolUsuario')) {
-      this.usuariosService.getRolNumber()
-        .subscribe((response) => {
-          this.userPermissions = response;
-          this.cdr.detectChanges(); // Manually trigger change detection
-        })
-    }
+    // if (this.cookieService.get('rolUsuario')) {
+    //   this.usuariosService.getRolNumber()
+    //     .subscribe((response) => {
+    //       this.userPermissions = response;
+    //       this.cdr.detectChanges(); // Manually trigger change detection
+    //     })
+    // }
 
     this.eventBusService.onDashboardShown.subscribe(() => {
       this.ngOnInit();

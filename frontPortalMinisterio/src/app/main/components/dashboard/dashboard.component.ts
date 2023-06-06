@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { IDashboardItem } from "src/app/core/models/i-dashboardItem";
 import { UsuarioService } from "../../api/resources/usuarios.service";
 import { EventBusService } from "../../api/resources/event-bus.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-dashboard',
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit{
         private router: Router,
         private cookieService: CookieService,
         private usuariosService : UsuarioService,
+        public translate: TranslateService,
         private eventBusService : EventBusService){}
 
     ngOnInit(): void {
@@ -32,9 +34,12 @@ export class DashboardComponent implements OnInit{
 
         this.usuariosService.getDashboardUser()
         .subscribe((response : any) => {
-            
+
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
+                if (responseLenguaje !== 1) {
+                    this.translate.use('en');
+                }
 
                 Object.keys(response).forEach(element => {
                     this.keys = {
