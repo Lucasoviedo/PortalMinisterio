@@ -48,27 +48,23 @@ export class AppComponent implements OnInit {
             this.userPermissions = response;
             // this.cdr.detectChanges(); // Manually trigger change detection
           })
-
-          
+          this.showHeaderOptions = true;
+          if (this.cookieService.get('authToken') === "") {
+            this.cookieService.delete('authToken');
+            this.router.navigate(['/login']);
+          }
+          this.usuariosService.obtenerNombreApellido()
+              .subscribe((response : any) => {
+                this.nombreUsuario = `${response.apellido} ${response.nombre}`
+              })
+        
+        if (this.cookieService.get('rolUsuario')) {
+          this.usuariosService.getRolNumber()
+            .subscribe((response) => {
+              this.userPermissions = response;
+              this.cdr.detectChanges(); // Manually trigger change detection
+            })
       }
-
-      this.showHeaderOptions = true;
-      if (this.cookieService.get('authToken') === "") {
-        this.cookieService.delete('authToken');
-        this.router.navigate(['/login']);
-      }
-      this.usuariosService.obtenerNombreApellido()
-          .subscribe((response : any) => {
-            this.nombreUsuario = `${response.apellido} ${response.nombre}`
-          })
-    
-
-    if (this.cookieService.get('rolUsuario')) {
-      this.usuariosService.getRolNumber()
-        .subscribe((response) => {
-          this.userPermissions = response;
-          this.cdr.detectChanges(); // Manually trigger change detection
-        })
     }
 
     this.eventBusService.onDashboardShown.subscribe(() => {
