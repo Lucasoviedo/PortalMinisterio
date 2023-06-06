@@ -6,6 +6,8 @@ import { UsuarioService } from "../../api/resources/usuarios.service";
 import { EventBusService } from "../../api/resources/event-bus.service";
 import { TranslateService } from "@ngx-translate/core";
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -44,7 +46,7 @@ export class DashboardComponent implements OnInit{
                 Object.keys(response).forEach(element => {
                     this.keys = {
                         title :  element.replace(/([A-Z])/g, " $1").toUpperCase(),
-                        value : response[element]
+                        value : typeof(response[element]) !== "string" ? response[element] : moment(response[element], "MMM D YYYY h:mmA").format("DD-MM-YYYY")
                     };
 
                     if (responseLenguaje !== 1) {

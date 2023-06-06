@@ -22,7 +22,12 @@
     },
     "SEARCH": {
       "PLACEHOLDER": "Filtrar por codigo de lote"
-    }
+    },
+    "START_DATE": "Fecha inicio",
+    "END_DATE": "Fecha limite",
+    "BATCH_LAB": "LOTES LABORATORIOS",
+    "BATCH_PROV_RETURN": "DEVOLUCIONES PROVINCIAS",
+    "NO_INFO": "No existe informacion de lotes por el momento"
   },
   "BUTTONS": {
     "ADD": "AGREGAR",
@@ -46,7 +51,16 @@
     "CONTACT_NAME": "Nombre contacto",
     "CONTACT_EMAIL": "Email contacto",
     "CONFIGURATION": "Configuracion",
-    "PLACEHOLDER": "Filtrar por nombre, pais, contacto o email"
+    "PLACEHOLDER": "Filtrar por nombre, pais, contacto o email",
+    "MODAL": {
+      "TITLE": "INSERTAR LABORATORIO",
+      "NAME": "Nombre",
+      "COUNTRY": "Pais",
+      "DIRECTION": "Direccion",
+      "CONTACT_EMAIL": "Email contacto",
+      "CONTACT_NAME": "Nombre contacto",
+      "LAB_CODE": "Codigo laboratorio"
+    }
   },
   "LOGIN": {
     "TITLE": "Iniciar sesion",
@@ -100,6 +114,10 @@
     "VACCINATES": "VACUNADOS",
     "BATCHADMIN": "ADMINIATRACION DE LOTES",
     "BATCHINQUIRY": "CONSULTA DE LOTES"
+  },
+  "NOT_FOUND": {
+    "TITLE": "Lo sentimos! La pagina que esta tratando de acceder no se encuentra",
+    "BACK": "IR AL DASHBOARD"
   },
   "PROVINCE": {
     "EDIT": {
@@ -169,5 +187,14 @@
     "TITLE": "USUARIOS",
     "PLACEHOLDER": "Filtrar por nombre, email u origen",
     "SUMMARIZATION": "Cantidad total de usuarios"
+  },
+  "VACCINATED": {
+    "TITLE": "VACUNADOS",
+    "AMOUNT": "Cantidad de vacunados",
+    "NO_INFO": "No existe informacion de vacunados por el momento",
+    "LAB": "Laboratorio",
+    "DATE": "Fecha",
+    "VACCINE": "Vacuna",
+    "LOCATION": "Ubicacion"
   }
 }
