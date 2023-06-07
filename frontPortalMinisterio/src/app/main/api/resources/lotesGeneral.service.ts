@@ -59,4 +59,6 @@ export class LotesGeneralService {
     });
     return this.http.put<IConsultaDevolucion>(this.url + '/devoluciones-provincias/marcar-recepcion-devolucion' , fecha , {headers} );
   }
+
+  
 }

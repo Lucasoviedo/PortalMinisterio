@@ -24,6 +24,7 @@ import { ICriteriosBusquedaDevolucionesLabs } from "src/app/core/models/i-criter
 import { IModoDistribucion } from "src/app/core/models/i-modosDistribucion";
 import { UsuarioService } from "../../api/resources/usuarios.service";
 import { FormControl, Validators } from "@angular/forms";
+import { IEstructuraAux } from "src/app/core/models/provincias/i-estructuraAux";
 
 @Component({
     selector: 'app-lotesAdmin',
@@ -75,6 +76,8 @@ export class LotesAdminComponent implements OnInit{
 
     fechaInicio : Date =  new Date("1900-01-01");
     fechaFin : Date =  new Date();
+
+    vacunasLoteProvincia :Array<IEstructuraAux> = [];
 
     constructor(private router: Router, 
         private cookieService: CookieService,
@@ -236,14 +239,29 @@ export class LotesAdminComponent implements OnInit{
             this.vacunasDistribuirData = result
         })
 
-        this.provinciasService.obtenerProvinciasDistribuir(lote.codigoLote)
-        .subscribe((response : any) => {
-            this.provinciasDistribuirData = response.map((data: any) => {
+        this.provinciasService.getLoteProvincia(lote.codigoLote).subscribe((response: any) => {
+           this.vacunasLoteProvincia = response.map((data: any) => {
                 return{
-                    ...data,
-                    valor: 0
+                   codigoProvincia: data.codigoProvincia,
+                   cantidadVacunas: data.cantidadVacunas
                 };
-            })
+           })
+
+           this.provinciasService.obtenerProvinciasDistribuir(lote.codigoLote)
+           .subscribe((response : any) => {
+               this.provinciasDistribuirData = response.map((data: any) => {
+                   let cantidad = 0;
+                   for (let element of this.vacunasLoteProvincia) {
+                       if(element.codigoProvincia == data.codigoProvincia){
+                           cantidad = element.cantidadVacunas
+                       }
+                   }
+                   return{
+                       ...data,
+                       valor: cantidad
+                   };
+               })
+           })
         })
         this.provinciaTipoDistribucion = 0;
     }

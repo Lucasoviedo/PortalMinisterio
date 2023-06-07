@@ -1,6 +1,6 @@
 <app-splash *ngIf="showSplash"></app-splash>
 <div *ngIf="!showSplash">
-  <nav class="navbar navbar-expand-lg navbar-dark" [ngClass]="{
+  <nav class="navbar navbar-expand-lg navbar-dark text-white" [ngClass]="{
     'background-color-2': userPermissions == 2,
     'background-color-3': userPermissions == 3}">
     <div class="container-fluid">
