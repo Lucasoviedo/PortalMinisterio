@@ -1,12 +1,13 @@
 {
   "BATCH_TABLE": {
-    "LAB_CODE": "Cod. lab",
-    "LAB_NAME": "Nombre laboratorio",
-    "VACCINE_CODE": "Cod. vacuna",
+    "COD_PROV": "Cod. Provincia",
+    "LAB_CODE": "Cod. Laboratorio",
+    "LAB_NAME": "Nombre Laboratorio",
+    "VACCINE_CODE": "Cod. Vacuna",
     "COD_BATCH": "Cod. Lote",
     "STATE": "Estado",
     "SEND_DATE": "Fecha Envio",
-    "RETURN_CODE": "Cod. devolucion",
+    "RETURN_CODE": "Cod. Devolucion",
     "GET_DATE": "Fecha Recepcion",
     "VALIDATE": "Validacion",
     "VACCINES_QUANTITY": "Cantidad vacunas",
@@ -42,7 +43,7 @@
   "DASHBOARD": {
     "MESSAGE": "No existe informacion por el momento"
   },
-  "FOOTER": "Sistema de control de vacunacion de Ministerio de la Nación",
+  "FOOTER": "Sistema de control de vacunacion del Ministerio de la Nación",
   "LABORATORY": {
     "TITLE": "LABORATORIOS",
     "ADD": "AGREGAR LABORATORIO",
@@ -85,7 +86,7 @@
         "MESSAGE": "Seguro que quiere marcar la fecha de recepcion como"
       },
       "DISPATCH": {
-        "TITLE": "Despachar vacunas",
+        "TITLE": "Despachar vacunas a",
         "FOLLOWING_CODE": "Codigo seguimiento",
         "DEVOLUTION_DATE": "Fecha devolucion",
         "SEND_DATE": "Fecha Envio",
@@ -96,8 +97,6 @@
       "DISTRIBUTE": {
         "TITLE": "Distribuir vacunas",
         "QUANTITY": "Cantidad de vacunas a distribuir",
-        "MANUAL": "Manual",
-        "EQUITATIVE": "Equitativo",
         "MESSAGE": "Equitativo enviara la misma cantidad de vacunas a cada provincia, el resto irá a la primera provincia"
       },
       "VERIFY": {
@@ -112,11 +111,11 @@
     "PROVINCES": "PROVINCIAS",
     "USERS": "USUARIOS",
     "VACCINATES": "VACUNADOS",
-    "BATCHADMIN": "ADMINIATRACION DE LOTES",
+    "BATCHADMIN": "ADMINISTRACION DE LOTES",
     "BATCHINQUIRY": "CONSULTA DE LOTES"
   },
   "NOT_FOUND": {
-    "TITLE": "Lo sentimos! La pagina que esta tratando de acceder no se encuentra",
+    "TITLE": "¡Lo sentimos! La pagina que esta tratando de acceder no se encuentra",
     "BACK": "IR AL DASHBOARD"
   },
   "PROVINCE": {
