@@ -59,6 +59,7 @@
       <thead>
         <tr>
           <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+          <th>{{ "BATCH_TABLE.COD_PROV" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
           <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
@@ -68,7 +69,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let lote of lotesProvincias | filtrarPor:['codigoLote']:filtro.value">
-          <td>{{lote.codigoLaboratorio}} {{lote.codigoProvincia}}</td>
+          <td>{{lote.codigoLaboratorio}}</td>
+          <td>{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
           <td>{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
           <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
@@ -91,6 +93,7 @@
       <thead>
         <tr>
           <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+          <th>{{ "BATCH_TABLE.COD_PROV" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
           <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
@@ -100,10 +103,12 @@
       <tbody>
         <tr *ngFor="let lote of lotesDevolucionesProvincias | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLaboratorio}}</td>
+          <td>{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
           <td>{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
           <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
-            <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)" />
+            <input *ngIf="userPermissions == 1" type="date" id="date-input" (change)="openConfirmDataModal($event,lote)" />
+            <h5 *ngIf="userPermissions != 1">--------</h5>
           </td>
           <td *ngIf="lote.fechaRecepcion">
             {{lote.fechaRecepcion | dateFormat}}
@@ -125,7 +130,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="despacho-loteLabel">{{ "MANAGMENT.MODAL.DISPATCH.TITLE" | translate }}</h5>
+        <h5 class="modal-title" id="despacho-loteLabel">{{ "MANAGMENT.MODAL.DISPATCH.TITLE" | translate }} {{nombreProvincia}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

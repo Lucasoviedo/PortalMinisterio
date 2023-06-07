@@ -82,4 +82,11 @@ export class ProvinciaService {
     });
     return this.http.get<any>(this.url + '/provincias/codigos' , {headers} );
   }
+
+  getNombreProvinciaByCodProvincia(codigoProvincia : string){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/provincias/nombre' ,{codigoProvincia}, {headers} );
+  }
 }

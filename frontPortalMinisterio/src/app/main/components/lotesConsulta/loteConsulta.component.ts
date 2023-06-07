@@ -93,6 +93,8 @@ export class LotesConsultaComponent implements OnInit {
     fechaInicio : Date =  new Date("1900-01-01");
     fechaFin : Date =  new Date();
 
+    nombreProvincia = "";
+
     ngOnInit() {
         this.filtro = new FormControl('', [Validators.maxLength(255)]);
 
@@ -192,6 +194,11 @@ export class LotesConsultaComponent implements OnInit {
         this.empresaTransporteActual = 0;
         this.fechaDevolucion = "";
         this.codigoSeguiminetoActual = "";
+
+        this.provinciasService.getNombreProvinciaByCodProvincia(lote.codigoProvincia).subscribe((response: any) => {
+    
+            this.nombreProvincia = response.nombre;
+        });
     }
 
     despacharLoteProvincia() {
@@ -259,8 +266,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesData = this.lotesDataComplete;
             if(typeof(this.fechaFin) === "string")  this.filtrarFechaFin(this.fechaFin)
 
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            const newData = this.lotesData.filter(lote =>  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)
+            &&  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin));
             this.lotesData = newData;
         }
 
@@ -268,8 +275,8 @@ export class LotesConsultaComponent implements OnInit {
             this.devolucionesLaboratorios = this.devolucionesLaboratoriosComplete;
             if(typeof(this.fechaFin) === "string")  this.filtrarFechaFin(this.fechaFin)
 
-            const newData = this.devolucionesLaboratorios.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            const newData = this.devolucionesLaboratorios.filter(lote =>  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)
+            &&  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin));
             this.devolucionesLaboratorios = newData;
         }
 
@@ -277,8 +284,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesProvincias = this.lotesProvinciasComplete;
             if(typeof(this.fechaFin) === "string")  this.filtrarFechaFin(this.fechaFin)
 
-            const newData = this.lotesProvincias.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            const newData = this.lotesProvincias.filter(lote =>  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)
+            &&  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin));
             this.lotesProvincias = newData;
         }
 
@@ -286,8 +293,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesDevolucionesProvincias = this.lotesDevolucionesProvinciasComplete;
             if(typeof(this.fechaFin) === "string")  this.filtrarFechaFin(this.fechaFin)
 
-            const newData = this.lotesDevolucionesProvincias.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            const newData = this.lotesDevolucionesProvincias.filter(lote =>  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)
+            &&  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin));
             this.lotesDevolucionesProvincias = newData;
         }
     }
@@ -303,8 +310,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesData = this.lotesDataComplete;
             if(typeof(this.fechaInicio) === "string") this.filtrarFechaInicio(this.fechaInicio)
 
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            const newData = this.lotesData.filter(lote =>  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)
+            &&  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio));
             this.lotesData = newData;
         }
 
@@ -312,8 +319,8 @@ export class LotesConsultaComponent implements OnInit {
             this.devolucionesLaboratorios = this.devolucionesLaboratoriosComplete;
             if(typeof(this.fechaInicio) === "string") this.filtrarFechaInicio(this.fechaInicio)
 
-            const newData = this.devolucionesLaboratorios.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            const newData = this.devolucionesLaboratorios.filter(lote =>  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)
+            &&  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio));
             this.devolucionesLaboratorios = newData;
         }
 
@@ -321,8 +328,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesProvincias = this.lotesProvinciasComplete;
             if(typeof(this.fechaInicio) === "string") this.filtrarFechaInicio(this.fechaInicio)
 
-            const newData = this.lotesProvincias.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            const newData = this.lotesProvincias.filter(lote =>  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)
+            &&  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio));
             this.lotesProvincias = newData;
         }
 
@@ -330,8 +337,8 @@ export class LotesConsultaComponent implements OnInit {
             this.lotesDevolucionesProvincias = this.lotesDevolucionesProvinciasComplete;
             if(typeof(this.fechaInicio) === "string") this.filtrarFechaInicio(this.fechaInicio)
 
-            const newData = this.lotesDevolucionesProvincias.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            const newData = this.lotesDevolucionesProvincias.filter(lote =>  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)
+            &&  new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio));
             this.lotesDevolucionesProvincias = newData;
         }
     }

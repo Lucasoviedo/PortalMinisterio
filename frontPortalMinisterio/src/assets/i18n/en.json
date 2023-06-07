@@ -1,12 +1,13 @@
 {
   "BATCH_TABLE": {
-    "LAB_CODE": "Lab cod.",
-    "LAB_NAME": "Laboratorie name",
-    "VACCINE_CODE": "Vaccine cod.",
-    "COD_BATCH": "Batch Cod.",
+    "COD_PROV": "Province code",
+    "LAB_CODE": "Laboratory code",
+    "LAB_NAME": "Laboratory name",
+    "VACCINE_CODE": "Vaccine code",
+    "COD_BATCH": "Batch code",
     "STATE": "State",
     "SEND_DATE": "Send Date",
-    "RETURN_CODE": "Return cod.",
+    "RETURN_CODE": "Return code",
     "GET_DATE": "Reception Date",
     "VALIDATE": "Validation",
     "VACCINES_QUANTITY": "Vaccines Quantity",
@@ -27,7 +28,7 @@
     "END_DATE": "Limit date",
     "BATCH_LAB": "LABORATORIES BATCHES",
     "BATCH_PROV_RETURN": "PROVINCES RETURNINGS",
-    "NO_INFO": "Ther is no info about batches at the moment"
+    "NO_INFO": "There is no info about batches at the moment"
   },
   "BUTTONS": {
     "ADD": "ADD",
@@ -57,7 +58,7 @@
       "NAME": "Name",
       "COUNTRY": "Country",
       "DIRECTION": "Direction",
-      "CONTACT_EMAIL": "Contact Email",
+      "CONTACT_EMAIL": "Contact email",
       "CONTACT_NAME": "Contact name",
       "LAB_CODE": "Laboratory code"
     }
@@ -85,19 +86,17 @@
         "MESSAGE": "Are you sure that you want to set the getting date as"
       },
       "DISPATCH": {
-        "TITLE": "Dispatch vaccines",
+        "TITLE": "Dispatch vaccines to",
         "FOLLOWING_CODE": "Following code",
-        "DEVOLUTION_DATE": "Devolution date",
+        "DEVOLUTION_DATE": "Returning date",
         "SEND_DATE": "Send date",
         "SELECT_TRANSPORT": "Select transport company",
-        "SELECT_REASON": "Select devolution reason",
+        "SELECT_REASON": "Select returning reason",
         "COMMENTS": "Add comments"
       },
       "DISTRIBUTE": {
         "TITLE": "Distribute vaccines",
         "QUANTITY": "Quantity of vaccines to distribute",
-        "MANUAL": "Manual",
-        "EQUITATIVE": "Equitative",
         "MESSAGE": "Equitative will send equal amount of vaccines to each province, the rest will go to the first province"
       },
       "VERIFY": {
@@ -133,7 +132,7 @@
       "DIRECTION": "Direction",
       "NAME": "Name",
       "TITLE": "Health centers",
-      "MESSAGE": "¡There is no Health Centers registered in this province!"
+      "MESSAGE": "There is no Health Centers registered in this province!"
     },
     "MODAL": {
       "STATUS": "URL status",
@@ -180,7 +179,7 @@
     },
     "BUTTON": "ADD USER",
     "DELETE": {
-      "MESSAGE": "¿Are you sure that you want to delete this user?",
+      "MESSAGE": "Are you sure that you want to delete this user?",
       "TITLE": "Delete user"
     },
     "UPDATE": "Update user",
@@ -191,7 +190,7 @@
   "VACCINATED": {
     "TITLE": "VACCINATED",
     "AMOUNT": "Amount of vaccinated",
-    "NO_INFO": "There is no info amout vaccinated at the moment",
+    "NO_INFO": "There is no info about vaccinated at the moment",
     "LAB": "Laboratory",
     "DATE": "Date",
     "VACCINE": "Vaccine",

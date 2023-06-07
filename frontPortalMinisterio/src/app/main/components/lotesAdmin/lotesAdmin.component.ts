@@ -373,13 +373,13 @@ export class LotesAdminComponent implements OnInit{
             this.lotesData = newData;
         }
         if(typeof(this.fechaInicio) === "object"){
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)) 
-            && (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)));
+            const newData = this.lotesData.filter(lote => new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)
+            &&  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin));
             this.lotesData = newData;
         }
         if(typeof(this.fechaFin) === "object"){
-            const newData = this.lotesData.filter(lote => (new Date(lote.fechaEnvio) <= new Date(this.fechaFin) || new Date(lote.fechaRecepcion) <= new Date(this.fechaFin))
-            && (new Date(lote.fechaEnvio) >= new Date(this.fechaInicio) || new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio)));
+            const newData = this.lotesData.filter(lote =>  new Date(lote.fechaRecepcion) <= new Date(this.fechaFin)
+            && new Date(lote.fechaRecepcion) >= new Date(this.fechaInicio));
             this.lotesData = newData;
         }
     }
