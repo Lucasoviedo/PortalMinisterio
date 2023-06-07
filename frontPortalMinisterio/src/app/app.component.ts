@@ -33,38 +33,28 @@ export class AppComponent implements OnInit {
   showSplash = true;
 
   ngOnInit(): void {
+
     setTimeout(() => {
       this.showSplash = false;
     }, 2000);
+
     //Comprobar que exista la sesion
-    if (!this.cookieService.get('authToken')) {
+    if (!this.cookieService.get('authToken' || this.cookieService.get('authToken') === "")) {
       this.showHeaderOptions = false;
       this.cookieService.delete('rolUsuario');
       this.router.navigate(['/login']);
-    } else if (!this.cookieService.get('rolUsuario')) {
-          this.usuariosService.getRolNumber()
-          .subscribe((response) => {
-            this.cookieService.set('rolUsuario', response);
-            this.userPermissions = response;
-            // this.cdr.detectChanges(); // Manually trigger change detection
-          })
-          this.showHeaderOptions = true;
-          if (this.cookieService.get('authToken') === "") {
-            this.cookieService.delete('authToken');
-            this.router.navigate(['/login']);
-          }
-          this.usuariosService.obtenerNombreApellido()
-              .subscribe((response : any) => {
-                this.nombreUsuario = `${response.apellido} ${response.nombre}`
-              })
-        
-        if (this.cookieService.get('rolUsuario')) {
-          this.usuariosService.getRolNumber()
-            .subscribe((response) => {
-              this.userPermissions = response;
-              this.cdr.detectChanges(); // Manually trigger change detection
-            })
-      }
+    } else {
+      this.usuariosService.getRolNumber()
+      .subscribe((response) => {
+        this.cookieService.set('rolUsuario', response);
+        this.userPermissions = response;
+      })
+      this.showHeaderOptions = true;
+
+      this.usuariosService.obtenerNombreApellido()
+      .subscribe((response : any) => {
+        this.nombreUsuario = `${response.apellido} ${response.nombre}`
+      })
     }
 
     this.eventBusService.onDashboardShown.subscribe(() => {
@@ -75,14 +65,13 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.loginService.logout()
-      .subscribe((response: any) => {
+      .subscribe(() => {
         this.router.navigate(['/login']);
         this.cookieService.delete('authToken');
         this.cookieService.delete('idUsuario');
         this.cookieService.delete('rolUsuario');
         this.showHeaderOptions = false;
         this.showHeaderOptionsMovile = false;
-        // this.cdr.detectChanges(); // Manually trigger change detection
       },
         (error => {
           this.router.navigate(['/login']);
@@ -93,7 +82,7 @@ export class AppComponent implements OnInit {
           this.showHeaderOptionsMovile = false;
           this.cdr.detectChanges(); // Manually trigger change detection
         }));
-
+        
         this.userPermissions = 0;
         this.nombreUsuario = "";
   }
