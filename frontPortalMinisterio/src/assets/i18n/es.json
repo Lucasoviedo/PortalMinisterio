@@ -80,6 +80,7 @@
     "MESSAGE": "Seleccione un laboratorio para comenzar su consulta",
     "LABS": "Laboratorios",
     "STATES": "Estados",
+    "PROVINCES": "Provincias",
     "MODAL": {
       "GET_BATCH": {
         "TITLE": "Confirmar fecha",

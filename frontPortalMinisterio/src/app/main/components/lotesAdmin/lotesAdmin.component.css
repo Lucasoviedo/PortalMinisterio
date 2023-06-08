@@ -10,6 +10,21 @@ textarea{
     resize: none;
 }
 
+.administracion-grupo-filtros{
+    margin-bottom: 20px !important;
+    flex-direction: column;
+    align-items: center !important;
+    gap: 10px;
+}
+
+.administracion-busqueda{
+    display: flex; 
+    width: 60% ;
+}
+
+.administracion-grupo-filtros div{
+    width: 60%;
+}
 
 .modal-body-distribuir input[type="number"]{
     width: 75px;
@@ -43,4 +58,39 @@ textarea{
     border: 1px solid black;
     border-radius: 25%;
     margin-right: 10px;
+}
+
+.administracion-fechas{
+    width: 30% !important;
+}
+
+.administracion-fecha-envio{
+    display: none;
+}
+
+.administracion-opcion{
+    display: none;
+}
+
+@media (min-width: 744px) {
+    .administracion-grupo-filtros{
+        margin-bottom: 20px !important;
+        flex-direction: row;
+        align-items: center !important;
+        gap: 10px;
+    }
+
+    .administracion-busqueda{
+        align-self: end;
+    }
+
+    .administracion-fecha-envio{
+        display: table-cell;
+    }
+}
+
+@media (min-width: 992px) {
+    .administracion-opcion{
+        display: table-cell;
+    }
 }

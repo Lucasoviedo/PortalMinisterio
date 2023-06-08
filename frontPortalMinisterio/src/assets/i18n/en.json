@@ -79,6 +79,7 @@
     "NO_DATA": "No data yet",
     "MESSAGE": "Select a laboratory to begin the management",
     "LABS": "Laboratories",
+    "PROVINCES": "Provinces",
     "STATES": "States",
     "MODAL": {
       "GET_BATCH": {

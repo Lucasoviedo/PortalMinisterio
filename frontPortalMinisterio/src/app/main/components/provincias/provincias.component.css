@@ -21,3 +21,15 @@
 .message-color-2 > h4{
     font-weight: 800;
 }
+
+.provincia-email,
+.provincia-contacto{
+    display: none;
+}
+
+@media (min-width: 744px){
+    .provincia-email,
+    .provincia-contacto{
+        display:table-cell;
+    }
+}
