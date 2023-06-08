@@ -39,12 +39,6 @@ export class DashboardComponent implements OnInit{
 
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
-                if (responseLenguaje !== 1) {
-                    this.translate.use('en');
-                } else {
-                    this.translate.use('es');
-                }
-
                 Object.keys(response).forEach(element => {
                     this.keys = {
                         title :  element.replace(/([A-Z])/g, " $1").toUpperCase(),

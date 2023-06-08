@@ -18,7 +18,7 @@
         <select class="form-select" (change)="filtrarPorEstado($event)">
             <option value="" hidden selected>{{ "SELECT.STATE" | translate }}</option>
             <option value="">{{ "SELECT.ALL" | translate }}</option>
-            <option *ngFor="let estado of estadosData" value={{estado.estado}}>{{estado.estado}}</option>
+            <option *ngFor="let estado of estadosData" value={{estado.estado}}>{{estado.titulo}}</option>
         </select>
       </div>
     </div>
@@ -47,7 +47,7 @@
           <tbody >
               <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
                   <td>{{lote.codigoLote}}</td>
-                  <td>{{lote.estado}}</td>
+                  <td>{{lote.estadoMostar}}</td>
                   <td class="administracion-fecha-envio">{{lote.fechaEnvio | dateFormat}}</td>
                   <td *ngIf="lote.fechaRecepcion" class="administracion-opcion">{{lote.fechaRecepcion  | dateFormat}}</td>
                   <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio" class="administracion-opcion">
