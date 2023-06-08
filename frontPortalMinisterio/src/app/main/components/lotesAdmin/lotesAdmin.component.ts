@@ -110,17 +110,31 @@ export class LotesAdminComponent implements OnInit{
 
         this.lotesGeneralService.obtenerEstados()
         .subscribe((response: any) => {
-            this.estadosData = response
+            this.usuariosService.getLanguage()
+            .subscribe((responseLenguaje: any) => {
+                this.estadosData = response
+
+                    responseLenguaje !== 1 ? this.estadosData[0].titulo = "ACEPTED" : this.estadosData[0].titulo = this.estadosData[0].estado;
+                    this.estadosData[1].titulo = "PARCIALY ACEPTED"
+                    this.estadosData[2].titulo = "ON ITS WAY"
+                    this.estadosData[3].titulo = "ON ORIGIN"
+                    this.estadosData[4].titulo = "REJECTED"
+                    this.estadosData[5].titulo = "RECIVED"
+                    
+            })
+            console.log(this.estadosData)
         });
 
         this.lotesGeneralService.getVaccinesStates()
         .subscribe((response: any) => {
             this.vaccinesStatesData = response;
+            console.log(response)
         });
 
         this.devolucionesService.getRejectReasons()
         .subscribe((response: any) => {
             this.rejectionReasonsData = response;
+            // console.log(response)
         })
 
         this.lotesGeneralService.obtenerEmpresasTransporte()

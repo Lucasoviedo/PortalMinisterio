@@ -3,7 +3,7 @@
     <br/>
     <p>{{ "MANAGMENT.MESSAGE" | translate }}</p>
     <hr>
-    <div class="flexRow" style="margin-bottom: 20px;">
+    <div class="flexRow administracion-grupo-filtros">
       <div class="flexCol sizeUnTercio">
         <h6>{{ "SELECT.LAB" | translate }}</h6>
         <select class="form-select" (change)="filtrarPorLaboratorio($event)">
@@ -12,7 +12,7 @@
           <option *ngFor="let laboratorio of laboratoriosData" value={{laboratorio.codigoLaboratorio}}>{{laboratorio.codigoLaboratorio}}</option>
         </select>
       </div>
-      <input type="text" style="display: flex; align-self: end;" class="form-control col-4" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">
+      <input type="text" class="administracion-busqueda form-control" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">
       <div class="flexCol sizeUnTercio">
         <h6>{{ "SELECT.STATE" | translate }}</h6>
         <select class="form-select" (change)="filtrarPorEstado($event)">
@@ -24,9 +24,9 @@
     </div>
     <div class="dates-select">
         <h6>{{ "BATCH_TABLE.START_DATE" | translate }}: </h6>
-        <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
+        <input type="date" class="form-control administracion-fechas" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
         <h6>{{ "BATCH_TABLE.END_DATE" | translate }}: </h6>
-        <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaFin($event)"/>
+        <input type="date" class="form-control administracion-fechas" style="width: auto;" (change)="filtrarFechaFin($event)"/>
     </div>
     <div *ngIf="lotesDataComplete.length == 0">
       <h5>{{ "MANAGMENT.NO_DATA" | translate }}</h5>
@@ -37,64 +37,64 @@
               <tr>
                   <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
                   <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
-                  <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
-                  <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
-                  <th>{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
-                  <th>{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
-                  <th>{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
+                  <th class="administracion-fecha-envio">{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+                  <th class="administracion-opcion">{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+                  <th class="administracion-opcion">{{ "BATCH_TABLE.VALIDATE" | translate }}</th>
+                  <th class="administracion-opcion">{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
+                  <th class="administracion-opcion">{{ "BATCH_TABLE.DISTRIBUTE" | translate }}</th>
               </tr>
           </thead>
           <tbody >
               <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
                   <td>{{lote.codigoLote}}</td>
                   <td>{{lote.estado}}</td>
-                  <td>{{lote.fechaEnvio | dateFormat}}</td>
-                  <td *ngIf="lote.fechaRecepcion">{{lote.fechaRecepcion  | dateFormat}}</td>
-                  <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
+                  <td class="administracion-fecha-envio">{{lote.fechaEnvio | dateFormat}}</td>
+                  <td *ngIf="lote.fechaRecepcion" class="administracion-opcion">{{lote.fechaRecepcion  | dateFormat}}</td>
+                  <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio" class="administracion-opcion">
                     <input type="date" id="date-input" (change)="openConfirmDataModal($event,lote)"/>
                   </td>
-                  <td *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
+                  <td  class="administracion-opcion" *ngIf="!lote.fechaRecepcion && !lote.fechaEnvio"></td>
 
-                  <td *ngIf="lote.distribuido || lote.despachado; else demasEstados ">
+                  <td  class="administracion-opcion" *ngIf="lote.distribuido || lote.despachado; else demasEstados ">
                       {{ "BATCH_TABLE.STATES.VERIFIED" | translate }}
                   </td>
                   <ng-template #demasEstados>
-                      <td *ngIf="lote.fechaRecepcion">
+                      <td  class="administracion-opcion" *ngIf="lote.fechaRecepcion">
                           <div class="btn-table" (click)="verificarVacunas(lote)"
                           type="button" data-toggle="modal" data-target="#check-vaccines-modal">
                           {{ "BATCH_TABLE.STATES.VERIFY" | translate }}
                           </div>
                       </td>
-                      <td *ngIf="!lote.fechaRecepcion">
+                      <td  class="administracion-opcion" *ngIf="!lote.fechaRecepcion">
                           ------------ 
                       </td>
                   </ng-template>
 
-                  <td *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
+                  <td  class="administracion-opcion" *ngIf="lote.estado === 'EN_CAMINO' || lote.estado === 'RECIBIDO' || lote.cantidadVacunasADistribuir === lote.cantidadVacunas || lote.estado === 'ACEPTADO'
                     ; else demasDistribucion2 "> 
                     ------------ 
                   </td>
                   <ng-template #demasDistribucion2>
-                    <td *ngIf="!lote.despachado "> 
+                    <td  class="administracion-opcion" *ngIf="!lote.despachado "> 
                       <button class="btn-table"  (click)="verificarVacunas(lote)" [disabled]="lote.distribuido === 0 && lote.estado !== 'RECHAZADO'"
                           type="button" data-toggle="modal" data-target="#despacho-lote">
                           {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
                       </button>
                     </td>
-                    <td *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
+                    <td  class="administracion-opcion" *ngIf="lote.despachado">{{ "BATCH_TABLE.STATES.DISPATCHED" | translate }}</td>
                   </ng-template>
 
-                  <td *ngIf="(lote.estado === 'ACEPTADO' 
+                  <td  class="administracion-opcion" *ngIf="(lote.estado === 'ACEPTADO' 
                     || lote.estado === 'ACEPTADO_PARCIALMENTE') && (!lote.distribuido) 
                     ; else demasDistribucion "> 
-                    <div class="btn-table" (click)="distribuirVacunas(lote)"
+                    <div class="btn-table administracion-opcion" (click)="distribuirVacunas(lote)"
                           type="button" data-toggle="modal" data-target="#distribucion-lote">
                           {{ "BATCH_TABLE.STATES.DISTRIBUTE" | translate }}
                       </div>
                   </td>
                   <ng-template #demasDistribucion>
-                    <td *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
-                    <td *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
+                    <td  class="administracion-opcion" *ngIf="!lote.distribuido || lote.estado === 'RECHAZADO' "> ------------ </td>
+                    <td  class="administracion-opcion" *ngIf="lote.distribuido">{{ "BATCH_TABLE.STATES.DISTRIBUTED" | translate }}</td>
                   </ng-template>
               </tr>
           </tbody>

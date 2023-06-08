@@ -1,11 +1,15 @@
 <div class="container">
   <h1 class="tituloConsulta">{{ "INQUIRY.TITLE" | translate }}</h1>
   <div class="dates-select">
-    <input type="text" style="display: flex; align-self: end;" class="form-control col-4" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">  
+    <input type="text" class="form-control consulta-busqueda" [formControl]="filtro" placeholder="{{ 'BATCH_TABLE.SEARCH.PLACEHOLDER' | translate }}">  
+    <div>
       <h6>{{ "BATCH_TABLE.START_DATE" | translate }}: </h6>
       <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaInicio($event)"/>
+    </div>
+    <div>
       <h6>{{ "BATCH_TABLE.END_DATE" | translate }}: </h6>
       <input type="date" class="form-control" style="width: auto;" (change)="filtrarFechaFin($event)"/>
+    </div>
   </div>
   <div *ngIf="lotesData.length > 0">
     <h3>{{ "BATCH_TABLE.BATCH_LAB" | translate }}</h3>
@@ -14,7 +18,7 @@
         <tr>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
           <th>{{ "BATCH_TABLE.STATE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
         </tr>
       </thead>
@@ -22,8 +26,8 @@
         <tr *ngFor="let lote of lotesData | filtrarPor:['codigoLote']:filtro.value">
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.estado}}</td>
-          <td>{{lote.fechaEnvio | dateFormat}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{lote.fechaEnvio | dateFormat}}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -33,22 +37,22 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
-          <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.RETURN_CODE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+          <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let lote of devolucionesLaboratorios | filtrarPor:['codigoLote']:filtro.value">
-          <td>{{lote.codigoLaboratorio}}</td>
+          <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td>{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td>{{lote.codigoDevolucion}}</td>
-          <td>{{lote.cantidadVacunas}}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
+          <td class="consulta-no-movil">{{lote.cantidadVacunas}}</td>
         </tr>
       </tbody>
     </table>
@@ -58,24 +62,24 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.COD_PROV" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.COD_PROV" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
-          <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
           <th *ngIf="userPermissions == 1">{{ "BATCH_TABLE.DISPATCH" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let lote of lotesProvincias | filtrarPor:['codigoLote']:filtro.value">
-          <td>{{lote.codigoLaboratorio}}</td>
-          <td>{{lote.codigoProvincia}}</td>
+          <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
+          <td class="consulta-no-movil">{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td>{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
-          <td>{{lote.cantidadVacunas}}</td>
-          <td *ngIf="!lote.idEmpresaTransporte && userPermissions == 1">
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
+          <td class="consulta-no-movil">{{lote.cantidadVacunas}}</td>
+          <td class="consulta-no-movil" *ngIf="!lote.idEmpresaTransporte && userPermissions == 1">
             <div class="btn-table" (click)="despacharLote(lote)" type="button" data-toggle="modal"
               data-target="#despacho-lote">
               {{ "BATCH_TABLE.STATES.DISPATCH" | translate }}
@@ -92,20 +96,20 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.LAB_CODE" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_PROV" | translate }}</th>
           <th>{{ "BATCH_TABLE.COD_BATCH" | translate }}</th>
-          <th>{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.SEND_DATE" | translate }}</th>
           <th>{{ "BATCH_TABLE.GET_DATE" | translate }}</th>
-          <th>{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
+          <th class="consulta-no-movil">{{ "BATCH_TABLE.VACCINES_QUANTITY" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let lote of lotesDevolucionesProvincias | filtrarPor:['codigoLote']:filtro.value">
-          <td>{{lote.codigoLaboratorio}}</td>
+          <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td>{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
             <input *ngIf="userPermissions == 1" type="date" id="date-input" (change)="openConfirmDataModal($event,lote)" />
             <h5 *ngIf="userPermissions != 1">--------</h5>
@@ -113,7 +117,7 @@
           <td *ngIf="lote.fechaRecepcion">
             {{lote.fechaRecepcion | dateFormat}}
           </td>
-          <td>{{lote.cantidadVacunas}}</td>
+          <td class="consulta-no-movil">{{lote.cantidadVacunas}}</td>
         </tr>
       </tbody>
     </table>

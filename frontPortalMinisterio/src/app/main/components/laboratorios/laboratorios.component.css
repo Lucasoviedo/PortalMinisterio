@@ -1,3 +1,7 @@
+.laboratorio-agregarBoton{
+    overflow: hidden;
+}
+
 .laboratorio-nombre > div{
     display: flex; 
     align-items: center; 
@@ -20,4 +24,48 @@
 .message-color-1 > h4,
 .message-color-2 > h4{
     font-weight: 800;
+}
+
+.laboratorio-email{
+    display: none;
+}
+
+.laboratorio-contacto{
+    display: none;
+}
+
+.laboratorio-div-filtro{
+    width: 50%;
+}
+
+.laboratorio-div-boton{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (min-width: 744px){
+    .laboratorio-contacto,
+    .laboratorio-email{
+        display:table-cell;
+    }
+    
+    .laboratorio-div-filtro{
+        width: 75%;
+    }
+
+    .laboratorio-div-boton{
+        width: 25%;
+    }
+}
+
+
+@media (min-width: 1006px){
+    .disapear-desktop{
+        display: none;
+    }
+
+    .header-options-movile{
+        display: none;
+    }
 }

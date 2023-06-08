@@ -37,3 +37,42 @@ textarea{
 .modal-body div:nth-child(1) h6{
     font-weight: 600;
 }
+
+.dates-select{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dates-select > * {
+    width: 60%;
+}
+
+.dates-select div {
+    display: flex;
+    flex-direction: column;
+}
+
+.consulta-busqueda{
+    display: flex; 
+    /* align-self: end; */
+}
+
+.consulta-no-movil{
+    display: none;
+}
+
+@media (min-width: 744px) {
+    .consulta-no-movil{
+        display: table-cell;
+    }
+
+    .dates-select{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .consulta-busqueda{
+        align-self: end;
+    }
+}

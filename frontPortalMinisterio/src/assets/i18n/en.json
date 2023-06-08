@@ -6,6 +6,7 @@
     "VACCINE_CODE": "Vaccine code",
     "COD_BATCH": "Batch code",
     "STATE": "State",
+    "PENDING": "PENDING",
     "SEND_DATE": "Send Date",
     "RETURN_CODE": "Return code",
     "GET_DATE": "Reception Date",
@@ -52,6 +53,7 @@
     "CONTACT_NAME": "Contact name",
     "CONTACT_EMAIL": "Contact email",
     "CONFIGURATION": "Configuration",
+    "EDIT": "Edit laboratory endpoint",
     "PLACEHOLDER": "Filter by name, country, contact or email",
     "MODAL": {
       "TITLE": "INSERT LABORATORY",
@@ -79,6 +81,7 @@
     "NO_DATA": "No data yet",
     "MESSAGE": "Select a laboratory to begin the management",
     "LABS": "Laboratories",
+    "PROVINCES": "Provinces",
     "STATES": "States",
     "MODAL": {
       "GET_BATCH": {

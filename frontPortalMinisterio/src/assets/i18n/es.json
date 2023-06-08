@@ -6,6 +6,7 @@
     "VACCINE_CODE": "Cod. Vacuna",
     "COD_BATCH": "Cod. Lote",
     "STATE": "Estado",
+    "PENDING": "PENDIENTE",
     "SEND_DATE": "Fecha Envio",
     "RETURN_CODE": "Cod. Devolucion",
     "GET_DATE": "Fecha Recepcion",
@@ -52,6 +53,7 @@
     "CONTACT_NAME": "Nombre contacto",
     "CONTACT_EMAIL": "Email contacto",
     "CONFIGURATION": "Configuracion",
+    "EDIT": "Editar endpoint laboratorio",
     "PLACEHOLDER": "Filtrar por nombre, pais, contacto o email",
     "MODAL": {
       "TITLE": "INSERTAR LABORATORIO",
@@ -80,6 +82,7 @@
     "MESSAGE": "Seleccione un laboratorio para comenzar su consulta",
     "LABS": "Laboratorios",
     "STATES": "Estados",
+    "PROVINCES": "Provincias",
     "MODAL": {
       "GET_BATCH": {
         "TITLE": "Confirmar fecha",

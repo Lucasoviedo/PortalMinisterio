@@ -150,12 +150,12 @@ export class ProvinciasComponent implements OnInit {
             this.usuariosService.getLanguage()
             .subscribe((responseLenguaje: any) => {
                 if(response.statusCode == "OK"){
-                    responseLenguaje == 1 ? this.mensajePing = "Successful conection" :  this.mensajePing = "Conexion exitosa"
+                    responseLenguaje != 1 ? this.mensajePing = "Successful conection" :  this.mensajePing = "Conexion exitosa"
                     this.codigoMensajePing = 1
                 } else if(response.statusCode === "INTERNAL_SERVER_ERROR"){
-                    responseLenguaje == 1 ? this.mensajePing = "The connection could not be established" :  this.mensajePing = "La conexion no se pudo establecer"
+                    responseLenguaje != 1 ? this.mensajePing = "The connection could not be established" :  this.mensajePing = "La conexion no se pudo establecer"
                 } else {
-                    responseLenguaje == 1 ? this.mensajePing = "There is no connection to this endpoint" :  this.mensajePing = "No existe una conexion a este endpoint"
+                    responseLenguaje != 1 ? this.mensajePing = "There is no connection to this endpoint" :  this.mensajePing = "No existe una conexion a este endpoint"
                 }
             })
         })    
