@@ -41,6 +41,8 @@ export class DashboardComponent implements OnInit{
             .subscribe((responseLenguaje: any) => {
                 if (responseLenguaje !== 1) {
                     this.translate.use('en');
+                } else {
+                    this.translate.use('es');
                 }
 
                 Object.keys(response).forEach(element => {

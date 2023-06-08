@@ -1,5 +1,6 @@
 .user-header-options{
-    width: 33.33%;
+    width: 50%;
+    margin-bottom: 10px;
 }
 
 .card-usuario-container{
@@ -9,6 +10,10 @@
 .card-usuario{
     
     height: 275px;
+}
+
+.agregarBoton{
+    width: 100%;
 }
 
 .card-usuario > div {
@@ -22,6 +27,12 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
+}
+
+@media (min-width: 744px){
+    .user-header-options{
+        width: 33%;
+    }
 }
 
 @media (min-width: 1006px){

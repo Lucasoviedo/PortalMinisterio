@@ -6,8 +6,8 @@
         <thead>
             <tr>
                 <th>{{ "PROVINCE.TABLE.NAME" | translate }}</th>
-                <th>{{ "PROVINCE.TABLE.CONTACT" | translate }}</th>
-                <th>{{ "PROVINCE.TABLE.EMAIL" | translate }}</th>
+                <th class="provincia-contacto">{{ "PROVINCE.TABLE.CONTACT" | translate }}</th>
+                <th class="provincia-email">{{ "PROVINCE.TABLE.EMAIL" | translate }}</th>
                 <th>{{ "PROVINCE.TABLE.CONFIG" | translate }}</th>
             </tr>
         </thead>
@@ -20,8 +20,8 @@
                         <u><b>{{provincia.nombre}}</b></u>
                     </div>
                 </td>
-                <td>{{provincia.nombreContacto}}</td>
-                <td>{{provincia.emailContacto}}</td>
+                <td class="provincia-contacto">{{provincia.nombreContacto}}</td>
+                <td class="provincia-email">{{provincia.emailContacto}}</td>
                 <td>
                     <div>
                         <img src="../../../../assets/configurar.svg" class="configurar-img" type="button" 

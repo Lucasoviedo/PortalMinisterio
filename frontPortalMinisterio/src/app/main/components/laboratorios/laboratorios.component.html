@@ -2,11 +2,11 @@
 <div class="container">
     <h1 class="tituloConsulta">{{ "LABORATORY.TITLE" | translate }}</h1>
     <div class="row filtrosContenedor">
-        <div class="col-9">
+        <div class="laboratorio-div-filtro">
             <input type="text" class="form-control col-12" [formControl]="filtro" placeholder="{{ 'LABORATORY.PLACEHOLDER' | translate }}">
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary agregarBoton" data-toggle="modal" data-target="#insertar-laboratorio">
+        <div class="laboratorio-div-boton">
+            <button class="btn btn-primary laboratorio-agregarBoton" data-toggle="modal" data-target="#insertar-laboratorio">
                 {{ "LABORATORY.ADD" | translate }}
             </button>
         </div>
@@ -16,8 +16,8 @@
             <tr>
                 <th>{{ "LABORATORY.NAME" | translate }}</th>
                 <th>{{ "LABORATORY.COUNTRY" | translate }}</th>
-                <th>{{ "LABORATORY.CONTACT_NAME" | translate }}</th>
-                <th>{{ "LABORATORY.CONTACT_EMAIL" | translate }}</th>
+                <th class="laboratorio-email">{{ "LABORATORY.CONTACT_EMAIL" | translate }}</th>
+                <th class="laboratorio-contacto">{{ "LABORATORY.CONTACT_NAME" | translate }}</th>
                 <th>{{ "LABORATORY.CONFIGURATION" | translate }}</th>
             </tr>
         </thead>
@@ -31,8 +31,8 @@
                     </div>
                 </td>
                 <td>{{laboratorio.pais}}</td>
-                <td>{{laboratorio.emailContacto}}</td>
-                <td>{{laboratorio.nombreContacto}}</td>
+                <td class="laboratorio-email">{{laboratorio.emailContacto}}</td>
+                <td class="laboratorio-contacto">{{laboratorio.nombreContacto}}</td>
                 <td>
                     <img src="../../../../assets/configurar.svg" class="configurar-img" type="button" 
                         data-toggle="modal" data-target="#editar-laboratorio" (click)="editarLaboratorio(laboratorio)"/>

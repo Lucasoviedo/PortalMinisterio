@@ -20,6 +20,7 @@
     height: 12.5vh;
     min-height: 70px;
     background-color: rgba(var(--bs-primary-rgb));
+    height: auto;
 }
 
 .navbar-brand{
@@ -32,6 +33,9 @@
 
 .header-buttons{
     display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: end;
 }
 
 .header-option-movile{
@@ -85,12 +89,16 @@ html{
     box-shadow: 0 0 10px rgb(199, 130, 3);
 }
 
-@media (min-width: 1006px){
+@media (min-width: 992px){
     .disapear-desktop{
         display: none;
     }
 
     .header-options-movile{
         display: none;
+    }
+
+    .header-buttons{
+        width: auto;
     }
 }

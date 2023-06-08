@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="tituloConsulta">{{ "VACCINATED.TITLE" | translate }}</h1>
-    <div class="flexRow">
-        <div class="flexCol sizeUnTercio">
+    <div class="flexRow vacunados-grupo-selects">
+        <div class="flexCol sizeUnTercio vacunados-filtro">
             <h6 *ngIf="laboratoriosData.length > 0">{{ "MANAGMENT.LABS" | translate }}</h6>
             <select class="form-select" *ngIf="laboratoriosData.length > 0"
             (change)="filtrarPorLaboratorio($event)">
@@ -11,8 +11,8 @@
                     value={{laboratorio}}>{{laboratorio}}</option>
             </select>
         </div>
-        <div class="flexCol sizeUnTercio">
-            <h6 *ngIf="provinciasData.length > 0">{{ "MANAGMENT.STATES" | translate }}</h6>
+        <div class="flexCol sizeUnTercio vacunados-filtro">
+            <h6 *ngIf="provinciasData.length > 0">{{ "MANAGMENT.PROVINCES" | translate }}</h6>
             <select class="form-select" *ngIf="provinciasData.length > 0"
             (change)="filtrarPorProvincia($event)">
                 <option selected hidden>{{ "SELECT.PROVINCE" | translate }}</option>
@@ -32,18 +32,18 @@
             <tr>
                 <th>{{ "VACCINATED.LAB" | translate }}</th>
                 <th>CUIL</th>
-                <th>{{ "VACCINATED.DATE" | translate }}</th>
+                <th class="vacunados-fecha">{{ "VACCINATED.DATE" | translate }}</th>
                 <th>{{ "VACCINATED.VACCINE" | translate }}</th>
-                <th>{{ "VACCINATED.LOCATION" | translate }}</th>
+                <th class="vacunados-lugar">{{ "VACCINATED.LOCATION" | translate }}</th>
             </tr>
         </thead>
         <tbody >
             <tr *ngFor="let vacunado of vacunadosData">
                 <td>{{vacunado.laboratorio}}</td>
                 <td>{{vacunado.cuil}}</td>
-                <td>{{vacunado.fechaHoraVacunacion | dateFormat}}</td>
+                <td class="vacunados-fecha">{{vacunado.fechaHoraVacunacion | dateFormat}}</td>
                 <td>{{vacunado.nombreVacuna}} n°{{vacunado.nroDosis}}</td>
-                <td>{{vacunado.provincia}} - {{vacunado.centroVac}}</td>
+                <td class="vacunados-lugar">{{vacunado.provincia}} - {{vacunado.centroVac}}</td>
             </tr>
         </tbody>
     </table>

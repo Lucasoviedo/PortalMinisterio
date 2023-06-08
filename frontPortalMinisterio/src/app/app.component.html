@@ -27,8 +27,8 @@
           </li>
         </ul>
       </div>
-      <h5 style="padding-right: 10px; color: white;" *ngIf="nombreUsuario">{{nombreUsuario}}</h5>
       <div *ngIf="showHeaderOptions" class="header-buttons">
+        <h5 style="padding-right: 10px; color: white;" *ngIf="nombreUsuario">{{nombreUsuario}}</h5>
         <div class="logout-img-container disapear-desktop" (click)="clickShowHeaderOptionsMovile()">
           <img src="../assets/menu-hamburguesa.svg" class="logout-img" alt="menu" />
         </div>

@@ -1,0 +1,30 @@
+.vacunados-grupo-selects{
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vacunados-filtro{
+    width: 60% !important;
+    margin-bottom: 5px;
+}
+
+.vacunados-lugar,
+.vacunados-fecha{
+    display: none;
+}
+
+@media (min-width: 744px) {
+    .vacunados-grupo-selects{
+        flex-direction: row;
+    }
+
+    .vacunados-lugar,
+    .vacunados-fecha{
+        display: table-cell;
+    }
+
+    .vacunados-filtro{
+        width: 33% !important;
+        margin-bottom: 0;
+    }
+}
