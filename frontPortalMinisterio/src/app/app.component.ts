@@ -55,6 +55,15 @@ export class AppComponent implements OnInit {
       .subscribe((response : any) => {
         this.nombreUsuario = `${response.apellido} ${response.nombre}`
       })
+
+      this.usuariosService.getLanguage()
+      .subscribe((responseLenguaje: any) => {
+          if (responseLenguaje !== 1) {
+              this.translate.use('en');
+          } else {
+              this.translate.use('es');
+          }
+        })
     }
 
     this.eventBusService.onDashboardShown.subscribe(() => {

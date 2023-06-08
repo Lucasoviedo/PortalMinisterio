@@ -45,6 +45,8 @@ export class LotesAdminComponent implements OnInit{
     fechaDevolucion = undefined;
     codigoSeguiminetoActual = "";
 
+    lenguaje = 1;
+
     totalVacunasADistribuir = 0;
 
     finalizarVerificacion = false;
@@ -53,7 +55,7 @@ export class LotesAdminComponent implements OnInit{
     modoDistribucionData: Array<IModoDistribucion> = [];
     fechaActualizacionRecibo = new Date();
     loteActualizacionRecibo :  IEditarLoteRecepcion =  { idUsuario: 1, codigoLote: "", fechaRecepcion: "", codigoProvincia: ""} ;
-    modalSeguimiento : ILoteLab =  { idUsuario: 0, codigoLaboratorio: "", codigoEstado: "", codigoLote: "", fechaEnvio: new Date, codigoSeguimiento: "", fechaRecepcion: new Date, idEmpresaTransporte: 0, distribuido: 0, despachado: 0, estado: "", cantidadVacunasADistribuir: 0, cantidadVacunas: 0, nombreLaboratorio: "", fechaRegistro: new Date, fechaVencimiento: new Date} ;
+    modalSeguimiento : ILoteLab =  { idUsuario: 0, codigoLaboratorio: "", codigoEstado: "", codigoLote: "", fechaEnvio: new Date, codigoSeguimiento: "", fechaRecepcion: new Date, idEmpresaTransporte: 0, distribuido: 0, despachado: 0, estado: "", cantidadVacunasADistribuir: 0, cantidadVacunas: 0, nombreLaboratorio: "", fechaRegistro: new Date, fechaVencimiento: new Date, estadoMostrar : ""} ;
 
     lotesData: Array<ILoteLab> = [];
     lotesDataLab: Array<ILoteLab> = [];
@@ -103,38 +105,68 @@ export class LotesAdminComponent implements OnInit{
             this.laboratoriosData = response
         });
 
-        this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
-        .subscribe((response: any) => {
-            this.lotesDataComplete = response
-        });
+        
 
-        this.lotesGeneralService.obtenerEstados()
-        .subscribe((response: any) => {
-            this.usuariosService.getLanguage()
-            .subscribe((responseLenguaje: any) => {
-                this.estadosData = response
+        this.usuariosService.getLanguage()
+        .subscribe((responseLenguaje: any) => {
+            this.lenguaje = responseLenguaje
 
-                    responseLenguaje !== 1 ? this.estadosData[0].titulo = "ACEPTED" : this.estadosData[0].titulo = this.estadosData[0].estado;
-                    this.estadosData[1].titulo = "PARCIALY ACEPTED"
-                    this.estadosData[2].titulo = "ON ITS WAY"
-                    this.estadosData[3].titulo = "ON ORIGIN"
-                    this.estadosData[4].titulo = "REJECTED"
-                    this.estadosData[5].titulo = "RECIVED"
-                    
+            this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
+            .subscribe((response: any) => {
+                this.lotesDataComplete = response.map((lote : any) => {
+                    if(this.lenguaje != 1) {
+                        let estadoFinal = ""
+                        if(lote.estado === "ACEPTADO") estadoFinal= "ACEPTED"
+                        if(lote.estado === "ACEPTADO_PARCIALMENTE") estadoFinal= "PARCIALY ACEPTED"
+                        if(lote.estado === "EN_CAMINO") estadoFinal= "ON ITS WAY"
+                        if(lote.estado === "EN_ORIGEN") estadoFinal= "ON ORIGIN"
+                        if(lote.estado === "RECHAZADO") estadoFinal= "REJECTED"
+                        if(lote.estado === "RECIBIDO") estadoFinal= "RECIVED"
+                        return{
+                            ...lote,
+                            estadoMostar : estadoFinal
+                        }
+                    } else {
+                        return{
+                            ...lote,
+                            estadoMostar : lote.estado
+                        }
+                    }
+                })
+            });
+
+            this.devolucionesService.getRejectReasons()
+            .subscribe((response: any) => {
+                this.rejectionReasonsData = response;
+                if(this.lenguaje != 1) {
+                    this.rejectionReasonsData[0].tipoMotivo = "Packaging damage"
+                    this.rejectionReasonsData[1].tipoMotivo = "Manufacturing defects"
+                    this.rejectionReasonsData[2].tipoMotivo = "Failure to meet quality standards"
+                    this.rejectionReasonsData[3].tipoMotivo = "Lack of proper documentation"
+                    this.rejectionReasonsData[4].tipoMotivo = "Expiration of vaccine batch"
+                    this.rejectionReasonsData[5].tipoMotivo = "Storage issues"
+                    this.rejectionReasonsData[6].tipoMotivo = "Contamination during transportation"
+                    this.rejectionReasonsData[7].tipoMotivo = "Other"
+                }
             })
-            console.log(this.estadosData)
-        });
 
-        this.lotesGeneralService.getVaccinesStates()
-        .subscribe((response: any) => {
-            this.vaccinesStatesData = response;
-            console.log(response)
-        });
-
-        this.devolucionesService.getRejectReasons()
-        .subscribe((response: any) => {
-            this.rejectionReasonsData = response;
-            // console.log(response)
+            this.lotesGeneralService.obtenerEstados()
+            .subscribe((response: any) => {
+                this.estadosData = response
+                this.lenguaje !== 1 ? this.estadosData[0].titulo = "ACEPTED" : this.estadosData[0].titulo = this.estadosData[0].estado;
+                this.lenguaje !== 1 ? this.estadosData[1].titulo = "PARCIALY ACEPTED" : this.estadosData[1].titulo = this.estadosData[1].estado;
+                this.lenguaje !== 1 ? this.estadosData[2].titulo = "ON ITS WAY" : this.estadosData[2].titulo = this.estadosData[2].estado;
+                this.lenguaje !== 1 ? this.estadosData[3].titulo = "ON ORIGIN" : this.estadosData[3].titulo = this.estadosData[3].estado;
+                this.lenguaje !== 1 ? this.estadosData[4].titulo = "REJECTED" : this.estadosData[4].titulo = this.estadosData[4].estado;
+                this.lenguaje !== 1 ? this.estadosData[5].titulo = "RECIVED" : this.estadosData[5].titulo = this.estadosData[5].estado;
+            });
+    
+            this.lotesGeneralService.getVaccinesStates()
+            .subscribe((response: any) => {
+                this.vaccinesStatesData = response;
+                this.lenguaje !== 1 ? this.vaccinesStatesData[0].estado = "ACEPTED" : this.vaccinesStatesData[0].estado = this.vaccinesStatesData[0].estado;
+                this.lenguaje !== 1 ? this.vaccinesStatesData[1].estado = "REJECTED" : this.vaccinesStatesData[1].estado = this.vaccinesStatesData[1].estado;
+            });
         })
 
         this.lotesGeneralService.obtenerEmpresasTransporte()
@@ -175,7 +207,26 @@ export class LotesAdminComponent implements OnInit{
         .subscribe((res: any) => {
             this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
             .subscribe((response: any) => {
-                this.lotesDataComplete = response
+                this.lotesDataComplete = response.map((lote : any) => {
+                    if(this.lenguaje != 1) {
+                        let estadoFinal = ""
+                        if(lote.estado === "ACEPTADO") estadoFinal= "ACEPTED"
+                        if(lote.estado === "ACEPTADO_PARCIALMENTE") estadoFinal= "PARCIALY ACEPTED"
+                        if(lote.estado === "EN_CAMINO") estadoFinal= "ON ITS WAY"
+                        if(lote.estado === "EN_ORIGEN") estadoFinal= "ON ORIGIN"
+                        if(lote.estado === "RECHAZADO") estadoFinal= "REJECTED"
+                        if(lote.estado === "RECIBIDO") estadoFinal= "RECIVED"
+                        return{
+                            ...lote,
+                            estadoMostar : estadoFinal
+                        }
+                    } else {
+                        return{
+                            ...lote,
+                            estadoMostar : lote.estado
+                        }
+                    }
+                })
                 this.lotesData = this.lotesDataComplete;
             });
         });
@@ -185,9 +236,9 @@ export class LotesAdminComponent implements OnInit{
         this.vaccinesData.map((element, index) => {
            element.codigoEstadoVacuna = evento.target.value
             if(evento.target.value === "A"){
-                element.estado = "ACEPTADA"
+                this.lenguaje !== 1 ? element.estado = "ACEPTED" : element.estado = "ACEPTADA";
             } else {
-                element.estado = "RECHAZADA"
+                this.lenguaje !== 1 ? element.estado = "REJECTED" : element.estado = "RECHAZADA";
             }
         })
         this.finalizarVerificacion = true
@@ -198,9 +249,9 @@ export class LotesAdminComponent implements OnInit{
             if(element.codigoVacuna == vaccineCod){
                 this.vaccinesData[index].codigoEstadoVacuna = evento.target.value
                 if(evento.target.value === "A"){
-                    this.vaccinesData[index].estado = "ACEPTADA"
+                    this.lenguaje !== 1 ?  this.vaccinesData[index].estado = "ACEPTED" : this.vaccinesData[index].estado = "ACEPTADA"
                 } else {
-                    this.vaccinesData[index].estado = "RECHAZADA"
+                    this.lenguaje !== 1 ?  this.vaccinesData[index].estado = "REJECTED" : this.vaccinesData[index].estado = "RECHAZADA"
                 }
             }
         })
@@ -219,17 +270,38 @@ export class LotesAdminComponent implements OnInit{
         this.finalizarVerificacion = false
         this.lotesMinLabService.obtenerVacunasLote(lote.codigoLote)
         .subscribe((response:any) =>{
-            this.vaccinesData = response;
+            this.vaccinesData = response.map((vacuna : any) => {
+                let estadoVacuna = vacuna.estado
+
+                if(this.lenguaje !== 1){
+                    if(estadoVacuna == "ACEPTADA"){
+                        estadoVacuna = "ACEPTED"
+                    } else {
+                        estadoVacuna = "REJECTED"
+                    }
+                }
+
+                return{
+                    ...vacuna,
+                    estado : estadoVacuna
+                }
+            });
         })
     }
 
     async editarVacunas(){
         for (let element of this.vaccinesData) {
+
+            let estadoFinal = "ACEPTADA" 
+            if (element.estado == "RECHAZADA" || element.estado == "REJECTED" ){
+                estadoFinal = "RECHAZADA"
+            }
+
             let data = {
                 codigoVacuna : element.codigoVacuna,
                 codigoLote :   element.codigoLote,
                 codigoEstadoVacuna : element.codigoEstadoVacuna,
-                estado : element.estado
+                estado : estadoFinal
             }
             try{
                 await this.vacunasService.actualizarVacunas(data).toPromise();
@@ -239,7 +311,26 @@ export class LotesAdminComponent implements OnInit{
         }
         this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
         .subscribe((response: any) => {
-            this.lotesDataComplete = response
+            this.lotesDataComplete = response.map((lote : any) => {
+                if(this.lenguaje != 1) {
+                    let estadoFinal = ""
+                    if(lote.estado === "ACEPTADO") estadoFinal= "ACEPTED"
+                    if(lote.estado === "ACEPTADO_PARCIALMENTE") estadoFinal= "PARCIALY ACEPTED"
+                    if(lote.estado === "EN_CAMINO") estadoFinal= "ON ITS WAY"
+                    if(lote.estado === "EN_ORIGEN") estadoFinal= "ON ORIGIN"
+                    if(lote.estado === "RECHAZADO") estadoFinal= "REJECTED"
+                    if(lote.estado === "RECIBIDO") estadoFinal= "RECIVED"
+                    return{
+                        ...lote,
+                        estadoMostar : estadoFinal
+                    }
+                } else {
+                    return{
+                        ...lote,
+                        estadoMostar : lote.estado
+                    }
+                }
+            })
             this.lotesData = this.lotesDataComplete;
         });
     }
@@ -297,7 +388,26 @@ export class LotesAdminComponent implements OnInit{
         .subscribe(() => {
             this.lotesMinLabService.obtenerLotes(this.criteriaBusquedaLotesLabs)
             .subscribe((response: any) => {
-                this.lotesDataComplete = response
+                this.lotesDataComplete = response.map((lote : any) => {
+                    if(this.lenguaje != 1) {
+                        let estadoFinal = ""
+                        if(lote.estado === "ACEPTADO") estadoFinal= "ACEPTED"
+                        if(lote.estado === "ACEPTADO_PARCIALMENTE") estadoFinal= "PARCIALY ACEPTED"
+                        if(lote.estado === "EN_CAMINO") estadoFinal= "ON ITS WAY"
+                        if(lote.estado === "EN_ORIGEN") estadoFinal= "ON ORIGIN"
+                        if(lote.estado === "RECHAZADO") estadoFinal= "REJECTED"
+                        if(lote.estado === "RECIBIDO") estadoFinal= "RECIVED"
+                        return{
+                            ...lote,
+                            estadoMostar : estadoFinal
+                        }
+                    } else {
+                        return{
+                            ...lote,
+                            estadoMostar : lote.estado
+                        }
+                    }
+                })
                 this.lotesData = this.lotesDataComplete;
 
                 this.empresaTransporteActual = 0;
@@ -395,7 +505,6 @@ export class LotesAdminComponent implements OnInit{
 
     reiniciarData(){
         this.lotesData = this.lotesDataComplete;
-        console.log(typeof(this.fechaFin))
         if(this.selectedOptionLab !== "") {
             const newData = this.lotesData.filter(lote => lote.codigoLaboratorio === this.selectedOptionLab);
             this.lotesData = newData;
