@@ -17,7 +17,7 @@
             <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/usuarios')">{{ "NAVBAR.USERS" | translate }}</div>
           </li>
           <li class="nav-item">
-            <div *ngIf="userPermissions != 2" class="nav-link" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
+            <div class="nav-link" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
           </li>
           <li class="nav-item">
             <div *ngIf="userPermissions == 1" class="nav-link" (click)="ruteoHeader('/lotes-admin')">{{ "NAVBAR.BATCHADMIN" | translate }}</div>
@@ -42,7 +42,7 @@
     <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/laboratorios')">{{ "NAVBAR.LABORATORIES" | translate }}</div>
     <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/provincias')">{{ "NAVBAR.PROVINCES" | translate }}</div>
     <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/usuarios')">{{ "NAVBAR.USERS" | translate }}</div>
-    <div *ngIf="userPermissions != 2" class="header-option-movile" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
+    <div  class="header-option-movile" (click)="ruteoHeader('/vacunados')">{{ "NAVBAR.VACCINATES" | translate }}</div>
     <div *ngIf="userPermissions == 1" class="header-option-movile" (click)="ruteoHeader('/lotes-admin')">{{ "NAVBAR.BATCHADMIN" | translate }}</div>
     <div class="header-option-movile" (click)="ruteoHeader('/lotes-consulta')">{{ "NAVBAR.BATCHINQUIRY" | translate }}</div>
   </div>

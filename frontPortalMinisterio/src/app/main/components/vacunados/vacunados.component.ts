@@ -32,26 +32,38 @@ export class VacunadosComponent implements OnInit{
                 private vacunasService: VacunasService){}
 
     ngOnInit(): void {
-        if(this.cookieService.get('rolUsuario')){
-            if(this.cookieService.get('rolUsuario') == "2"){
-                this.router.navigate(['/']);
-            }
-        }
 
         this.vacunasService.getVaccinateds()
         .subscribe((response) => {
 
-            this.vacunadosDataCompleta = response
-        })
+            if(response) {
 
-        this.laboratorioService.getLaboratorios()
-        .subscribe((response: any) => {
-            this.laboratoriosData = response.map((laboratorio : any) => {
-                return laboratorio.nombre;
+                this.vacunadosDataCompleta = response 
+            }
+
+            this.vacunasService.getVacunacionesLab().subscribe((response2) => {
+
+                if(response2){
+                    this.vacunadosDataCompleta = response2
+                    this.vacunadosData = response2
+                }
+                console.log(this.vacunadosDataCompleta)
+
             })
+            
         })
 
-        if(this.cookieService.get('rolUsuario') == "1"){
+
+        if(this.cookieService.get('rolUsuario') != "2"){
+            this.laboratorioService.getLaboratorios()
+            .subscribe((response: any) => {
+                this.laboratoriosData = response.map((laboratorio : any) => {
+                    return laboratorio.nombre;
+                })
+            })
+        }
+
+        if(this.cookieService.get('rolUsuario') != "3"){
             this.provinciaService.getProvincias(1)
             .subscribe((response: any) => {
                 this.provinciasData = response.map((laboratorio : any) => {
