@@ -6,7 +6,7 @@
             <input type="text" class="form-control col-12" [formControl]="filtro" placeholder="{{ 'LABORATORY.PLACEHOLDER' | translate }}">
         </div>
         <div class="laboratorio-div-boton">
-            <button class="btn btn-primary laboratorio-agregarBoton" data-toggle="modal" data-target="#insertar-laboratorio">
+            <button class="btn btn-primary laboratorio-agregarBoton" data-toggle="modal" data-target="#insertar-laboratorio" (click) = "resetModalLabels()">
                 {{ "LABORATORY.ADD" | translate }}
             </button>
         </div>

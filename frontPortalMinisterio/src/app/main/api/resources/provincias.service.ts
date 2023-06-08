@@ -89,4 +89,13 @@ export class ProvinciaService {
     });
     return this.http.post<any>(this.url + '/provincias/nombre' ,{codigoProvincia}, {headers} );
   }
+
+  getLoteProvincia(codigoLote : string){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<any>(this.url + '/lotes-provincias/lote' ,{codigoLote}, {headers} );
+  }
+
+
 }

@@ -35,4 +35,11 @@ export class VacunasService {
     });
     return this.http.put<IVacunaEditada>(this.url + '/vacunas/editar-vacuna', vacuna, {headers});
   }
+
+  getVacunacionesLab(){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.get<any>(this.url + '/vacunaciones/vacunaciones-laboratorio', {headers});
+  }
 }

@@ -244,4 +244,18 @@ export class UsuariosComponent implements OnInit {
             });
         })
     }
+
+    resetModalLabels() {
+        this.nuevoUsuario.nombre = "";
+        this.nuevoUsuario.apellido = "";
+        this.nuevoUsuario.dni = 0;
+        this.nuevoUsuario.email = "";
+        this.nuevoUsuario.nroRol = 0;
+        this.nuevoUsuario.codigoLaboratorio = undefined;
+        this.nuevoUsuario.codigoProvincia = undefined;
+        this.nuevoUsuario.idIdioma = 0;
+        this.nuevoUsuario.nombreUsuario = "";
+        this.nuevoUsuario.clave = "";
+        this.nuevoUsuarioClaveRepetida = "";  
+    }
 }
