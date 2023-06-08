@@ -14,7 +14,7 @@
             <input type="text" class="form-control" [formControl]="filtro" placeholder="{{ 'USERS.PLACEHOLDER' | translate }}" name="nombre" autocomplete="off">
         </div>
         <div class="user-header-options">
-            <button class="btn btn-primary agregarBoton" type="button" data-toggle="modal" data-target="#newUserModal"
+            <button class="btn btn-primary agregarBoton" type="button" data-toggle="modal" data-target="#newUserModal" (click) = "resetModalLabels()"
             >{{ "USERS.BUTTON" | translate }}</button>
         </div>
     </div>

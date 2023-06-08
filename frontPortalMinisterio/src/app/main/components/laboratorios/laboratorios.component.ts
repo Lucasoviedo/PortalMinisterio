@@ -141,4 +141,14 @@ export class LaboratoriosComponent implements OnInit{
             this.eventBusService.onEndpointEdit.emit();
         })
     }
+
+    resetModalLabels() {
+        this.nuevoLaboratorio.nombre = '';
+        this.nuevoLaboratorio.pais = '';
+        this.nuevoLaboratorio.direccion = '';
+        this.nuevoLaboratorio.emailContacto = '';
+        this.nuevoLaboratorio.nombreContacto = '';
+        this.nuevoLaboratorio.codigoLaboratorio = '';
+      }
+      
 }
