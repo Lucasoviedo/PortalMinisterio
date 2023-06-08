@@ -27,7 +27,7 @@
           <td>{{lote.codigoLote}}</td>
           <td>{{lote.estado}}</td>
           <td class="consulta-no-movil">{{lote.fechaEnvio | dateFormat}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -49,9 +49,9 @@
         <tr *ngFor="let lote of devolucionesLaboratorios | filtrarPor:['codigoLote']:filtro.value">
           <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td>{{lote.codigoDevolucion}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td class="consulta-no-movil">{{lote.cantidadVacunas}}</td>
         </tr>
       </tbody>
@@ -76,8 +76,8 @@
           <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
           <td class="consulta-no-movil">{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
-          <td>{{(lote.fechaRecepcion | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
+          <td>{{(lote.fechaRecepcion | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td class="consulta-no-movil">{{lote.cantidadVacunas}}</td>
           <td class="consulta-no-movil" *ngIf="!lote.idEmpresaTransporte && userPermissions == 1">
             <div class="btn-table" (click)="despacharLote(lote)" type="button" data-toggle="modal"
@@ -109,7 +109,7 @@
           <td class="consulta-no-movil">{{lote.codigoLaboratorio}}</td>
           <td>{{lote.codigoProvincia}}</td>
           <td>{{lote.codigoLote}}</td>
-          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) || "PENDIENTE"}}</td>
+          <td class="consulta-no-movil">{{(lote.fechaEnvio | dateFormat) ||  ("BATCH_TABLE.PENDING" | translate) }}</td>
           <td *ngIf="!lote.fechaRecepcion && lote.fechaEnvio">
             <input *ngIf="userPermissions == 1" type="date" id="date-input" (change)="openConfirmDataModal($event,lote)" />
             <h5 *ngIf="userPermissions != 1">--------</h5>
