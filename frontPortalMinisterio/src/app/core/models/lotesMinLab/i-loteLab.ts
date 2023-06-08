@@ -15,4 +15,6 @@ export interface ILoteLab{
     nombreLaboratorio: string;
     fechaRegistro: Date;
     fechaVencimiento: Date;
+
+    estadoMostrar : string;
 }
