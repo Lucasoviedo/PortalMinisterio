@@ -198,5 +198,9 @@
     "DATE": "Date",
     "VACCINE": "Vaccine",
     "LOCATION": "Location"
+  },
+  "FINAL": {
+    "MESSAGE": "Message",
+    "PLACEHOLDER": "Write your message"
   }
 }
