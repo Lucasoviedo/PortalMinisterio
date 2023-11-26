@@ -11,14 +11,17 @@
     align-items: center;
 }
 
-.content-container{
-    min-height: 75vh;
+
+.container-app{
+    height: 100vh; 
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 }
 
 .navbar{
     box-shadow: 0 0 10px rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));
     height: 12.5vh;
-    min-height: 70px;
     background-color: rgba(var(--bs-primary-rgb));
     height: auto;
 }
@@ -34,7 +37,6 @@
 .header-buttons{
     display: flex;
     align-items: center;
-    width: 100%;
     justify-content: end;
 }
 

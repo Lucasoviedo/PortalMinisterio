@@ -59,6 +59,19 @@
     }
 }
 
+.mensajeria-modal{
+    display: flex;
+    flex-direction: column;
+}
+
+.mensajeria-modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.mensajeria-modal textarea{
+    resize: none;
+}
 
 @media (min-width: 1006px){
     .disapear-desktop{

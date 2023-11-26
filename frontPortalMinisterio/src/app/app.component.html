@@ -1,5 +1,5 @@
 <app-splash *ngIf="showSplash"></app-splash>
-<div *ngIf="!showSplash">
+<div *ngIf="!showSplash" class="container-app">
   <nav class="navbar navbar-expand-lg navbar-dark text-white" [ngClass]="{
     'background-color-2': userPermissions == 2,
     'background-color-3': userPermissions == 3}">
@@ -47,7 +47,7 @@
     <div class="header-option-movile" (click)="ruteoHeader('/lotes-consulta')">{{ "NAVBAR.BATCHINQUIRY" | translate }}</div>
   </div>
 
-  <div class="content-container">
+  <div>
     <app-loader></app-loader>
     <router-outlet></router-outlet>
   </div>

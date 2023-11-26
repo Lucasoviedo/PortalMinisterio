@@ -11,6 +11,7 @@ import { ITecnologia } from "src/app/core/models/endpoints/i-tecnologia";
 import { EventBusService } from "../../api/resources/event-bus.service";
 import { INuevoLaboratorio } from "src/app/core/models/laboratorios/i-nuevoLaboratorio";
 import { FormControl, Validators } from "@angular/forms";
+import { IMensajeLaboratorio } from "src/app/core/models/i-mensajeLaboratorio";
 
 @Component({
     selector: 'app-laboratorios',
@@ -30,6 +31,13 @@ export class LaboratoriosComponent implements OnInit{
     
     mensajePing = ""
     codigoMensajePing = 0
+
+    mensajeLaboratorio = ""
+    mensaje : IMensajeLaboratorio = {
+        mensaje :"",
+        fecha : new Date(),
+        codigoLaboratorio: ""
+    }
 
     endpointEditar : IEndpoint = {clave: "", codigoLabOProv: "", habilitado: 1, tecnologia: "", url: "", usuario: "", urlStatus: ""};
     nuevoLaboratorio : INuevoLaboratorio = {codigoLaboratorio: "", nombre: "", pais: "", direccion: "", emailContacto: "", nombreContacto: ""}
@@ -105,6 +113,7 @@ export class LaboratoriosComponent implements OnInit{
     }
 
     editarLaboratorio(laboratorio:ILaboratorio){
+        this.mensajeLaboratorio = ""
         const variable = this.endpointsData.find(endpoint => endpoint.codigoLaboratorio === laboratorio.codigoLaboratorio);
         if(variable) { 
             this.endpointEditar.clave = variable.clave;
@@ -149,6 +158,17 @@ export class LaboratoriosComponent implements OnInit{
         this.nuevoLaboratorio.emailContacto = '';
         this.nuevoLaboratorio.nombreContacto = '';
         this.nuevoLaboratorio.codigoLaboratorio = '';
+      }
+
+
+      enviarMensajeLaboratorio(){
+        this.mensaje.mensaje = this.mensajeLaboratorio;
+        this.mensaje.fecha = new Date();
+        this.mensaje.codigoLaboratorio = this.endpointEditar.codigoLabOProv
+        
+        this.laboratorioService.enviarMensaje(this.mensaje).subscribe(() => {
+            alert(`¡Mensaje enviado correctamente a ${this.mensaje.codigoLaboratorio}!`)
+        })
       }
       
 }

@@ -4,6 +4,7 @@ import { ILaboratorio } from 'src/app/core/models/laboratorios/i-laboratorio';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { INuevoLaboratorio } from 'src/app/core/models/laboratorios/i-nuevoLaboratorio';
+import { IMensajeLaboratorio } from 'src/app/core/models/i-mensajeLaboratorio';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,10 @@ export class LaboratorioService {
   }
 
 
-
+  enviarMensaje(mensaje: IMensajeLaboratorio){
+    const headers = new HttpHeaders({
+      'Authorization': this.cookieService.get('authToken')
+    });
+    return this.http.post<IMensajeLaboratorio>(this.url + '/laboratorios/mensaje', mensaje , {headers} );
+  }
 }

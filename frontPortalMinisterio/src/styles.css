@@ -3,6 +3,10 @@
     font-size: 12pt;
 }
 
+body{
+    height: 100vh;
+}
+
 textarea,
 input{
     border-radius: 10px;
